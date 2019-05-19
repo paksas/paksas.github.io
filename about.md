@@ -3,7 +3,7 @@ title: Piotr
 permalink: /about/
 ---
 
-![Piotr and Danusia](https://github.com/paksas/paksas.github.io/images/piotr.jpg "Piotr and Danusia")
+![Piotr and Danusia](https://github.com/paksas/paksas.github.io/_images/piotr.jpg "Piotr and Danusia")
 
 ...is a jolly fellow, loving husband, science enthusiast and a terrible skier.
 
