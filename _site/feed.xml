@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2019-05-19T10:27:52+01:00</updated><id>/feed.xml</id><entry><title type="html">Anger</title><link href="/2019/05/19/anger.html" rel="alternate" type="text/html" title="Anger" /><published>2019-05-19T00:00:00+01:00</published><updated>2019-05-19T00:00:00+01:00</updated><id>/2019/05/19/anger</id><content type="html" xml:base="/2019/05/19/anger.html">&lt;p&gt;SKELETON:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-05-19T11:36:31+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
+</subtitle><entry><title type="html">Anger</title><link href="http://localhost:4000/jekyll/update/2019/05/19/anger.html" rel="alternate" type="text/html" title="Anger" /><published>2019-05-19T00:00:00+01:00</published><updated>2019-05-19T00:00:00+01:00</updated><id>http://localhost:4000/jekyll/update/2019/05/19/anger</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2019/05/19/anger.html">&lt;p&gt;SKELETON:&lt;/p&gt;
 
 &lt;p&gt;Ever since I was a child, I was plagued with the same ‘stress pattern’: bad situation -&amp;gt; emotions -&amp;gt; trains of thoughts “I would show them” -&amp;gt; spiral on forever&lt;/p&gt;
 
@@ -29,6 +30,8 @@ I’m noticing how physical sensations (hunger, fatigue, thirst) affect the emot
 &lt;ul&gt;
   &lt;li&gt;I beat the anger, and so can you&lt;/li&gt;
   &lt;li&gt;techniques&lt;/li&gt;
-  &lt;li&gt;I nve
-STORY:&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>ptrochim</name></author><summary type="html">SKELETON:</summary></entry><entry><title type="html">Complements</title><link href="/2019/05/13/complements.html" rel="alternate" type="text/html" title="Complements" /><published>2019-05-13T00:00:00+01:00</published><updated>2019-05-13T00:00:00+01:00</updated><id>/2019/05/13/complements</id><content type="html" xml:base="/2019/05/13/complements.html">&lt;p&gt;Intuition behind the probability complement technique.&lt;/p&gt;</content><author><name>ptrochim</name></author><summary type="html">Intuition behind the probability complement technique.</summary></entry></feed>
+  &lt;li&gt;I never knew what it means to be ‘relaxed’ - now I can tell you&lt;/li&gt;
+  &lt;li&gt;I’m like you, I went through it - here’s how&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;STORY:&lt;/p&gt;</content><author><name>ptrochim</name></author><summary type="html">SKELETON:</summary></entry><entry><title type="html">Complements</title><link href="http://localhost:4000/jekyll/update/2019/05/13/complements.html" rel="alternate" type="text/html" title="Complements" /><published>2019-05-13T00:00:00+01:00</published><updated>2019-05-13T00:00:00+01:00</updated><id>http://localhost:4000/jekyll/update/2019/05/13/complements</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2019/05/13/complements.html">&lt;p&gt;Intuition behind the probability complement technique.&lt;/p&gt;</content><author><name>ptrochim</name></author><summary type="html">Intuition behind the probability complement technique.</summary></entry></feed>

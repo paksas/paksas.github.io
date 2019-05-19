@@ -1,39 +1,17 @@
-collections:
-  authors:
-    output: true
+title: Piotr Trochim's blog
+email: ptrochim@gmail.com
+description: > # this means to ignore newlines until "baseurl:"
+  Thoughts and results I wish to persist.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "http://paksas.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+twitter_username: piotrtrochim
+github_username:  paksas
 
-defaults:
-  - scope:
-      path: ""
-      type: "authors"
-    values:
-      layout: "author"
-  - scope:
-      path: ""
-      type: "posts"
-    values:
-      layout: "post"
-  - scope:
-      path: ""
-    values:
-      layout: "default"
-
-# Minima date format
-# refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
-minima:
-  date_format: "%b %-d, %Y"
-
-  # generate social links in footer
-  social_links:
-    twitter: jekyllrb
-    github:  jekyll
-    rss: rss
-
+# Build settings
 markdown: kramdown
-# theme: minima
-remote_theme: benbalter/retlab
-
+theme: minima
 plugins:
   - jekyll-feed
-  - jekyll-sitemap
-  - jekyll-seo-tag
+exclude:
+  - Gemfile
+  - Gemfile.lock
