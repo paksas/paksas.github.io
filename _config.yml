@@ -18,6 +18,21 @@ defaults:
     values:
       layout: "default"
 
+# Minima date format
+# refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
+minima:
+  date_format: "%b %-d, %Y"
+
+  # generate social links in footer
+  social_links:
+    twitter: jekyllrb
+    github:  jekyll
+    rss: rss
+
+markdown: kramdown
+# theme: minima
+remote_theme: benbalter/retlab
+
 plugins:
   - jekyll-feed
   - jekyll-sitemap
