@@ -1,55 +1,136 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-14T17:47:37+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
-</subtitle><entry><title type="html">Gauss</title><link href="http://localhost:4000/2020/05/14/gauss.html" rel="alternate" type="text/html" title="Gauss" /><published>2020-05-14T00:00:00+01:00</published><updated>2020-05-14T00:00:00+01:00</updated><id>http://localhost:4000/2020/05/14/gauss</id><content type="html" xml:base="http://localhost:4000/2020/05/14/gauss.html">&lt;hr /&gt;
-&lt;p&gt;title: “Inference from data”
-author: ptrochim
-categories: math
-—&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-14T21:11:41+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
+</subtitle><entry><title type="html">Maximum Likelihood Estimate</title><link href="http://localhost:4000/math/2020/05/14/gauss.html" rel="alternate" type="text/html" title="Maximum Likelihood Estimate" /><published>2020-05-14T00:00:00+01:00</published><updated>2020-05-14T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/14/gauss</id><content type="html" xml:base="http://localhost:4000/math/2020/05/14/gauss.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
 
-&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;This is a post in the series about statistical model fitting.
+It’s my attempt to explain various approaches and algorithms in a way I would have liked to learn them when I had first started studying this fascinating topic.&lt;/p&gt;
 
-&lt;p&gt;I was trying to understand how to find distributions that correspond to observed data.
-As I started reading literature, I soon got lost between references to Maximum Likelihood Estimates, Bayesian estimators, Gaussian processes, regressions, distributions, density function and a ton of other terms all fed at once, often without any context or relationship between one another whatsoever.&lt;/p&gt;
+&lt;p&gt;In this post, I will be covering an algorithm that relies exclusively on the data and doesn’t require the user to use any auxiliary distributions - Maximum Likelihood Estimate.&lt;/p&gt;
 
-&lt;p&gt;TL;DR: they are related.
-They are subsequent steps in a progression to build a mechanism that finds a function responsible for the observed sample points.&lt;/p&gt;
-
-&lt;p&gt;So let me try to explain it the easy way.&lt;/p&gt;
+&lt;p&gt;I will assume that you are familiar with:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;The concept of a random variable&lt;/li&gt;
+  &lt;li&gt;Binomial distribution&lt;/li&gt;
+  &lt;li&gt;Expected value of a random variable&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h1 id=&quot;is-this-a-fair-coin&quot;&gt;Is this a fair coin?&lt;/h1&gt;
 
-&lt;p&gt;Imagine walking down the street one day, and seeing a small crowd of people surrounding what appears to be a guy flipping a coin.
+&lt;p&gt;Imagine walking down the street one day, and seeing a small crowd of people surrounding what appears to be a clown flipping a coin.
 He notices you as you approach and waves at you with his other hand. Then, he presents you with a challenge.&lt;/p&gt;
 
-&lt;p&gt;You need to guess if the coin is fair or not. He will throw and catch the coin 10 times, telling you the result of the throw every single time.
-The sooner you make the guess, the more money you collect. And if you linger for too long, and the 10th throw is complete, you don’t get a dime.&lt;/p&gt;
-
-&lt;p&gt;And as he starts throwing the coin, you start observing the first results…&lt;/p&gt;
+&lt;p&gt;You need to guess if toss coin is fair or not. He will toss the coin 10 times, telling you the result of each toss.
+He will then toss it one more time, and you need to guess the result. If you win, you get 10$. If you loose - you loose 5$.&lt;/p&gt;
 
 &lt;h1 id=&quot;what-you-see-is-all-there-is-wysiati&quot;&gt;What You See Is All There Is (WYSIATI)&lt;/h1&gt;
 
-&lt;p&gt;This famous misnomer coined by (…) in their book “Thinking Fast and Slow” does give a hint how to proceed.&lt;/p&gt;
+&lt;p&gt;This famous mnemonic coined by Daniel Kahneman in his book “Thinking Fast and Slow” gives a hint how to proceed.&lt;/p&gt;
 
-&lt;p&gt;If you had observed 4 heads, it would mean you’re dealing with a coin biased towards the heads.
-If you had observed 2 heads and 2 tails, you would conclude that it’s a fair coin.&lt;/p&gt;
+&lt;p&gt;What would be your guess if you have observed 10 Heads, and you had no other information to go on?&lt;/p&gt;
 
-&lt;p&gt;In order to quantify this knowledge, we can say that are loking at both:&lt;/p&gt;
+&lt;p&gt;If you did’t see the greedy smirk on the clown’s face, nor the long face of the person walking away from the table. You only saw the clown toss 10 Heads in a row.
+What would be the result of the next one?&lt;/p&gt;
+
+&lt;p&gt;Clearly, it’d be Heads. And if he threw 10 Tails, you would be stupid not to have bet on Tails… would you?&lt;/p&gt;
+
+&lt;p&gt;As these thoughts run through your head, you are trying to guess a certain property - what to &lt;em&gt;expect&lt;/em&gt; from the coin as you keep tossing it:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;the number of observations &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;&lt;/li&gt;
-  &lt;li&gt;the quality of the observations &lt;script type=&quot;math/tex&quot;&gt;{x_0, x_1, ..., x_n}&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;10 Heads - &lt;script type=&quot;math/tex&quot;&gt;E[X] = 1&lt;/script&gt;, so bet Heads&lt;/li&gt;
+  &lt;li&gt;10 Tails - &lt;script type=&quot;math/tex&quot;&gt;E[X] = 0&lt;/script&gt;, so bet Tails&lt;/li&gt;
+  &lt;li&gt;5 Heads and 5 Tails - &lt;script type=&quot;math/tex&quot;&gt;E[X] = 0.5&lt;/script&gt;, so… make a guess _O_/&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;And it’s only when &lt;em&gt;on average&lt;/em&gt; we get an equal chance of throwing Heads or Tails, do we conclude that the coin is fair.&lt;/p&gt;
+&lt;p&gt;We need to guess the &lt;em&gt;expected value&lt;/em&gt; of the Random Variable, otherwise known as the mean of its distribution.&lt;/p&gt;
 
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;average = \frac{1, n} \sum {i=0, n} x_i&lt;/script&gt; [eq 1]&lt;/p&gt;
+&lt;h1 id=&quot;relating-data-to-a-random-variable&quot;&gt;Relating data to a Random Variable&lt;/h1&gt;
+
+&lt;p&gt;Our coin tossing is best represented by a Random Variable with a Binomial Distribution.&lt;/p&gt;
+
+&lt;p&gt;We remember that a discrete Random Variable is a sampler that pulls items out of a set. How frequently will certain values show up is dictated by its probability (mass) function. And it’s expected value (or mean) indicates which particular item we can expect to see pulled out the most.&lt;/p&gt;
+
+&lt;p&gt;But how do we reverse it? How do we guess the mean and parameterize the probability (mass) function given the data that has been pulled out?&lt;/p&gt;
+
+&lt;h1 id=&quot;discrete-or-continuous-is-a-matter-of-perspective&quot;&gt;Discrete or continuous is a matter of perspective&lt;/h1&gt;
+
+&lt;p&gt;The expected value of R.V. (a.k.a the mean of its distribution) is a maxima of that R.V’s probability (mass) function.
+The best way to find the maxima of a function is to solve its derivative for its roots !&lt;/p&gt;
+
+&lt;p&gt;So let’s remind ourselves of Binomial distribution p.m.f:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;f(\theta, n, k) = \binom{n}{k} \theta^{n} (1 - \theta)^{n-k}&lt;/script&gt;
+
+&lt;p&gt;Where:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; - number of &lt;em&gt;positive&lt;/em&gt; samples (in our case let’s assume those are represented by Heads)&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; - total number of samples&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; - a latent parameter that represents the fairness of our coin (in this particular case).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Binomial distribution is a discrete distribution. The word discrete suggests something that’s not continuous, something we wouldn’t be able to differentiate.
+But whether it’s discrete or continuous depends on what we consider its &lt;em&gt;variable&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;While calculating probabilities of events, we usually are given some fixed &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; (we are throwing a specific coin), and we operate in terms of &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; (or sometimes only the latter).
+These two are discrete positive values, and that’s what the distribution derives its name from.&lt;/p&gt;
+
+&lt;p&gt;In our case however, these two parameters are fixed - we are given 10 observations (&lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;), and &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; of them are Heads. What we need to find is such value of &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; that will maximize our observations:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac{df(\theta, n, k)}{d\theta} = 0&lt;/script&gt;
+
+&lt;h1 id=&quot;todo-graphical-representation&quot;&gt;TODO: graphical representation&lt;/h1&gt;
+
+&lt;h1 id=&quot;solving-the-derivative&quot;&gt;Solving the derivative&lt;/h1&gt;
+
+&lt;p&gt;Since &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; are constants, we might get rid of the ominous binomial &lt;script type=&quot;math/tex&quot;&gt;\binom{n}{k}&lt;/script&gt;, by the property of dividing both sides of equation by it (zero divided by whatever remains a zero).&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac{df(\theta, n, k)}{d\theta} = n\theta^{n-1}(1-\theta)^{n-k} + \theta^{n}(n-k)(1-\theta)^{n-k-1} = 0&lt;/script&gt;
+
+&lt;p&gt;and after &lt;a href=&quot;#algebraic-appendix&quot;&gt;a little bit of algebra&lt;/a&gt;, we get &lt;script type=&quot;math/tex&quot;&gt;\theta = \frac{n}{k}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;The result suggests that the parameter of Binomial Distribution’s probability mass function that maximizes the likelihood of observing clown’s coin toss results is… the ratio of obtained Heads &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; to the number of performed throws &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;deeper-insight---the-average&quot;&gt;Deeper insight - the average&lt;/h1&gt;
+
+&lt;p&gt;If we assumed that Tails are represented by 0, and Heads by a 1, and an &lt;script type=&quot;math/tex&quot;&gt;x_i&lt;/script&gt; would represent &lt;script type=&quot;math/tex&quot;&gt;i^{th}&lt;/script&gt; coin toss result, then &lt;script type=&quot;math/tex&quot;&gt;n = \sum_{i=0}^{n} x_i&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;Our result then becomes the &lt;em&gt;average&lt;/em&gt; value of the observed data:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\theta = \frac{n}{k} = \frac{1}{k} \sum_{i=0}^{n} x_i&lt;/script&gt;
 
 &lt;h1 id=&quot;maximum-likelihood-estimate&quot;&gt;Maximum Likelihood Estimate&lt;/h1&gt;
 
-&lt;p&gt;We would also arrive at [eq 1] if we applied a techinque called Maximum Likelihood Estimate (or MLE for short).&lt;/p&gt;
+&lt;p&gt;The method the relies on finding the maxima of a probability mass/density function is called Maximum Likelihood Estimation.
+It’s major feature is its independence. The only thing we care about when using it is the data.&lt;/p&gt;
 
-&lt;h1 id=&quot;uncertainty&quot;&gt;Uncertainty&lt;/h1&gt;
+&lt;p&gt;That unfortunately is also one of its major weaknesses, as we’ll see in the subsequent posts about the Bayesian methods.&lt;/p&gt;
 
-&lt;p&gt;But what happens at odd number of readings. You are clearly going to be dealing with some bias.
-Let’s say that you’ve observed 3 heads and 2 tails.&lt;/p&gt;</content><author><name></name></author><summary type="html">title: “Inference from data” author: ptrochim categories: math —</summary></entry><entry><title type="html">Control your emotions</title><link href="http://localhost:4000/psychology/2019/05/19/anger.html" rel="alternate" type="text/html" title="Control your emotions" /><published>2019-05-19T00:00:00+01:00</published><updated>2019-05-19T00:00:00+01:00</updated><id>http://localhost:4000/psychology/2019/05/19/anger</id><content type="html" xml:base="http://localhost:4000/psychology/2019/05/19/anger.html">&lt;h1 id=&quot;emotions&quot;&gt;Emotions&lt;/h1&gt;
+&lt;h1 id=&quot;algebraic-appendix&quot;&gt;Algebraic appendix&lt;/h1&gt;
+
+&lt;p&gt;I’ll flex my algebra muscle, but I’ll try explaining what inspired specific transformations.
+The equation contains a plus sign, which won’t allow us to use division as a way of getting rid of unwanted stuff that easily. So my first hunch is to rearrange the terms.
+That way I can use the equals sign as a mirror and check if there are any symmetrical terms - terms that occur on both sides that I can &lt;em&gt;divide away&lt;/em&gt;.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;n\theta^{n-1}(1-\theta)^{n-k} = -\theta^{n}(n-k)(1-\theta)^{n-k-1}&lt;/script&gt;
+
+&lt;p&gt;The next transformation becomes immediately obvious.&lt;/p&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\theta^{n}&lt;/script&gt; can be broken down into &lt;script type=&quot;math/tex&quot;&gt;\theta^{n-1} * \theta&lt;/script&gt; which gives us &lt;script type=&quot;math/tex&quot;&gt;\theta^{n-1}&lt;/script&gt; on both sides of the &lt;script type=&quot;math/tex&quot;&gt;=&lt;/script&gt; sign. The same transformation can be applied to (1-\theta)^{n-k}&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;n\theta^{n-1}(1-\theta)^{n-k-1}(1-\theta) = -\theta^{n-1}\theta(n-k)(1-\theta)^{n-k-1}&lt;/script&gt;
+
+&lt;p&gt;Now we can divide them away, and we get:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;n(1-\theta) = -\theta(n-k)&lt;/script&gt;
+
+&lt;p&gt;If we unroll the terms in the parenthesis, we get the term &lt;script type=&quot;math/tex&quot;&gt;-n\theta&lt;/script&gt; on boths sides of the &lt;script type=&quot;math/tex&quot;&gt;=&lt;/script&gt; sign.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;n - n\theta = -n\theta + k\theta&lt;/script&gt;
+
+&lt;p&gt;After removing it, we get:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;n = k\theta&lt;/script&gt;
+
+&lt;p&gt;And that leads straight to:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\theta = \frac{n}{k}&lt;/script&gt;</content><author><name>ptrochim</name></author><summary type="html">Introduction</summary></entry><entry><title type="html">Control your emotions</title><link href="http://localhost:4000/psychology/2019/05/19/anger.html" rel="alternate" type="text/html" title="Control your emotions" /><published>2019-05-19T00:00:00+01:00</published><updated>2019-05-19T00:00:00+01:00</updated><id>http://localhost:4000/psychology/2019/05/19/anger</id><content type="html" xml:base="http://localhost:4000/psychology/2019/05/19/anger.html">&lt;h1 id=&quot;emotions&quot;&gt;Emotions&lt;/h1&gt;
 
 &lt;p&gt;Imagine waking up one sunny morning. You had a delicious breakfast, jumped in the car, and headed for that motorway. 
 The traffic is heavy, cars queing to the motorway entrance. And as you’re sitting there, waiting patiently for your turn, you see a few cars cutting through in a pathetic attempt to ‘outsmart’ everyone else. Next thing you notice is a knot that ties inside your belly.&lt;/p&gt;
