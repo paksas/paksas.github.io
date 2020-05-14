@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-14T21:11:41+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-14T21:17:47+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
 </subtitle><entry><title type="html">Maximum Likelihood Estimate</title><link href="http://localhost:4000/math/2020/05/14/gauss.html" rel="alternate" type="text/html" title="Maximum Likelihood Estimate" /><published>2020-05-14T00:00:00+01:00</published><updated>2020-05-14T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/14/gauss</id><content type="html" xml:base="http://localhost:4000/math/2020/05/14/gauss.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
 
 &lt;p&gt;This is a post in the series about statistical model fitting.
@@ -19,7 +19,7 @@ It’s my attempt to explain various approaches and algorithms in a way I would 
 He notices you as you approach and waves at you with his other hand. Then, he presents you with a challenge.&lt;/p&gt;
 
 &lt;p&gt;You need to guess if toss coin is fair or not. He will toss the coin 10 times, telling you the result of each toss.
-He will then toss it one more time, and you need to guess the result. If you win, you get 10$. If you loose - you loose 5$.&lt;/p&gt;
+He will then toss it one more time, and you need to guess the result.&lt;/p&gt;
 
 &lt;h1 id=&quot;what-you-see-is-all-there-is-wysiati&quot;&gt;What You See Is All There Is (WYSIATI)&lt;/h1&gt;
 
@@ -36,16 +36,16 @@ What would be the result of the next one?&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;10 Heads - &lt;script type=&quot;math/tex&quot;&gt;E[X] = 1&lt;/script&gt;, so bet Heads&lt;/li&gt;
   &lt;li&gt;10 Tails - &lt;script type=&quot;math/tex&quot;&gt;E[X] = 0&lt;/script&gt;, so bet Tails&lt;/li&gt;
-  &lt;li&gt;5 Heads and 5 Tails - &lt;script type=&quot;math/tex&quot;&gt;E[X] = 0.5&lt;/script&gt;, so… make a guess _O_/&lt;/li&gt;
+  &lt;li&gt;5 Heads and 5 Tails - &lt;script type=&quot;math/tex&quot;&gt;E[X] = 0.5&lt;/script&gt;, so… make a guess :/&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;We need to guess the &lt;em&gt;expected value&lt;/em&gt; of the Random Variable, otherwise known as the mean of its distribution.&lt;/p&gt;
 
 &lt;h1 id=&quot;relating-data-to-a-random-variable&quot;&gt;Relating data to a Random Variable&lt;/h1&gt;
 
-&lt;p&gt;Our coin tossing is best represented by a Random Variable with a Binomial Distribution.&lt;/p&gt;
+&lt;p&gt;Our coin tossing experiment is best represented by a Random Variable with a Binomial Distribution.&lt;/p&gt;
 
-&lt;p&gt;We remember that a discrete Random Variable is a sampler that pulls items out of a set. How frequently will certain values show up is dictated by its probability (mass) function. And it’s expected value (or mean) indicates which particular item we can expect to see pulled out the most.&lt;/p&gt;
+&lt;p&gt;A discrete Random Variable is a sampler that pulls items out of a set. How frequently will certain values show up is dictated by its probability (mass) function. And it’s expected value (or mean) indicates which particular item we can expect to see pulled out the most.&lt;/p&gt;
 
 &lt;p&gt;But how do we reverse it? How do we guess the mean and parameterize the probability (mass) function given the data that has been pulled out?&lt;/p&gt;
 
