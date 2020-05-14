@@ -1,5 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-06-04T14:50:00+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
-</subtitle><entry><title type="html">Control your emotions</title><link href="http://localhost:4000/jekyll/update/2019/05/19/anger.html" rel="alternate" type="text/html" title="Control your emotions" /><published>2019-05-19T00:00:00+01:00</published><updated>2019-05-19T00:00:00+01:00</updated><id>http://localhost:4000/jekyll/update/2019/05/19/anger</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2019/05/19/anger.html">&lt;h1 id=&quot;emotions&quot;&gt;Emotions&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-14T17:47:37+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
+</subtitle><entry><title type="html">Gauss</title><link href="http://localhost:4000/2020/05/14/gauss.html" rel="alternate" type="text/html" title="Gauss" /><published>2020-05-14T00:00:00+01:00</published><updated>2020-05-14T00:00:00+01:00</updated><id>http://localhost:4000/2020/05/14/gauss</id><content type="html" xml:base="http://localhost:4000/2020/05/14/gauss.html">&lt;hr /&gt;
+&lt;p&gt;title: “Inference from data”
+author: ptrochim
+categories: math
+—&lt;/p&gt;
+
+&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+
+&lt;p&gt;I was trying to understand how to find distributions that correspond to observed data.
+As I started reading literature, I soon got lost between references to Maximum Likelihood Estimates, Bayesian estimators, Gaussian processes, regressions, distributions, density function and a ton of other terms all fed at once, often without any context or relationship between one another whatsoever.&lt;/p&gt;
+
+&lt;p&gt;TL;DR: they are related.
+They are subsequent steps in a progression to build a mechanism that finds a function responsible for the observed sample points.&lt;/p&gt;
+
+&lt;p&gt;So let me try to explain it the easy way.&lt;/p&gt;
+
+&lt;h1 id=&quot;is-this-a-fair-coin&quot;&gt;Is this a fair coin?&lt;/h1&gt;
+
+&lt;p&gt;Imagine walking down the street one day, and seeing a small crowd of people surrounding what appears to be a guy flipping a coin.
+He notices you as you approach and waves at you with his other hand. Then, he presents you with a challenge.&lt;/p&gt;
+
+&lt;p&gt;You need to guess if the coin is fair or not. He will throw and catch the coin 10 times, telling you the result of the throw every single time.
+The sooner you make the guess, the more money you collect. And if you linger for too long, and the 10th throw is complete, you don’t get a dime.&lt;/p&gt;
+
+&lt;p&gt;And as he starts throwing the coin, you start observing the first results…&lt;/p&gt;
+
+&lt;h1 id=&quot;what-you-see-is-all-there-is-wysiati&quot;&gt;What You See Is All There Is (WYSIATI)&lt;/h1&gt;
+
+&lt;p&gt;This famous misnomer coined by (…) in their book “Thinking Fast and Slow” does give a hint how to proceed.&lt;/p&gt;
+
+&lt;p&gt;If you had observed 4 heads, it would mean you’re dealing with a coin biased towards the heads.
+If you had observed 2 heads and 2 tails, you would conclude that it’s a fair coin.&lt;/p&gt;
+
+&lt;p&gt;In order to quantify this knowledge, we can say that are loking at both:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;the number of observations &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;the quality of the observations &lt;script type=&quot;math/tex&quot;&gt;{x_0, x_1, ..., x_n}&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And it’s only when &lt;em&gt;on average&lt;/em&gt; we get an equal chance of throwing Heads or Tails, do we conclude that the coin is fair.&lt;/p&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;average = \frac{1, n} \sum {i=0, n} x_i&lt;/script&gt; [eq 1]&lt;/p&gt;
+
+&lt;h1 id=&quot;maximum-likelihood-estimate&quot;&gt;Maximum Likelihood Estimate&lt;/h1&gt;
+
+&lt;p&gt;We would also arrive at [eq 1] if we applied a techinque called Maximum Likelihood Estimate (or MLE for short).&lt;/p&gt;
+
+&lt;h1 id=&quot;uncertainty&quot;&gt;Uncertainty&lt;/h1&gt;
+
+&lt;p&gt;But what happens at odd number of readings. You are clearly going to be dealing with some bias.
+Let’s say that you’ve observed 3 heads and 2 tails.&lt;/p&gt;</content><author><name></name></author><summary type="html">title: “Inference from data” author: ptrochim categories: math —</summary></entry><entry><title type="html">Control your emotions</title><link href="http://localhost:4000/psychology/2019/05/19/anger.html" rel="alternate" type="text/html" title="Control your emotions" /><published>2019-05-19T00:00:00+01:00</published><updated>2019-05-19T00:00:00+01:00</updated><id>http://localhost:4000/psychology/2019/05/19/anger</id><content type="html" xml:base="http://localhost:4000/psychology/2019/05/19/anger.html">&lt;h1 id=&quot;emotions&quot;&gt;Emotions&lt;/h1&gt;
 
 &lt;p&gt;Imagine waking up one sunny morning. You had a delicious breakfast, jumped in the car, and headed for that motorway. 
 The traffic is heavy, cars queing to the motorway entrance. And as you’re sitting there, waiting patiently for your turn, you see a few cars cutting through in a pathetic attempt to ‘outsmart’ everyone else. Next thing you notice is a knot that ties inside your belly.&lt;/p&gt;
