@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-14T21:17:47+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-15T12:36:05+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
 </subtitle><entry><title type="html">Maximum Likelihood Estimate</title><link href="http://localhost:4000/math/2020/05/14/gauss.html" rel="alternate" type="text/html" title="Maximum Likelihood Estimate" /><published>2020-05-14T00:00:00+01:00</published><updated>2020-05-14T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/14/gauss</id><content type="html" xml:base="http://localhost:4000/math/2020/05/14/gauss.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
 
 &lt;p&gt;This is a post in the series about statistical model fitting.
@@ -49,41 +49,80 @@ What would be the result of the next one?&lt;/p&gt;
 
 &lt;p&gt;But how do we reverse it? How do we guess the mean and parameterize the probability (mass) function given the data that has been pulled out?&lt;/p&gt;
 
-&lt;h1 id=&quot;discrete-or-continuous-is-a-matter-of-perspective&quot;&gt;Discrete or continuous is a matter of perspective&lt;/h1&gt;
+&lt;h1 id=&quot;binomial-distribution-for-a-coin-tossing-problem&quot;&gt;Binomial distribution for a coin tossing problem&lt;/h1&gt;
 
 &lt;p&gt;The expected value of R.V. (a.k.a the mean of its distribution) is a maxima of that R.V’s probability (mass) function.
 The best way to find the maxima of a function is to solve its derivative for its roots !&lt;/p&gt;
 
 &lt;p&gt;So let’s remind ourselves of Binomial distribution p.m.f:&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;f(\theta, n, k) = \binom{n}{k} \theta^{n} (1 - \theta)^{n-k}&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;f(\theta, n, k) = \binom{n}{k} \theta^{k} (1 - \theta)^{n-k}&lt;/script&gt;
 
-&lt;p&gt;Where:&lt;/p&gt;
+&lt;p&gt;Where, in our case:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; - number of &lt;em&gt;positive&lt;/em&gt; samples (in our case let’s assume those are represented by Heads)&lt;/li&gt;
-  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; - total number of samples&lt;/li&gt;
-  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; - a latent parameter that represents the fairness of our coin (in this particular case).&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; - total number of coin tosses&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; - number of &lt;em&gt;positive&lt;/em&gt; tosses (in our case let’s assume those are represented by Heads)&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; - a latent parameter that can be thought of as the fairness of our coin.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Binomial distribution is a discrete distribution. The word discrete suggests something that’s not continuous, something we wouldn’t be able to differentiate.
-But whether it’s discrete or continuous depends on what we consider its &lt;em&gt;variable&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Binomial distribution is a discrete distribution. The word discrete suggests something that’s not continuous, something we wouldn’t be able to differentiate, right?&lt;/p&gt;
 
-&lt;p&gt;While calculating probabilities of events, we usually are given some fixed &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; (we are throwing a specific coin), and we operate in terms of &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; (or sometimes only the latter).
-These two are discrete positive values, and that’s what the distribution derives its name from.&lt;/p&gt;
+&lt;h1 id=&quot;misleading-vocabulary&quot;&gt;Misleading vocabulary&lt;/h1&gt;
+
+&lt;p&gt;When I think about a distribution, I think about its probability function.
+If its support is a discrete domain, then it’s a discrete distribution. If it’s continuous - like a real numbers line for example - then the distribution is continuous.&lt;/p&gt;
+
+&lt;p&gt;When I look at the probability mass function (they make you use the term mass to highlight the discretness of the distribution), I see three parameters:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Parameter&lt;/th&gt;
+      &lt;th&gt;Values&lt;/th&gt;
+      &lt;th&gt;Type&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;n \in {0, 1, ...}&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;Discrete&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;k \in {0, 1, ..., n}&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;Discrete&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;theta \in R&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;Continuous&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;We clearly deal with two discrete parameters, and a continuous one. So which is it then?&lt;/p&gt;
+
+&lt;p&gt;It depends on the use case actually. It also depends on the distribution (some, line the Normal distribution, have only continuous params).
+But the bottom line is that you can change the support of the function. In our case:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;if you were interested in finding a probability of a series of coin tosses given a specific coin, identified by a specific &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;, you would fix its value, and the support would become fully discrete.&lt;/li&gt;
+  &lt;li&gt;if you were told what the results of the tosses were, and asked to guess the property of the coin, its &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;, you would fix &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt;, and the continuous &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; would become its support.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Confusing, isn’t it. One function, so many different options and use cases.&lt;/p&gt;
 
 &lt;p&gt;In our case however, these two parameters are fixed - we are given 10 observations (&lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;), and &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; of them are Heads. What we need to find is such value of &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; that will maximize our observations:&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac{df(\theta, n, k)}{d\theta} = 0&lt;/script&gt;
 
-&lt;h1 id=&quot;todo-graphical-representation&quot;&gt;TODO: graphical representation&lt;/h1&gt;
-
 &lt;h1 id=&quot;solving-the-derivative&quot;&gt;Solving the derivative&lt;/h1&gt;
 
-&lt;p&gt;Since &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; are constants, we might get rid of the ominous binomial &lt;script type=&quot;math/tex&quot;&gt;\binom{n}{k}&lt;/script&gt;, by the property of dividing both sides of equation by it (zero divided by whatever remains a zero).&lt;/p&gt;
+&lt;p&gt;In order to find the maxima, we’ll solve:&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac{df(\theta, n, k)}{d\theta} = n\theta^{n-1}(1-\theta)^{n-k} + \theta^{n}(n-k)(1-\theta)^{n-k-1} = 0&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac{df(\theta, n, k)}{d\theta} = 0&lt;/script&gt;
 
-&lt;p&gt;and after &lt;a href=&quot;#algebraic-appendix&quot;&gt;a little bit of algebra&lt;/a&gt;, we get &lt;script type=&quot;math/tex&quot;&gt;\theta = \frac{n}{k}&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;After &lt;a href=&quot;#algebraic-derivation-of-mle-for-bernoulli-distribution&quot;&gt;a little bit of algebra&lt;/a&gt;, we get &lt;script type=&quot;math/tex&quot;&gt;\theta = \frac{k}{n}&lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;The result suggests that the parameter of Binomial Distribution’s probability mass function that maximizes the likelihood of observing clown’s coin toss results is… the ratio of obtained Heads &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; to the number of performed throws &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;.&lt;/p&gt;
 
@@ -97,40 +136,59 @@ These two are discrete positive values, and that’s what the distribution deriv
 
 &lt;h1 id=&quot;maximum-likelihood-estimate&quot;&gt;Maximum Likelihood Estimate&lt;/h1&gt;
 
-&lt;p&gt;The method the relies on finding the maxima of a probability mass/density function is called Maximum Likelihood Estimation.
-It’s major feature is its independence. The only thing we care about when using it is the data.&lt;/p&gt;
+&lt;p&gt;The method the relies on finding the maxima of a probability mass/density function is called Maximum Likelihood Estimation.&lt;/p&gt;
 
-&lt;p&gt;That unfortunately is also one of its major weaknesses, as we’ll see in the subsequent posts about the Bayesian methods.&lt;/p&gt;
+&lt;p&gt;It’s major feature is its independence. The only thing we care about when using it is the data.
+That unfortunately is also one of its major weaknesses, as we’ll see in the subsequent posts about the Bayesian methods.&lt;/p&gt;
 
-&lt;h1 id=&quot;algebraic-appendix&quot;&gt;Algebraic appendix&lt;/h1&gt;
+&lt;p&gt;Other benefits of using it are:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;it works with any kind of distribution&lt;/li&gt;
+  &lt;li&gt;it works for multidimensional distributions&lt;/li&gt;
+  &lt;li&gt;you can use any kind of optimization method, not necessarily the derivatives.&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;I’ll flex my algebra muscle, but I’ll try explaining what inspired specific transformations.
-The equation contains a plus sign, which won’t allow us to use division as a way of getting rid of unwanted stuff that easily. So my first hunch is to rearrange the terms.
+&lt;h1 id=&quot;algebraic-derivation-of-mle-for-bernoulli-distribution&quot;&gt;Algebraic derivation of MLE for Bernoulli distribution&lt;/h1&gt;
+
+&lt;p&gt;I really like to dot all the i’s ;) 
+So here’s my attempt at showing you how I derived the formula.&lt;/p&gt;
+
+&lt;p&gt;Let’s start with the differentiation:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\binom{n}{k} \left( k\theta^{k-1}(1-\theta)^{n-k} + \theta^{n}(n-k)(1-\theta)^{n-k-1} (-1) \right) = 0&lt;/script&gt;
+
+&lt;p&gt;Derivative of a product breaks down to a sum of derivatives. And the trailing &lt;script type=&quot;math/tex&quot;&gt;(-1)&lt;/script&gt; comes from taking the derrivative of a nested function &lt;script type=&quot;math/tex&quot;&gt;\frac{d(1 - \theta)^{n-k}}{d\theta}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Since &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; are constants, we might get rid of the ominous binomial &lt;script type=&quot;math/tex&quot;&gt;\binom{n}{k}&lt;/script&gt;, by the property of dividing both sides of equation by it (zero divided by whatever remains a zero).&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;k\theta^{k-1}(1-\theta)^{n-k} - \theta^{n}(n-k)(1-\theta)^{n-k-1} = 0&lt;/script&gt;
+
+&lt;p&gt;The summation won’t allow us to use division as a way of getting rid of unwanted stuff that easily. So my first hunch is to rearrange the terms.
 That way I can use the equals sign as a mirror and check if there are any symmetrical terms - terms that occur on both sides that I can &lt;em&gt;divide away&lt;/em&gt;.&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;n\theta^{n-1}(1-\theta)^{n-k} = -\theta^{n}(n-k)(1-\theta)^{n-k-1}&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;k\theta^{k-1}(1-\theta)^{n-k} = \theta^{k}(n-k)(1-\theta)^{n-k-1}&lt;/script&gt;
 
 &lt;p&gt;The next transformation becomes immediately obvious.&lt;/p&gt;
 
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\theta^{n}&lt;/script&gt; can be broken down into &lt;script type=&quot;math/tex&quot;&gt;\theta^{n-1} * \theta&lt;/script&gt; which gives us &lt;script type=&quot;math/tex&quot;&gt;\theta^{n-1}&lt;/script&gt; on both sides of the &lt;script type=&quot;math/tex&quot;&gt;=&lt;/script&gt; sign. The same transformation can be applied to (1-\theta)^{n-k}&lt;/p&gt;
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\theta^{k}&lt;/script&gt; can be broken down into &lt;script type=&quot;math/tex&quot;&gt;\theta^{k-1} * \theta&lt;/script&gt; which gives us &lt;script type=&quot;math/tex&quot;&gt;\theta^{k-1}&lt;/script&gt; on both sides of the &lt;script type=&quot;math/tex&quot;&gt;=&lt;/script&gt; sign. The same transformation can be applied to (1-\theta)^{n-k}&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;n\theta^{n-1}(1-\theta)^{n-k-1}(1-\theta) = -\theta^{n-1}\theta(n-k)(1-\theta)^{n-k-1}&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;k\theta^{k-1}(1-\theta)^{n-k-1}(1-\theta) = \theta^{k-1}\theta(n-k)(1-\theta)^{n-k-1}&lt;/script&gt;
 
 &lt;p&gt;Now we can divide them away, and we get:&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;n(1-\theta) = -\theta(n-k)&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;k(1-\theta) = \theta(n-k)&lt;/script&gt;
 
 &lt;p&gt;If we unroll the terms in the parenthesis, we get the term &lt;script type=&quot;math/tex&quot;&gt;-n\theta&lt;/script&gt; on boths sides of the &lt;script type=&quot;math/tex&quot;&gt;=&lt;/script&gt; sign.&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;n - n\theta = -n\theta + k\theta&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;k - k\theta = n\theta - k\theta&lt;/script&gt;
 
-&lt;p&gt;After removing it, we get:&lt;/p&gt;
+&lt;p&gt;We can get rid of &lt;script type=&quot;math/tex&quot;&gt;- k\theta&lt;/script&gt; which occurs on both sides of the &lt;script type=&quot;math/tex&quot;&gt;=&lt;/script&gt; sign:&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;n = k\theta&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;k = n\theta&lt;/script&gt;
 
 &lt;p&gt;And that leads straight to:&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\theta = \frac{n}{k}&lt;/script&gt;</content><author><name>ptrochim</name></author><summary type="html">Introduction</summary></entry><entry><title type="html">Control your emotions</title><link href="http://localhost:4000/psychology/2019/05/19/anger.html" rel="alternate" type="text/html" title="Control your emotions" /><published>2019-05-19T00:00:00+01:00</published><updated>2019-05-19T00:00:00+01:00</updated><id>http://localhost:4000/psychology/2019/05/19/anger</id><content type="html" xml:base="http://localhost:4000/psychology/2019/05/19/anger.html">&lt;h1 id=&quot;emotions&quot;&gt;Emotions&lt;/h1&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\theta = \frac{k}{n}&lt;/script&gt;</content><author><name>ptrochim</name></author><summary type="html">Introduction</summary></entry><entry><title type="html">Control your emotions</title><link href="http://localhost:4000/psychology/2019/05/19/anger.html" rel="alternate" type="text/html" title="Control your emotions" /><published>2019-05-19T00:00:00+01:00</published><updated>2019-05-19T00:00:00+01:00</updated><id>http://localhost:4000/psychology/2019/05/19/anger</id><content type="html" xml:base="http://localhost:4000/psychology/2019/05/19/anger.html">&lt;h1 id=&quot;emotions&quot;&gt;Emotions&lt;/h1&gt;
 
 &lt;p&gt;Imagine waking up one sunny morning. You had a delicious breakfast, jumped in the car, and headed for that motorway. 
 The traffic is heavy, cars queing to the motorway entrance. And as you’re sitting there, waiting patiently for your turn, you see a few cars cutting through in a pathetic attempt to ‘outsmart’ everyone else. Next thing you notice is a knot that ties inside your belly.&lt;/p&gt;
