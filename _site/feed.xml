@@ -1,5 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-15T12:36:05+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
-</subtitle><entry><title type="html">Maximum Likelihood Estimate</title><link href="http://localhost:4000/math/2020/05/14/gauss.html" rel="alternate" type="text/html" title="Maximum Likelihood Estimate" /><published>2020-05-14T00:00:00+01:00</published><updated>2020-05-14T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/14/gauss</id><content type="html" xml:base="http://localhost:4000/math/2020/05/14/gauss.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-16T17:57:21+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
+</subtitle><entry><title type="html">Bayesian Inference</title><link href="http://localhost:4000/math/2020/05/16/bayesian-inference.html" rel="alternate" type="text/html" title="Bayesian Inference" /><published>2020-05-16T00:00:00+01:00</published><updated>2020-05-16T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/16/bayesian-inference</id><content type="html" xml:base="http://localhost:4000/math/2020/05/16/bayesian-inference.html">&lt;p&gt;here’s my plot&lt;/p&gt;
+
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+      &lt;meta charset=&quot;utf-8&quot; /&gt;
+      &lt;title&gt;my plot&lt;/title&gt;  
+        &lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.pydata.org/bokeh/release/bokeh-1.4.0.min.js&quot;&gt;&lt;/script&gt;
+        &lt;script type=&quot;text/javascript&quot;&gt;
+            Bokeh.set_log_level(&quot;info&quot;);
+        &lt;/script&gt;
+        
+      
+      
+    
+  &lt;/head&gt;
+  
+  
+  &lt;body&gt;
+    
+      
+        
+          
+          
+            
+              &lt;div class=&quot;bk-root&quot; id=&quot;ca2a4bcc-13e4-4a2e-b5de-4cfc587902a5&quot; data-root-id=&quot;1001&quot;&gt;&lt;/div&gt;
+            
+          
+        
+      
+      
+        &lt;script type=&quot;application/json&quot; id=&quot;1146&quot;&gt;
+          {&quot;85c49e6c-531d-4827-98bd-4723a9986045&quot;:{&quot;roots&quot;:{&quot;references&quot;:[{&quot;attributes&quot;:{&quot;bottom_units&quot;:&quot;screen&quot;,&quot;fill_alpha&quot;:{&quot;value&quot;:0.5},&quot;fill_color&quot;:{&quot;value&quot;:&quot;lightgrey&quot;},&quot;left_units&quot;:&quot;screen&quot;,&quot;level&quot;:&quot;overlay&quot;,&quot;line_alpha&quot;:{&quot;value&quot;:1.0},&quot;line_color&quot;:{&quot;value&quot;:&quot;black&quot;},&quot;line_dash&quot;:[4,4],&quot;line_width&quot;:{&quot;value&quot;:2},&quot;render_mode&quot;:&quot;css&quot;,&quot;right_units&quot;:&quot;screen&quot;,&quot;top_units&quot;:&quot;screen&quot;},&quot;id&quot;:&quot;1044&quot;,&quot;type&quot;:&quot;BoxAnnotation&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1025&quot;,&quot;type&quot;:&quot;HelpTool&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1045&quot;,&quot;type&quot;:&quot;Selection&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1024&quot;,&quot;type&quot;:&quot;ResetTool&quot;},{&quot;attributes&quot;:{&quot;fill_alpha&quot;:{&quot;value&quot;:0.1},&quot;fill_color&quot;:{&quot;value&quot;:&quot;#1f77b4&quot;},&quot;line_alpha&quot;:{&quot;value&quot;:0.1},&quot;line_color&quot;:{&quot;value&quot;:&quot;#1f77b4&quot;},&quot;x&quot;:{&quot;field&quot;:&quot;x&quot;},&quot;y&quot;:{&quot;field&quot;:&quot;y&quot;}},&quot;id&quot;:&quot;1035&quot;,&quot;type&quot;:&quot;Circle&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1016&quot;,&quot;type&quot;:&quot;BasicTicker&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1008&quot;,&quot;type&quot;:&quot;LinearScale&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1046&quot;,&quot;type&quot;:&quot;UnionRenderers&quot;},{&quot;attributes&quot;:{&quot;source&quot;:{&quot;id&quot;:&quot;1033&quot;,&quot;type&quot;:&quot;ColumnDataSource&quot;}},&quot;id&quot;:&quot;1037&quot;,&quot;type&quot;:&quot;CDSView&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1023&quot;,&quot;type&quot;:&quot;SaveTool&quot;},{&quot;attributes&quot;:{&quot;callback&quot;:null,&quot;data&quot;:{&quot;x&quot;:[1,2],&quot;y&quot;:[3,4]},&quot;selected&quot;:{&quot;id&quot;:&quot;1045&quot;,&quot;type&quot;:&quot;Selection&quot;},&quot;selection_policy&quot;:{&quot;id&quot;:&quot;1046&quot;,&quot;type&quot;:&quot;UnionRenderers&quot;}},&quot;id&quot;:&quot;1033&quot;,&quot;type&quot;:&quot;ColumnDataSource&quot;},{&quot;attributes&quot;:{&quot;dimension&quot;:1,&quot;ticker&quot;:{&quot;id&quot;:&quot;1016&quot;,&quot;type&quot;:&quot;BasicTicker&quot;}},&quot;id&quot;:&quot;1019&quot;,&quot;type&quot;:&quot;Grid&quot;},{&quot;attributes&quot;:{&quot;fill_color&quot;:{&quot;value&quot;:&quot;#1f77b4&quot;},&quot;line_color&quot;:{&quot;value&quot;:&quot;#1f77b4&quot;},&quot;x&quot;:{&quot;field&quot;:&quot;x&quot;},&quot;y&quot;:{&quot;field&quot;:&quot;y&quot;}},&quot;id&quot;:&quot;1034&quot;,&quot;type&quot;:&quot;Circle&quot;},{&quot;attributes&quot;:{&quot;active_drag&quot;:&quot;auto&quot;,&quot;active_inspect&quot;:&quot;auto&quot;,&quot;active_multi&quot;:null,&quot;active_scroll&quot;:&quot;auto&quot;,&quot;active_tap&quot;:&quot;auto&quot;,&quot;tools&quot;:[{&quot;id&quot;:&quot;1020&quot;,&quot;type&quot;:&quot;PanTool&quot;},{&quot;id&quot;:&quot;1021&quot;,&quot;type&quot;:&quot;WheelZoomTool&quot;},{&quot;id&quot;:&quot;1022&quot;,&quot;type&quot;:&quot;BoxZoomTool&quot;},{&quot;id&quot;:&quot;1023&quot;,&quot;type&quot;:&quot;SaveTool&quot;},{&quot;id&quot;:&quot;1024&quot;,&quot;type&quot;:&quot;ResetTool&quot;},{&quot;id&quot;:&quot;1025&quot;,&quot;type&quot;:&quot;HelpTool&quot;}]},&quot;id&quot;:&quot;1026&quot;,&quot;type&quot;:&quot;Toolbar&quot;},{&quot;attributes&quot;:{&quot;formatter&quot;:{&quot;id&quot;:&quot;1040&quot;,&quot;type&quot;:&quot;BasicTickFormatter&quot;},&quot;ticker&quot;:{&quot;id&quot;:&quot;1011&quot;,&quot;type&quot;:&quot;BasicTicker&quot;}},&quot;id&quot;:&quot;1010&quot;,&quot;type&quot;:&quot;LinearAxis&quot;},{&quot;attributes&quot;:{&quot;data_source&quot;:{&quot;id&quot;:&quot;1033&quot;,&quot;type&quot;:&quot;ColumnDataSource&quot;},&quot;glyph&quot;:{&quot;id&quot;:&quot;1034&quot;,&quot;type&quot;:&quot;Circle&quot;},&quot;hover_glyph&quot;:null,&quot;muted_glyph&quot;:null,&quot;nonselection_glyph&quot;:{&quot;id&quot;:&quot;1035&quot;,&quot;type&quot;:&quot;Circle&quot;},&quot;selection_glyph&quot;:null,&quot;view&quot;:{&quot;id&quot;:&quot;1037&quot;,&quot;type&quot;:&quot;CDSView&quot;}},&quot;id&quot;:&quot;1036&quot;,&quot;type&quot;:&quot;GlyphRenderer&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1011&quot;,&quot;type&quot;:&quot;BasicTicker&quot;},{&quot;attributes&quot;:{&quot;callback&quot;:null},&quot;id&quot;:&quot;1004&quot;,&quot;type&quot;:&quot;DataRange1d&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1020&quot;,&quot;type&quot;:&quot;PanTool&quot;},{&quot;attributes&quot;:{&quot;text&quot;:&quot;&quot;},&quot;id&quot;:&quot;1039&quot;,&quot;type&quot;:&quot;Title&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1006&quot;,&quot;type&quot;:&quot;LinearScale&quot;},{&quot;attributes&quot;:{&quot;ticker&quot;:{&quot;id&quot;:&quot;1011&quot;,&quot;type&quot;:&quot;BasicTicker&quot;}},&quot;id&quot;:&quot;1014&quot;,&quot;type&quot;:&quot;Grid&quot;},{&quot;attributes&quot;:{&quot;callback&quot;:null},&quot;id&quot;:&quot;1002&quot;,&quot;type&quot;:&quot;DataRange1d&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1021&quot;,&quot;type&quot;:&quot;WheelZoomTool&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1040&quot;,&quot;type&quot;:&quot;BasicTickFormatter&quot;},{&quot;attributes&quot;:{&quot;formatter&quot;:{&quot;id&quot;:&quot;1042&quot;,&quot;type&quot;:&quot;BasicTickFormatter&quot;},&quot;ticker&quot;:{&quot;id&quot;:&quot;1016&quot;,&quot;type&quot;:&quot;BasicTicker&quot;}},&quot;id&quot;:&quot;1015&quot;,&quot;type&quot;:&quot;LinearAxis&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1042&quot;,&quot;type&quot;:&quot;BasicTickFormatter&quot;},{&quot;attributes&quot;:{&quot;overlay&quot;:{&quot;id&quot;:&quot;1044&quot;,&quot;type&quot;:&quot;BoxAnnotation&quot;}},&quot;id&quot;:&quot;1022&quot;,&quot;type&quot;:&quot;BoxZoomTool&quot;},{&quot;attributes&quot;:{&quot;below&quot;:[{&quot;id&quot;:&quot;1010&quot;,&quot;type&quot;:&quot;LinearAxis&quot;}],&quot;center&quot;:[{&quot;id&quot;:&quot;1014&quot;,&quot;type&quot;:&quot;Grid&quot;},{&quot;id&quot;:&quot;1019&quot;,&quot;type&quot;:&quot;Grid&quot;}],&quot;left&quot;:[{&quot;id&quot;:&quot;1015&quot;,&quot;type&quot;:&quot;LinearAxis&quot;}],&quot;renderers&quot;:[{&quot;id&quot;:&quot;1036&quot;,&quot;type&quot;:&quot;GlyphRenderer&quot;}],&quot;title&quot;:{&quot;id&quot;:&quot;1039&quot;,&quot;type&quot;:&quot;Title&quot;},&quot;toolbar&quot;:{&quot;id&quot;:&quot;1026&quot;,&quot;type&quot;:&quot;Toolbar&quot;},&quot;x_range&quot;:{&quot;id&quot;:&quot;1002&quot;,&quot;type&quot;:&quot;DataRange1d&quot;},&quot;x_scale&quot;:{&quot;id&quot;:&quot;1006&quot;,&quot;type&quot;:&quot;LinearScale&quot;},&quot;y_range&quot;:{&quot;id&quot;:&quot;1004&quot;,&quot;type&quot;:&quot;DataRange1d&quot;},&quot;y_scale&quot;:{&quot;id&quot;:&quot;1008&quot;,&quot;type&quot;:&quot;LinearScale&quot;}},&quot;id&quot;:&quot;1001&quot;,&quot;subtype&quot;:&quot;Figure&quot;,&quot;type&quot;:&quot;Plot&quot;}],&quot;root_ids&quot;:[&quot;1001&quot;]},&quot;title&quot;:&quot;Bokeh Application&quot;,&quot;version&quot;:&quot;1.4.0&quot;}}
+        &lt;/script&gt;
+        &lt;script type=&quot;text/javascript&quot;&gt;
+          (function() {
+            var fn = function() {
+              Bokeh.safely(function() {
+                (function(root) {
+                  function embed_document(root) {
+                    
+                  var docs_json = document.getElementById('1146').textContent;
+                  var render_items = [{&quot;docid&quot;:&quot;85c49e6c-531d-4827-98bd-4723a9986045&quot;,&quot;roots&quot;:{&quot;1001&quot;:&quot;ca2a4bcc-13e4-4a2e-b5de-4cfc587902a5&quot;}}];
+                  root.Bokeh.embed.embed_items(docs_json, render_items);
+                
+                  }
+                  if (root.Bokeh !== undefined) {
+                    embed_document(root);
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function(root) {
+                      if (root.Bokeh !== undefined) {
+                        clearInterval(timer);
+                        embed_document(root);
+                      } else {
+                        attempts++;
+                        if (attempts &gt; 100) {
+                          clearInterval(timer);
+                          console.log(&quot;Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing&quot;);
+                        }
+                      }
+                    }, 10, root)
+                  }
+                })(window);
+              });
+            };
+            if (document.readyState != &quot;loading&quot;) fn();
+            else document.addEventListener(&quot;DOMContentLoaded&quot;, fn);
+          })();
+        &lt;/script&gt;
+    
+  &lt;/body&gt;
+  
+&lt;/html&gt;
+
+&lt;p&gt;after the plot&lt;/p&gt;</content><author><name>ptrochim</name></author><summary type="html">here’s my plot</summary></entry><entry><title type="html">Maximum Likelihood Estimate</title><link href="http://localhost:4000/math/2020/05/15/mle.html" rel="alternate" type="text/html" title="Maximum Likelihood Estimate" /><published>2020-05-15T00:00:00+01:00</published><updated>2020-05-15T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/15/mle</id><content type="html" xml:base="http://localhost:4000/math/2020/05/15/mle.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
 
 &lt;p&gt;This is a post in the series about statistical model fitting.
 It’s my attempt to explain various approaches and algorithms in a way I would have liked to learn them when I had first started studying this fascinating topic.&lt;/p&gt;
@@ -23,7 +97,7 @@ He will then toss it one more time, and you need to guess the result.&lt;/p&gt;
 
 &lt;h1 id=&quot;what-you-see-is-all-there-is-wysiati&quot;&gt;What You See Is All There Is (WYSIATI)&lt;/h1&gt;
 
-&lt;p&gt;This famous mnemonic coined by Daniel Kahneman in his book “Thinking Fast and Slow” gives a hint how to proceed.&lt;/p&gt;
+&lt;p&gt;This famous mnemonic coined by Daniel Kahneman in his book &lt;a href=&quot;https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow&quot;&gt;“Thinking Fast and Slow”&lt;/a&gt; gives a hint how to proceed.&lt;/p&gt;
 
 &lt;p&gt;What would be your guess if you have observed 10 Heads, and you had no other information to go on?&lt;/p&gt;
 
@@ -188,7 +262,14 @@ That way I can use the equals sign as a mirror and check if there are any symmet
 
 &lt;p&gt;And that leads straight to:&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\theta = \frac{k}{n}&lt;/script&gt;</content><author><name>ptrochim</name></author><summary type="html">Introduction</summary></entry><entry><title type="html">Control your emotions</title><link href="http://localhost:4000/psychology/2019/05/19/anger.html" rel="alternate" type="text/html" title="Control your emotions" /><published>2019-05-19T00:00:00+01:00</published><updated>2019-05-19T00:00:00+01:00</updated><id>http://localhost:4000/psychology/2019/05/19/anger</id><content type="html" xml:base="http://localhost:4000/psychology/2019/05/19/anger.html">&lt;h1 id=&quot;emotions&quot;&gt;Emotions&lt;/h1&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\theta = \frac{k}{n}&lt;/script&gt;
+
+&lt;h1 id=&quot;literature&quot;&gt;Literature&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow&quot;&gt;Thinking fast and slow&lt;/a&gt;, Daniel Kahneman&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://books.google.co.uk/books?id=fCmpBwAAQBAJ&amp;amp;source=gbs_similarbooks&quot;&gt;Probability and statistics&lt;/a&gt;, Morris DeGroot, Mark Schervish&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>ptrochim</name></author><summary type="html">Introduction</summary></entry><entry><title type="html">Control your emotions</title><link href="http://localhost:4000/psychology/2019/05/19/anger.html" rel="alternate" type="text/html" title="Control your emotions" /><published>2019-05-19T00:00:00+01:00</published><updated>2019-05-19T00:00:00+01:00</updated><id>http://localhost:4000/psychology/2019/05/19/anger</id><content type="html" xml:base="http://localhost:4000/psychology/2019/05/19/anger.html">&lt;h1 id=&quot;emotions&quot;&gt;Emotions&lt;/h1&gt;
 
 &lt;p&gt;Imagine waking up one sunny morning. You had a delicious breakfast, jumped in the car, and headed for that motorway. 
 The traffic is heavy, cars queing to the motorway entrance. And as you’re sitting there, waiting patiently for your turn, you see a few cars cutting through in a pathetic attempt to ‘outsmart’ everyone else. Next thing you notice is a knot that ties inside your belly.&lt;/p&gt;
