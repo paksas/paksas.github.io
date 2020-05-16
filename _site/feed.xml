@@ -1,5 +1,153 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-16T17:57:21+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
-</subtitle><entry><title type="html">Bayesian Inference</title><link href="http://localhost:4000/math/2020/05/16/bayesian-inference.html" rel="alternate" type="text/html" title="Bayesian Inference" /><published>2020-05-16T00:00:00+01:00</published><updated>2020-05-16T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/16/bayesian-inference</id><content type="html" xml:base="http://localhost:4000/math/2020/05/16/bayesian-inference.html">&lt;p&gt;here’s my plot&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-17T00:28:31+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
+</subtitle><entry><title type="html">Bayesian Inference</title><link href="http://localhost:4000/math/2020/05/16/bayesian-inference.html" rel="alternate" type="text/html" title="Bayesian Inference" /><published>2020-05-16T00:00:00+01:00</published><updated>2020-05-16T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/16/bayesian-inference</id><content type="html" xml:base="http://localhost:4000/math/2020/05/16/bayesian-inference.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+
+&lt;p&gt;This is a post in the series about statistical model fitting.
+It’s my attempt to explain various approaches and algorithms in a way I would have liked to learn them when I had first started studying this fascinating topic.&lt;/p&gt;
+
+&lt;p&gt;In this post, I will be covering a method that builds on top of &lt;a href=&quot;https://en.wikipedia.org/wiki/Maximum_likelihood_estimation&quot;&gt;Maximum Likelihood Estimate&lt;/a&gt; method I covered in &lt;a href=&quot;https://paksas.github.io/math/2020/05/15/mle.html&quot;&gt;the previous post&lt;/a&gt;, enhancing it.&lt;/p&gt;
+
+&lt;h1 id=&quot;back-alley-clown&quot;&gt;Back alley clown&lt;/h1&gt;
+
+&lt;p&gt;Let me recall the example from the previous post.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Imagine walking down the street one day, and seeing a small crowd of people surrounding what appears to be a clown flipping a coin.
+He notices you as you approach and waves at you with his other hand. Then, he presents you with a challenge.&lt;/p&gt;
+
+  &lt;p&gt;You need to guess if toss coin is fair or not. He will toss the coin 10 times, telling you the result of each toss.
+He will then toss it one more time, and you need to guess the result.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Back then though, all we cared about was the result of those 10 throws. But that’s not how humans work. We take circumstance into account.
+I would be far more likely to respond to the challenge if I was attending a fair than if I was making a shortcut through a dark, dirty alley.&lt;/p&gt;
+
+&lt;p&gt;I’m of course describing the process of &lt;em&gt;building confidence&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;A fair clown is something rather desired, whereas one encounteres in a back alley would have to first gain our trust. His coin tosses would have to be pretty &lt;em&gt;convincing&lt;/em&gt;, showing no bias towards one side or another.&lt;/p&gt;
+
+&lt;h1 id=&quot;two-distributions&quot;&gt;Two distributions&lt;/h1&gt;
+
+&lt;p&gt;Mathematically speaking, we are still looking for the parameters of a distribution that models the Random Variable that is the clown’s coin.&lt;/p&gt;
+
+&lt;p&gt;However now in addition to solid evidence, we also have our &lt;em&gt;prior&lt;/em&gt; beliefs. Those two combined allow us not only to make a guess about the parameter value, but also reflect our level of &lt;em&gt;confidence&lt;/em&gt; in that guess.&lt;/p&gt;
+
+&lt;p&gt;If you recall, MLE allowed to direcly calculate the values of distribution parameters. It meant that it was caclulating a distribution with &lt;em&gt;complete confidence&lt;/em&gt; in its result. It makes sense, since the method relied exclusively on the data, which is a solid evidence. So unless there was other data available, the method was 100% confident about its estimate.&lt;/p&gt;
+
+&lt;p&gt;Right now we want to express our &lt;em&gt;doubt&lt;/em&gt;, and &lt;em&gt;doubts&lt;/em&gt; are expressed using… distributions.
+That’s right - we are going to find another distribution, which we will use to &lt;em&gt;sample&lt;/em&gt; the values of our &lt;em&gt;target distribution&lt;/em&gt; parameters.&lt;/p&gt;
+
+&lt;p&gt;It took me a very long time to come to that realization during my studies, so I want to repeat that &lt;em&gt;important&lt;/em&gt; paragraph again:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Right now we want to express our &lt;em&gt;doubt&lt;/em&gt;, and &lt;em&gt;doubts&lt;/em&gt; are expressed using… distributions.
+That’s right - we are going to find another distribution, which we will use to &lt;em&gt;sample&lt;/em&gt; the values of our &lt;em&gt;target distribution&lt;/em&gt; parameters.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;building-a-model-of-uncertainty&quot;&gt;Building a model of uncertainty&lt;/h1&gt;
+
+&lt;p&gt;We have two quantities now:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;the observed coin toss results&lt;/li&gt;
+  &lt;li&gt;the level of confidence about the parameters&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We can express confidence about something with a distribution. Let’s denote that distribution &lt;script type=&quot;math/tex&quot;&gt;\xi&lt;/script&gt;, without defining it really.
+Ditributions are properties of Random Variables - and this one is no different. Its Random Variable samples from a set of all possible distribution parameters &lt;script type=&quot;math/tex&quot;&gt;\theta \in \omega&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;Think about it - we now have a random variable that has some expected value and variance (uncertainty about that value) that represents the parameters &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; of our &lt;em&gt;target distribution&lt;/em&gt;. This is exactly what we wanted.&lt;/p&gt;
+
+&lt;p&gt;But what about the data - the toss results?
+Well, since we have access to &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; values, we could check which ones can even generate the tosses we observed, and how likely would those be.&lt;/p&gt;
+
+&lt;p&gt;Then, we could weight those predictions by the probability of actually drawing the specific parameter values &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;Allow me to be loose with the notation and just start putting things together:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(\theta, data) = f(data, \theta) * \xi(\theta)&lt;/script&gt;
+
+&lt;p&gt;If &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; is a specific sample, and so is the &lt;script type=&quot;math/tex&quot;&gt;data&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\xi&lt;/script&gt; would return the probability of drawing &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; from the &lt;em&gt;parameter distribution&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;f(data, \theta)&lt;/script&gt; would return the probability of drawing &lt;script type=&quot;math/tex&quot;&gt;data&lt;/script&gt; for the given value of &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;and by that property, &lt;script type=&quot;math/tex&quot;&gt;p(\theta, data)&lt;/script&gt; would be the revised &lt;em&gt;“probability”&lt;/em&gt; of drawing parameter value &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; after having observed &lt;script type=&quot;math/tex&quot;&gt;data&lt;/script&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There are 3 problems with the equation above:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;it operates on specific values, so it could be good maybe for discrete distributions, but would break as soon as we wanted to use a continuous one.&lt;/li&gt;
+  &lt;li&gt;it operates on specific values (deuce), so it doesn’t really give us the distribution we are looking for&lt;/li&gt;
+  &lt;li&gt;if &lt;script type=&quot;math/tex&quot;&gt;\xi&lt;/script&gt; was a discrete distribution, and we would actually iterate all values of &lt;script type=&quot;math/tex&quot;&gt;\xi&lt;/script&gt; and summed the returned probabilites, they wouldn’t add up to 1 - so it doesn’t actually return a probability distribution.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;bayes-theorem&quot;&gt;Bayes Theorem&lt;/h1&gt;
+
+&lt;p&gt;At this point I would like to introduce the Bayes Theorem. Actually all of you probably know it, and those who don’t can have a quick look at one of the numerous sources that describe it in detail, such as &lt;a href=&quot;https://en.wikipedia.org/wiki/Bayes%27_theorem&quot;&gt;this Wikipedia page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(A|B)=\frac{p(B|A) * p(A)}{p(B)}&lt;/script&gt;
+
+&lt;p&gt;or, more precisely:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(A_j|B)=\frac{p(B|A_j) * p(A_j)}{\sum_{i} p(B|A_i) * p(A_i)}&lt;/script&gt;
+
+&lt;p&gt;In plain English, our belief about particular parameter values A_j, after we have observed coin toss results B, is the same as the probability of seeing those results being drawn from a distribution parameterized using A_j, and then scaling that value by the likelihood of actually coming across the parameters A_j, as well as that of running into thoe toss results - no matter what parameterization is used.&lt;/p&gt;
+
+&lt;h1 id=&quot;bayes-theorem-to-fix-our-model&quot;&gt;Bayes Theorem to fix our model&lt;/h1&gt;
+
+&lt;p&gt;Our model doesn’t look much like the Bayes Theorem:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Model&lt;/th&gt;
+      &lt;th&gt;Bayes Theorem&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;p(\theta, data) = f(data, \theta) * \xi(\theta)&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;p(A|B)=\frac{p(B|A) * p(A)}{p(B)}&lt;/script&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Even if we replace A and B with the same letters, they are still different:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Model&lt;/th&gt;
+      &lt;th&gt;Bayes Theorem&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;p(\theta, data) = f(data, \theta) * \xi(\theta)&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;p(\Theta|Data)=\frac{p(Data|\Theta) * p(\Theta)}{p(Data)}&lt;/script&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;we don’t have the denominator &lt;script type=&quot;math/tex&quot;&gt;p(Data)&lt;/script&gt;.&lt;/li&gt;
+  &lt;li&gt;Bayes Theorem uses Random Variables (upper case labels), where as our model operates on samples (lower case labels)&lt;/li&gt;
+  &lt;li&gt;the functions look kind of the same, but the ones in our model are missing the conditional vertical bars&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;conjugate-distribution&quot;&gt;Conjugate distribution&lt;/h1&gt;
+
+&lt;p&gt;Explain that in order to be able to use posterior as the next iteration prior, MLE and prior need to be conjugate distributions
+Quote Pearse stats book on the conjugate prior
+Beta is a conjugate of the binomial distr.&lt;/p&gt;
+
+&lt;h1 id=&quot;posterior&quot;&gt;Posterior&lt;/h1&gt;
+
+&lt;h1 id=&quot;algebra-to-derive-the-posterior-update-rule&quot;&gt;Algebra to derive the posterior update rule&lt;/h1&gt;
+
+&lt;h1 id=&quot;example&quot;&gt;Example&lt;/h1&gt;
+
+&lt;p&gt;Interactive plot showing a few iterations in which we update the initial belief&lt;/p&gt;
+
+&lt;p&gt;here’s my plot&lt;/p&gt;
 
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
@@ -73,12 +221,12 @@
   
 &lt;/html&gt;
 
-&lt;p&gt;after the plot&lt;/p&gt;</content><author><name>ptrochim</name></author><summary type="html">here’s my plot</summary></entry><entry><title type="html">Maximum Likelihood Estimate</title><link href="http://localhost:4000/math/2020/05/15/mle.html" rel="alternate" type="text/html" title="Maximum Likelihood Estimate" /><published>2020-05-15T00:00:00+01:00</published><updated>2020-05-15T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/15/mle</id><content type="html" xml:base="http://localhost:4000/math/2020/05/15/mle.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;after the plot&lt;/p&gt;</content><author><name>ptrochim</name></author><summary type="html">Introduction</summary></entry><entry><title type="html">Maximum Likelihood Estimate</title><link href="http://localhost:4000/math/2020/05/15/mle.html" rel="alternate" type="text/html" title="Maximum Likelihood Estimate" /><published>2020-05-15T00:00:00+01:00</published><updated>2020-05-15T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/15/mle</id><content type="html" xml:base="http://localhost:4000/math/2020/05/15/mle.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
 
 &lt;p&gt;This is a post in the series about statistical model fitting.
 It’s my attempt to explain various approaches and algorithms in a way I would have liked to learn them when I had first started studying this fascinating topic.&lt;/p&gt;
 
-&lt;p&gt;In this post, I will be covering an algorithm that relies exclusively on the data and doesn’t require the user to use any auxiliary distributions - Maximum Likelihood Estimate.&lt;/p&gt;
+&lt;p&gt;In this post, I will be covering a method that relies exclusively on the data and doesn’t require the user to use any auxiliary distributions - Maximum Likelihood Estimate.&lt;/p&gt;
 
 &lt;p&gt;I will assume that you are familiar with:&lt;/p&gt;
 &lt;ul&gt;
@@ -188,11 +336,11 @@ But the bottom line is that you can change the support of the function. In our c
 
 &lt;p&gt;In our case however, these two parameters are fixed - we are given 10 observations (&lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;), and &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; of them are Heads. What we need to find is such value of &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; that will maximize our observations:&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac{df(\theta, n, k)}{d\theta} = 0&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;argmax f(\theta, n, k)&lt;/script&gt;
 
 &lt;h1 id=&quot;solving-the-derivative&quot;&gt;Solving the derivative&lt;/h1&gt;
 
-&lt;p&gt;In order to find the maxima, we’ll solve:&lt;/p&gt;
+&lt;p&gt;In order to find the maxima, we’ll use the differential calculus - a battle hardened method for optimizing a function:&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac{df(\theta, n, k)}{d\theta} = 0&lt;/script&gt;
 

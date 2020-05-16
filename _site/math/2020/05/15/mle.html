@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Maximum Likelihood Estimate | Piotr Trochim’s blog</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Maximum Likelihood Estimate" />
+<meta name="author" content="ptrochim" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Introduction" />
+<meta property="og:description" content="Introduction" />
+<link rel="canonical" href="http://localhost:4000/math/2020/05/15/mle.html" />
+<meta property="og:url" content="http://localhost:4000/math/2020/05/15/mle.html" />
+<meta property="og:site_name" content="Piotr Trochim’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-05-15T00:00:00+01:00" />
+<script type="application/ld+json">
+{"headline":"Maximum Likelihood Estimate","dateModified":"2020-05-15T00:00:00+01:00","datePublished":"2020-05-15T00:00:00+01:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/math/2020/05/15/mle.html"},"url":"http://localhost:4000/math/2020/05/15/mle.html","author":{"@type":"Person","name":"ptrochim"},"description":"Introduction","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Piotr Trochim's blog" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Piotr Trochim&#39;s blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">Piotr</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Maximum Likelihood Estimate</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-05-15T00:00:00+01:00" itemprop="datePublished">May 15, 2020
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">ptrochim</span></span></p>
+      
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h1 id="introduction">Introduction</h1>
+
+<p>This is a post in the series about statistical model fitting.
+It’s my attempt to explain various approaches and algorithms in a way I would have liked to learn them when I had first started studying this fascinating topic.</p>
+
+<p>In this post, I will be covering a method that relies exclusively on the data and doesn’t require the user to use any auxiliary distributions - Maximum Likelihood Estimate.</p>
+
+<p>I will assume that you are familiar with:</p>
+<ul>
+  <li>The concept of a random variable</li>
+  <li>Binomial distribution</li>
+  <li>Expected value of a random variable</li>
+</ul>
+
+<h1 id="is-this-a-fair-coin">Is this a fair coin?</h1>
+
+<p>Imagine walking down the street one day, and seeing a small crowd of people surrounding what appears to be a clown flipping a coin.
+He notices you as you approach and waves at you with his other hand. Then, he presents you with a challenge.</p>
+
+<p>You need to guess if toss coin is fair or not. He will toss the coin 10 times, telling you the result of each toss.
+He will then toss it one more time, and you need to guess the result.</p>
+
+<h1 id="what-you-see-is-all-there-is-wysiati">What You See Is All There Is (WYSIATI)</h1>
+
+<p>This famous mnemonic coined by Daniel Kahneman in his book <a href="https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow">“Thinking Fast and Slow”</a> gives a hint how to proceed.</p>
+
+<p>What would be your guess if you have observed 10 Heads, and you had no other information to go on?</p>
+
+<p>If you did’t see the greedy smirk on the clown’s face, nor the long face of the person walking away from the table. You only saw the clown toss 10 Heads in a row.
+What would be the result of the next one?</p>
+
+<p>Clearly, it’d be Heads. And if he threw 10 Tails, you would be stupid not to have bet on Tails… would you?</p>
+
+<p>As these thoughts run through your head, you are trying to guess a certain property - what to <em>expect</em> from the coin as you keep tossing it:</p>
+<ul>
+  <li>10 Heads - <script type="math/tex">E[X] = 1</script>, so bet Heads</li>
+  <li>10 Tails - <script type="math/tex">E[X] = 0</script>, so bet Tails</li>
+  <li>5 Heads and 5 Tails - <script type="math/tex">E[X] = 0.5</script>, so… make a guess :/</li>
+</ul>
+
+<p>We need to guess the <em>expected value</em> of the Random Variable, otherwise known as the mean of its distribution.</p>
+
+<h1 id="relating-data-to-a-random-variable">Relating data to a Random Variable</h1>
+
+<p>Our coin tossing experiment is best represented by a Random Variable with a Binomial Distribution.</p>
+
+<p>A discrete Random Variable is a sampler that pulls items out of a set. How frequently will certain values show up is dictated by its probability (mass) function. And it’s expected value (or mean) indicates which particular item we can expect to see pulled out the most.</p>
+
+<p>But how do we reverse it? How do we guess the mean and parameterize the probability (mass) function given the data that has been pulled out?</p>
+
+<h1 id="binomial-distribution-for-a-coin-tossing-problem">Binomial distribution for a coin tossing problem</h1>
+
+<p>The expected value of R.V. (a.k.a the mean of its distribution) is a maxima of that R.V’s probability (mass) function.
+The best way to find the maxima of a function is to solve its derivative for its roots !</p>
+
+<p>So let’s remind ourselves of Binomial distribution p.m.f:</p>
+
+<script type="math/tex; mode=display">f(\theta, n, k) = \binom{n}{k} \theta^{k} (1 - \theta)^{n-k}</script>
+
+<p>Where, in our case:</p>
+<ul>
+  <li><script type="math/tex">n</script> - total number of coin tosses</li>
+  <li><script type="math/tex">k</script> - number of <em>positive</em> tosses (in our case let’s assume those are represented by Heads)</li>
+  <li><script type="math/tex">\theta</script> - a latent parameter that can be thought of as the fairness of our coin.</li>
+</ul>
+
+<p>Binomial distribution is a discrete distribution. The word discrete suggests something that’s not continuous, something we wouldn’t be able to differentiate, right?</p>
+
+<h1 id="misleading-vocabulary">Misleading vocabulary</h1>
+
+<p>When I think about a distribution, I think about its probability function.
+If its support is a discrete domain, then it’s a discrete distribution. If it’s continuous - like a real numbers line for example - then the distribution is continuous.</p>
+
+<p>When I look at the probability mass function (they make you use the term mass to highlight the discretness of the distribution), I see three parameters:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Values</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><script type="math/tex">n</script></td>
+      <td><script type="math/tex">n \in {0, 1, ...}</script></td>
+      <td>Discrete</td>
+    </tr>
+    <tr>
+      <td><script type="math/tex">k</script></td>
+      <td><script type="math/tex">k \in {0, 1, ..., n}</script></td>
+      <td>Discrete</td>
+    </tr>
+    <tr>
+      <td><script type="math/tex">\theta</script></td>
+      <td><script type="math/tex">theta \in R</script></td>
+      <td>Continuous</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We clearly deal with two discrete parameters, and a continuous one. So which is it then?</p>
+
+<p>It depends on the use case actually. It also depends on the distribution (some, line the Normal distribution, have only continuous params).
+But the bottom line is that you can change the support of the function. In our case:</p>
+<ul>
+  <li>if you were interested in finding a probability of a series of coin tosses given a specific coin, identified by a specific <script type="math/tex">\theta</script>, you would fix its value, and the support would become fully discrete.</li>
+  <li>if you were told what the results of the tosses were, and asked to guess the property of the coin, its <script type="math/tex">\theta</script>, you would fix <script type="math/tex">n</script> and <script type="math/tex">k</script>, and the continuous <script type="math/tex">\theta</script> would become its support.</li>
+</ul>
+
+<p>Confusing, isn’t it. One function, so many different options and use cases.</p>
+
+<p>In our case however, these two parameters are fixed - we are given 10 observations (<script type="math/tex">n</script>), and <script type="math/tex">k</script> of them are Heads. What we need to find is such value of <script type="math/tex">\theta</script> that will maximize our observations:</p>
+
+<script type="math/tex; mode=display">argmax f(\theta, n, k)</script>
+
+<h1 id="solving-the-derivative">Solving the derivative</h1>
+
+<p>In order to find the maxima, we’ll use the differential calculus - a battle hardened method for optimizing a function:</p>
+
+<script type="math/tex; mode=display">\frac{df(\theta, n, k)}{d\theta} = 0</script>
+
+<p>After <a href="#algebraic-derivation-of-mle-for-bernoulli-distribution">a little bit of algebra</a>, we get <script type="math/tex">\theta = \frac{k}{n}</script></p>
+
+<p>The result suggests that the parameter of Binomial Distribution’s probability mass function that maximizes the likelihood of observing clown’s coin toss results is… the ratio of obtained Heads <script type="math/tex">n</script> to the number of performed throws <script type="math/tex">n</script>.</p>
+
+<h1 id="deeper-insight---the-average">Deeper insight - the average</h1>
+
+<p>If we assumed that Tails are represented by 0, and Heads by a 1, and an <script type="math/tex">x_i</script> would represent <script type="math/tex">i^{th}</script> coin toss result, then <script type="math/tex">n = \sum_{i=0}^{n} x_i</script>.</p>
+
+<p>Our result then becomes the <em>average</em> value of the observed data:</p>
+
+<script type="math/tex; mode=display">\theta = \frac{n}{k} = \frac{1}{k} \sum_{i=0}^{n} x_i</script>
+
+<h1 id="maximum-likelihood-estimate">Maximum Likelihood Estimate</h1>
+
+<p>The method the relies on finding the maxima of a probability mass/density function is called Maximum Likelihood Estimation.</p>
+
+<p>It’s major feature is its independence. The only thing we care about when using it is the data.
+That unfortunately is also one of its major weaknesses, as we’ll see in the subsequent posts about the Bayesian methods.</p>
+
+<p>Other benefits of using it are:</p>
+<ul>
+  <li>it works with any kind of distribution</li>
+  <li>it works for multidimensional distributions</li>
+  <li>you can use any kind of optimization method, not necessarily the derivatives.</li>
+</ul>
+
+<h1 id="algebraic-derivation-of-mle-for-bernoulli-distribution">Algebraic derivation of MLE for Bernoulli distribution</h1>
+
+<p>I really like to dot all the i’s ;) 
+So here’s my attempt at showing you how I derived the formula.</p>
+
+<p>Let’s start with the differentiation:</p>
+
+<script type="math/tex; mode=display">\binom{n}{k} \left( k\theta^{k-1}(1-\theta)^{n-k} + \theta^{n}(n-k)(1-\theta)^{n-k-1} (-1) \right) = 0</script>
+
+<p>Derivative of a product breaks down to a sum of derivatives. And the trailing <script type="math/tex">(-1)</script> comes from taking the derrivative of a nested function <script type="math/tex">\frac{d(1 - \theta)^{n-k}}{d\theta}</script></p>
+
+<p>Since <script type="math/tex">n</script> and <script type="math/tex">k</script> are constants, we might get rid of the ominous binomial <script type="math/tex">\binom{n}{k}</script>, by the property of dividing both sides of equation by it (zero divided by whatever remains a zero).</p>
+
+<script type="math/tex; mode=display">k\theta^{k-1}(1-\theta)^{n-k} - \theta^{n}(n-k)(1-\theta)^{n-k-1} = 0</script>
+
+<p>The summation won’t allow us to use division as a way of getting rid of unwanted stuff that easily. So my first hunch is to rearrange the terms.
+That way I can use the equals sign as a mirror and check if there are any symmetrical terms - terms that occur on both sides that I can <em>divide away</em>.</p>
+
+<script type="math/tex; mode=display">k\theta^{k-1}(1-\theta)^{n-k} = \theta^{k}(n-k)(1-\theta)^{n-k-1}</script>
+
+<p>The next transformation becomes immediately obvious.</p>
+
+<p><script type="math/tex">\theta^{k}</script> can be broken down into <script type="math/tex">\theta^{k-1} * \theta</script> which gives us <script type="math/tex">\theta^{k-1}</script> on both sides of the <script type="math/tex">=</script> sign. The same transformation can be applied to (1-\theta)^{n-k}</p>
+
+<script type="math/tex; mode=display">k\theta^{k-1}(1-\theta)^{n-k-1}(1-\theta) = \theta^{k-1}\theta(n-k)(1-\theta)^{n-k-1}</script>
+
+<p>Now we can divide them away, and we get:</p>
+
+<script type="math/tex; mode=display">k(1-\theta) = \theta(n-k)</script>
+
+<p>If we unroll the terms in the parenthesis, we get the term <script type="math/tex">-n\theta</script> on boths sides of the <script type="math/tex">=</script> sign.</p>
+
+<script type="math/tex; mode=display">k - k\theta = n\theta - k\theta</script>
+
+<p>We can get rid of <script type="math/tex">- k\theta</script> which occurs on both sides of the <script type="math/tex">=</script> sign:</p>
+
+<script type="math/tex; mode=display">k = n\theta</script>
+
+<p>And that leads straight to:</p>
+
+<script type="math/tex; mode=display">\theta = \frac{k}{n}</script>
+
+<h1 id="literature">Literature</h1>
+
+<ol>
+  <li><a href="https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow">Thinking fast and slow</a>, Daniel Kahneman</li>
+  <li><a href="https://books.google.co.uk/books?id=fCmpBwAAQBAJ&amp;source=gbs_similarbooks">Probability and statistics</a>, Morris DeGroot, Mark Schervish</li>
+</ol>
+
+
+  </div><a class="u-url" href="/math/2020/05/15/mle.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Piotr Trochim&#39;s blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Piotr Trochim&#39;s blog</li><li><a class="u-email" href="mailto:ptrochim@gmail.com">ptrochim@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/paksas"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">paksas</span></a></li><li><a href="https://www.twitter.com/piotrtrochim"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">piotrtrochim</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Thoughts and results I wish to persist.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
