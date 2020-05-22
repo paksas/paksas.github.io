@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-17T00:28:31+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
-</subtitle><entry><title type="html">Bayesian Inference</title><link href="http://localhost:4000/math/2020/05/16/bayesian-inference.html" rel="alternate" type="text/html" title="Bayesian Inference" /><published>2020-05-16T00:00:00+01:00</published><updated>2020-05-16T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/16/bayesian-inference</id><content type="html" xml:base="http://localhost:4000/math/2020/05/16/bayesian-inference.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-22T12:38:17+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
+</subtitle><entry><title type="html">Bayesian Inference</title><link href="http://localhost:4000/math/2020/05/16/bayesian-inference.html" rel="alternate" type="text/html" title="Bayesian Inference" /><published>2020-05-16T00:00:00+01:00</published><updated>2020-05-16T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/16/bayesian-inference</id><content type="html" xml:base="http://localhost:4000/math/2020/05/16/bayesian-inference.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;This is a post in the series about statistical model fitting.
 It’s my attempt to explain various approaches and algorithms in a way I would have liked to learn them when I had first started studying this fascinating topic.&lt;/p&gt;
 
-&lt;p&gt;In this post, I will be covering a method that builds on top of &lt;a href=&quot;https://en.wikipedia.org/wiki/Maximum_likelihood_estimation&quot;&gt;Maximum Likelihood Estimate&lt;/a&gt; method I covered in &lt;a href=&quot;https://paksas.github.io/math/2020/05/15/mle.html&quot;&gt;the previous post&lt;/a&gt;, enhancing it.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Maximum_likelihood_estimation&quot;&gt;Maximum Likelihood Estimate&lt;/a&gt; method I covered in &lt;a href=&quot;https://paksas.github.io/math/2020/05/15/mle.html&quot;&gt;the previous post&lt;/a&gt;, had its flaws, one of which being its ignorance to hypothesis that may shed light on the collected data. The method I will describe now addresses that very issue.&lt;/p&gt;
 
 &lt;h1 id=&quot;back-alley-clown&quot;&gt;Back alley clown&lt;/h1&gt;
 
@@ -31,197 +31,358 @@ I would be far more likely to respond to the challenge if I was attending a fair
 
 &lt;p&gt;However now in addition to solid evidence, we also have our &lt;em&gt;prior&lt;/em&gt; beliefs. Those two combined allow us not only to make a guess about the parameter value, but also reflect our level of &lt;em&gt;confidence&lt;/em&gt; in that guess.&lt;/p&gt;
 
-&lt;p&gt;If you recall, MLE allowed to direcly calculate the values of distribution parameters. It meant that it was caclulating a distribution with &lt;em&gt;complete confidence&lt;/em&gt; in its result. It makes sense, since the method relied exclusively on the data, which is a solid evidence. So unless there was other data available, the method was 100% confident about its estimate.&lt;/p&gt;
+&lt;p&gt;If you recall, MLE direcly calculated the values of distribution parameters - it didn’t produce any value that would suggest a doubt about that value. It made sense, since the method relied exclusively on the data, which is a solid evidence. So unless there was other data available, the method was 100% confident about its estimate.&lt;/p&gt;
 
 &lt;p&gt;Right now we want to express our &lt;em&gt;doubt&lt;/em&gt;, and &lt;em&gt;doubts&lt;/em&gt; are expressed using… distributions.
 That’s right - we are going to find another distribution, which we will use to &lt;em&gt;sample&lt;/em&gt; the values of our &lt;em&gt;target distribution&lt;/em&gt; parameters.&lt;/p&gt;
 
-&lt;p&gt;It took me a very long time to come to that realization during my studies, so I want to repeat that &lt;em&gt;important&lt;/em&gt; paragraph again:&lt;/p&gt;
+&lt;p&gt;To reiterate:&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;Right now we want to express our &lt;em&gt;doubt&lt;/em&gt;, and &lt;em&gt;doubts&lt;/em&gt; are expressed using… distributions.
-That’s right - we are going to find another distribution, which we will use to &lt;em&gt;sample&lt;/em&gt; the values of our &lt;em&gt;target distribution&lt;/em&gt; parameters.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;building-a-model-of-uncertainty&quot;&gt;Building a model of uncertainty&lt;/h1&gt;
-
-&lt;p&gt;We have two quantities now:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;the observed coin toss results&lt;/li&gt;
-  &lt;li&gt;the level of confidence about the parameters&lt;/li&gt;
+  &lt;li&gt;MLE -&amp;gt; &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Bayesian Inference -&amp;gt; &lt;script type=&quot;math/tex&quot;&gt;\theta \sim P(\Theta)&lt;/script&gt; (&lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; sampled from a distribution &lt;script type=&quot;math/tex&quot;&gt;P&lt;/script&gt; of the random variable &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt;)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;We can express confidence about something with a distribution. Let’s denote that distribution &lt;script type=&quot;math/tex&quot;&gt;\xi&lt;/script&gt;, without defining it really.
-Ditributions are properties of Random Variables - and this one is no different. Its Random Variable samples from a set of all possible distribution parameters &lt;script type=&quot;math/tex&quot;&gt;\theta \in \omega&lt;/script&gt;.&lt;/p&gt;
+&lt;h1 id=&quot;bayesian-inference&quot;&gt;Bayesian Inference&lt;/h1&gt;
 
-&lt;p&gt;Think about it - we now have a random variable that has some expected value and variance (uncertainty about that value) that represents the parameters &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; of our &lt;em&gt;target distribution&lt;/em&gt;. This is exactly what we wanted.&lt;/p&gt;
+&lt;p&gt;As a reminder, the task of any parameter inference is to find parameters &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; based on some observed data &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;.
+In the specific case of Bayesian Inference, &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; is estimated indirectly rather than being directly calculated.&lt;/p&gt;
 
-&lt;p&gt;But what about the data - the toss results?
-Well, since we have access to &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; values, we could check which ones can even generate the tosses we observed, and how likely would those be.&lt;/p&gt;
+&lt;p&gt;This estimation is achieved by introducing a random variable &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt; that models the distribution of the parameter values.
+Our task now is to calculate the values of &lt;em&gt;that&lt;/em&gt; distribution, rather than to directly calculate the values of &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;, and use that parameter to parameterize the &lt;em&gt;target distributon&lt;/em&gt; from which the data is sampled:&lt;/p&gt;
 
-&lt;p&gt;Then, we could weight those predictions by the probability of actually drawing the specific parameter values &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;.&lt;/p&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{cases} \theta \sim P(\Theta) \\ x \sim P(X | \Theta=\theta) \end{cases}&lt;/script&gt;
 
-&lt;p&gt;Allow me to be loose with the notation and just start putting things together:&lt;/p&gt;
+&lt;h1 id=&quot;bayes-theorem&quot;&gt;Bayes theorem&lt;/h1&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(\theta, data) = f(data, \theta) * \xi(\theta)&lt;/script&gt;
+&lt;p&gt;The method makes use of the famous &lt;a href=&quot;https://en.wikipedia.org/wiki/Bayes%27_theorem&quot;&gt;Bayes Theorem&lt;/a&gt;.
+It’s quite ubiquitous, and there is a ton of good material out there explaining it in great detail. Therefore I’m going to assume that you’re vaguely familiar with it as well as its main use cases.
+If I may recommend a book that had the largest impact on my understanding, it would be: &lt;a href=&quot;&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;If &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; is a specific sample, and so is the &lt;script type=&quot;math/tex&quot;&gt;data&lt;/script&gt;:&lt;/p&gt;
+&lt;p&gt;Let’s quickly recap the theorem and how can it lend itself ot our goal:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(A|B) = \frac{P(B|A)*P(A)}{P(B)}&lt;/script&gt;
+
+&lt;p&gt;Let’s introduce its elements and the terminology:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\xi&lt;/script&gt; would return the probability of drawing &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; from the &lt;em&gt;parameter distribution&lt;/em&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;f(data, \theta)&lt;/script&gt; would return the probability of drawing &lt;script type=&quot;math/tex&quot;&gt;data&lt;/script&gt; for the given value of &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;&lt;/li&gt;
-  &lt;li&gt;and by that property, &lt;script type=&quot;math/tex&quot;&gt;p(\theta, data)&lt;/script&gt; would be the revised &lt;em&gt;“probability”&lt;/em&gt; of drawing parameter value &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; after having observed &lt;script type=&quot;math/tex&quot;&gt;data&lt;/script&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;P(A\|B)&lt;/script&gt; is called &lt;em&gt;the posterior&lt;/em&gt; and expresses our belief about &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; after observing &lt;script type=&quot;math/tex&quot;&gt;B&lt;/script&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;P(A)&lt;/script&gt; is called &lt;em&gt;the prior&lt;/em&gt; and expresses our belief about &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; before observing &lt;script type=&quot;math/tex&quot;&gt;B&lt;/script&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;P(B\|A)&lt;/script&gt; is called &lt;em&gt;the likelihood&lt;/em&gt; and expresses the way in which &lt;script type=&quot;math/tex&quot;&gt;B&lt;/script&gt; affects our belief about &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;P(B)&lt;/script&gt; is sometimes called &lt;em&gt;the evidence&lt;/em&gt; and functions as a normalizing factor.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;There are 3 problems with the equation above:&lt;/p&gt;
+&lt;p&gt;Reading this equation directly isn’t very informative. You immediately start asking the following questions:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;it operates on specific values, so it could be good maybe for discrete distributions, but would break as soon as we wanted to use a continuous one.&lt;/li&gt;
-  &lt;li&gt;it operates on specific values (deuce), so it doesn’t really give us the distribution we are looking for&lt;/li&gt;
-  &lt;li&gt;if &lt;script type=&quot;math/tex&quot;&gt;\xi&lt;/script&gt; was a discrete distribution, and we would actually iterate all values of &lt;script type=&quot;math/tex&quot;&gt;\xi&lt;/script&gt; and summed the returned probabilites, they wouldn’t add up to 1 - so it doesn’t actually return a probability distribution.&lt;/li&gt;
+  &lt;li&gt;if it’s &lt;script type=&quot;math/tex&quot;&gt;B&lt;/script&gt; that we have observed (the data) and &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; is what we want to estimate, then how do we calculate &lt;script type=&quot;math/tex&quot;&gt;P(B\|A)&lt;/script&gt;?&lt;/li&gt;
+  &lt;li&gt;..in fact, why don’t we calculate &lt;script type=&quot;math/tex&quot;&gt;P(A\|B)&lt;/script&gt; directly using some distribution equation?&lt;/li&gt;
+  &lt;li&gt;what is this normalizing factor &lt;script type=&quot;math/tex&quot;&gt;P(B)&lt;/script&gt; and how to calculate it?&lt;/li&gt;
+  &lt;li&gt;what distribution equations to use for all those terms?&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&quot;bayes-theorem&quot;&gt;Bayes Theorem&lt;/h1&gt;
+&lt;p&gt;I want to focs on building thorough understanding of this before proceeding to the inference problem.&lt;/p&gt;
 
-&lt;p&gt;At this point I would like to introduce the Bayes Theorem. Actually all of you probably know it, and those who don’t can have a quick look at one of the numerous sources that describe it in detail, such as &lt;a href=&quot;https://en.wikipedia.org/wiki/Bayes%27_theorem&quot;&gt;this Wikipedia page&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;notation&quot;&gt;Notation&lt;/h2&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(A|B)=\frac{p(B|A) * p(A)}{p(B)}&lt;/script&gt;
+&lt;h1 id=&quot;meaning-of-random-variables-a-and-b&quot;&gt;Meaning of random variables A and B&lt;/h1&gt;
 
-&lt;p&gt;or, more precisely:&lt;/p&gt;
+&lt;p&gt;We want to estimate the values of parameters given some observed data, and the left hand side of Bayes theorem is:&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(A_j|B)=\frac{p(B|A_j) * p(A_j)}{\sum_{i} p(B|A_i) * p(A_i)}&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(A|B)&lt;/script&gt;
 
-&lt;p&gt;In plain English, our belief about particular parameter values A_j, after we have observed coin toss results B, is the same as the probability of seeing those results being drawn from a distribution parameterized using A_j, and then scaling that value by the likelihood of actually coming across the parameters A_j, as well as that of running into thoe toss results - no matter what parameterization is used.&lt;/p&gt;
+&lt;p&gt;That would make:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; stand for the random variable that represents the parameters estimation &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;B&lt;/script&gt; be the observed data &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;h1 id=&quot;bayes-theorem-to-fix-our-model&quot;&gt;Bayes Theorem to fix our model&lt;/h1&gt;
+&lt;p&gt;Then we get:&lt;/p&gt;
 
-&lt;p&gt;Our model doesn’t look much like the Bayes Theorem:&lt;/p&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(\Theta|X) = \frac{P(X|\Theta)*P(\Theta)}{P(X)}&lt;/script&gt;
+
+&lt;p&gt;Let’s recal our problem formulation. We are looking for a distribution parameterized by some value of &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;, from which the data samples (coin tosses) are drawn - &lt;script type=&quot;math/tex&quot;&gt;x \sim P(\theta)&lt;/script&gt;.
+But instead of calculating the value of &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; directly, we want to express our belief about its value, so we choose to model it with a random variable &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt;.
+We are then going to use that random variable to parameterize the distribution we draw our data from:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{cases} \theta \sim P(\Theta) \\ x \sim P(X | \Theta=\theta) \end{cases}&lt;/script&gt;
+
+&lt;p&gt;Here, lowercase &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; denote the samples, and their uppercase equivalents &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt; - random variables.
+Notice that &lt;script type=&quot;math/tex&quot;&gt;P(X | \Theta)&lt;/script&gt; appears in the Bayesian equation, however not on its left hand side. It is in fact the likelihood.&lt;/p&gt;
+
+&lt;p&gt;This is very confusing. Are we calculating the wrong value? Should our equation look like this then:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(X | \Theta) = \frac{P(\Theta | X)*P(X)}{P(\Theta)}&lt;/script&gt;
+
+&lt;p&gt;The answer is NO. We are looking for P(\Theta), but the one that takes into account the observed data &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt; - &lt;script type=&quot;math/tex&quot;&gt;P(\Theta | X)&lt;/script&gt;.
+It is that distribution that will express our belief about the parameterization of the data distribution.&lt;/p&gt;
+
+&lt;p&gt;But then how do we write down the &lt;em&gt;target data distribution&lt;/em&gt;? We have several options, all of which definitely need to take &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt; into account as well as the random variable &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;, which models our data.
+We know for sure that it’s NOT &lt;script type=&quot;math/tex&quot;&gt;P(\Theta)&lt;/script&gt; - that’s the distribution of the parameters. So is it:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X, \Theta)&lt;/script&gt; ?&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X \| \Theta)&lt;/script&gt; ?&lt;/li&gt;
+  &lt;li&gt;or perhaps &lt;script type=&quot;math/tex&quot;&gt;P(X)&lt;/script&gt; with an &lt;em&gt;invisible&lt;/em&gt; &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt; parameterization everyone except for me sort of knows about?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;distribution-function-notation&quot;&gt;Distribution function notation&lt;/h1&gt;
+
+&lt;p&gt;Let’s see what different notations mean visually:&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th&gt;Model&lt;/th&gt;
-      &lt;th&gt;Bayes Theorem&lt;/th&gt;
+      &lt;th&gt;Notation&lt;/th&gt;
+      &lt;th&gt;Visual representation&lt;/th&gt;
+      &lt;th&gt;Comment&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;p(\theta, data) = f(data, \theta) * \xi(\theta)&lt;/script&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;p(A|B)=\frac{p(B|A) * p(A)}{p(B)}&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X)&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_1.png&quot; alt=&quot;Fig 1&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;1D probability mass/density function&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X=x)&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_2.png&quot; alt=&quot;Fig 2&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;1D probability or density value&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X, Y)&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_3.png&quot; alt=&quot;Fig 3&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;Joint (2D) probability mass/density function)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X=x, Y=y)&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_4.png&quot; alt=&quot;Fig 4&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;Probability or density value&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X, Y=y)&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;P(X | Y=y)&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_5.png&quot; alt=&quot;Fig 5&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;A slice through a 2D function&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;Even if we replace A and B with the same letters, they are still different:&lt;/p&gt;
+&lt;p&gt;Notice how the conditional probability slices through the data. We could as well use the notation &lt;script type=&quot;math/tex&quot;&gt;P(X, Y=y)&lt;/script&gt;, but the vertical bar notation was adopted for this purpose, and we call this slice “conditional” probability to emphasize that we are fixing the value of one of the variables.&lt;/p&gt;
+
+&lt;p&gt;Let’s see which type of notation best describe the &lt;em&gt;target distribution&lt;/em&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X, \Theta)&lt;/script&gt; - both the data &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt; and the parameters &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt; haven’t been sampled, and we are talking about a joint function of both&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X \| \Theta)&lt;/script&gt; - we have observed some value of &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt; and we want to use it to take a slice from &lt;script type=&quot;math/tex&quot;&gt;P(X, \Theta)&lt;/script&gt;. We will consider this slice a 1D distribution of &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;P(\Theta \| X)&lt;/script&gt; - we have observed some value of &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt; and we want to use it to take a slice from &lt;script type=&quot;math/tex&quot;&gt;P(X, \Theta)&lt;/script&gt;. We will consider this slice a 1D distribution of &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It’s clearly the 2nd one - &lt;script type=&quot;math/tex&quot;&gt;P(X \| \Theta)&lt;/script&gt;. It feels like we’ve gone full circle - the likelihood term of the Bayes Theorem is denoted in the same way as the &lt;em&gt;target distribution&lt;/em&gt; we will be sampling from.&lt;/p&gt;
+
+&lt;p&gt;This confused me for a very long time, and it stemmed from how nuanced the probability notation really is. Let’s looks at the equations side by side:&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th&gt;Model&lt;/th&gt;
       &lt;th&gt;Bayes Theorem&lt;/th&gt;
+      &lt;th&gt;Model of data generator&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;p(\theta, data) = f(data, \theta) * \xi(\theta)&lt;/script&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;p(\Theta|Data)=\frac{p(Data|\Theta) * p(\Theta)}{p(Data)}&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;P(\Theta|X) = \frac{P(X|\Theta)*P(\Theta)}{P(X)}&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;x \sim P(X|\Theta)&lt;/script&gt;&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
+&lt;p&gt;I searched long and hard for an explanation and, to my great disappointment, I didn’t find any. But I did find out a few things:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;we don’t have the denominator &lt;script type=&quot;math/tex&quot;&gt;p(Data)&lt;/script&gt;.&lt;/li&gt;
-  &lt;li&gt;Bayes Theorem uses Random Variables (upper case labels), where as our model operates on samples (lower case labels)&lt;/li&gt;
-  &lt;li&gt;the functions look kind of the same, but the ones in our model are missing the conditional vertical bars&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X\|\Theta)&lt;/script&gt; in both cases can be read as &lt;em&gt;“conditional distribution of &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt; given &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt;”&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;In Bayes Theorem cast for finding the relationship between conditional distributions, that’s also what it is&lt;/li&gt;
+  &lt;li&gt;in Bayes Theorem cast for the inference problems, that conditional distribution isn’t a distribution at all - if you would integrate the area under its curve, that area wouldn’t equal 1.0.&lt;/li&gt;
+  &lt;li&gt;In out model of data generator, it should be read as the conditional distribution, but it’s a completely different instance of the distribution.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&quot;conjugate-distribution&quot;&gt;Conjugate distribution&lt;/h1&gt;
+&lt;p&gt;It seems that the confusion stems from the fact that &lt;script type=&quot;math/tex&quot;&gt;P(X\|\Theta)&lt;/script&gt; in the Bayesian Inference equation - the so-called &lt;em&gt;likelihood&lt;/em&gt; term - isn’t a distribution at all. What is it then and why is it using the same notation as a distribution?&lt;/p&gt;
+
+&lt;h1 id=&quot;likelihood-function&quot;&gt;Likelihood function&lt;/h1&gt;
+
+&lt;p&gt;As we’ll see a bit later, the likelihood term is modeled using the equations of actual distribution functions, but it isn’t a distribution. The reason is that we are actually plugging in ALL of the values.
+It should be written as &lt;script type=&quot;math/tex&quot;&gt;P(X=x|\Theta=\theta)&lt;/script&gt; rather than &lt;script type=&quot;math/tex&quot;&gt;P(X|\Theta=\theta)&lt;/script&gt;, which suggests &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt; being a random variable and us modelling some sort of a distribution shape with it.&lt;/p&gt;
+
+&lt;p&gt;This function returns 2 different things, depending on the type of distribution function equation used:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Distribution function type&lt;/th&gt;
+      &lt;th&gt;Likelihood return value&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;discrete&lt;/td&gt;
+      &lt;td&gt;probability&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;continuous&lt;/td&gt;
+      &lt;td&gt;density&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Probability density, because that’s the density I’m referring to, isn’t equivalent to the probability. But in case of a regular probability density function, should you integrate the area under the entire curve, it would equal to 1.0.&lt;/p&gt;
+
+&lt;p&gt;So why is it that in the case of likelihood it wouldn’t?&lt;/p&gt;
+
+&lt;h1 id=&quot;the-parameters-of-the-likelihood-function&quot;&gt;The parameters of the likelihood function&lt;/h1&gt;
+
+&lt;p&gt;The answer lies in the function support - another nuance of the notation we usually don’t bother to focus on at all.&lt;/p&gt;
+
+&lt;p&gt;As I mentioned before, the likelihood term is expressed using a regular distribution function equation. I want to use a concrete example to drive the point here, and since we’re talking about coin tosses, I’m going to use the Binomial distribution equation. But please keep in mind that this applies to ANY distribution just the same.&lt;/p&gt;
+
+&lt;p&gt;The equation of Binomial distribution probability &lt;em&gt;mass&lt;/em&gt; function: &lt;script type=&quot;math/tex&quot;&gt;f(k, n, p) = \binom{n}{k} p^{k}(1-p)^{n-k}&lt;/script&gt;. It’s a discrete distribution.
+It’s discreteness stems from the fact that its support is a subset of integers defined as &lt;script type=&quot;math/tex&quot;&gt;k \in {0..n}&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;One would use this equation to express a distribution of probability by choosing some value of &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;p&lt;/script&gt;, and then iterating over all possible values of &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; and running the three through this equation.
+Let’s say that we want to model the distribution of getting k Heads in 10 tosses, and the tosses are performed with a fair coin (p=0.5).
+The equation would then take the form:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;f(10, k, 0.5) = \binom{10}{k} 0.5^{k}(1-0.5)^{10-k}&lt;/script&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_6.png&quot; alt=&quot;Fig 6&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If you would integrate (sum up in this case) the values, the result would equal 1.0.&lt;/p&gt;
+
+&lt;p&gt;But &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; isn’t the only parameter we can iterate over. What would happen if we fixed it, and iterated over all possible values of &lt;script type=&quot;math/tex&quot;&gt;p&lt;/script&gt; instead?
+To be more specific - we have performed 10 tosses, 3 of them were Heads. How does the probability change for different values of &lt;script type=&quot;math/tex&quot;&gt;p&lt;/script&gt; ?&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;f(10, 3, p) = \binom{10}{3} p^{3}(1-p)^{10-3} = 120 p^{3}(1-p)^{7}&lt;/script&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_7.png&quot; alt=&quot;Fig 7&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Notice a few things off the bat:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;the plot is no longer choppy.&lt;/li&gt;
+  &lt;li&gt;it has a different range - (0, 1) rather than {0..10}&lt;/li&gt;
+  &lt;li&gt;and I can guarantee that if you calculated the integral, it wouldn’t add up to 1.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Bayesian Inference writes the likelihood as if it was something that can be modelled as a joint distribution of two variables - the data and the parameterization. Specifically:&lt;/p&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;f(n, k, p) = P(X \| \Theta)&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;X: k&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\Theta: (n, p)&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;The only justification I can think of at the time of writing this article is that this is a notation abuse.
+As we’ve seen in the case of Binomial distribution function (and other functions follow suite), there is a very specific support defined and one can’t just turn other parameters into random variables and expect to obtain a joint distributon.&lt;/p&gt;
+
+&lt;p&gt;In addition to causing confusion, it also introduces mathematical discrepancy - the nominator can no longer be treated as a distribution. So in order to bring the posterior back on track to being a regular distribution, another term needs to step in and act as a normalizer.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-normalizing-role-of-the-evidence-term&quot;&gt;The normalizing role of the evidence term.&lt;/h1&gt;
+
+&lt;p&gt;Going back to the Bayes Theorem, we find the evidence defined as &lt;script type=&quot;math/tex&quot;&gt;P(X)&lt;/script&gt;.
+The extended version of the Theorem rewrites this term as &lt;script type=&quot;math/tex&quot;&gt;P(X) = \int P(X | \Theta=\theta) d\theta&lt;/script&gt;:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(\Theta|X) = \frac{P(X|\Theta)*P(\Theta)}{\int P(X | \Theta=\theta) d\theta}&lt;/script&gt;
+
+&lt;p&gt;It means that we will marginalize random variable &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;, which represents the model of our data, for all possible values of &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt;. That marginalization would guarantee a distribution, if &lt;script type=&quot;math/tex&quot;&gt;P(X\|\Theta)&lt;/script&gt; was in fact a distribution, which it isn’t.&lt;/p&gt;
+
+&lt;p&gt;However - it will normalize the nominator such that the calculated posterior P(\Theta | X) will be a distribution! This does not depend on the type of distribution equations used.
+I would however appreciate a proof, so if anyone knows it, please share.&lt;/p&gt;
+
+&lt;h1 id=&quot;can-maximum-likelihood-estimate-be-used-to-calculate-the-likelihood-term&quot;&gt;Can Maximum Likelihood Estimate be used to calculate the Likelihood term?&lt;/h1&gt;
+
+&lt;p&gt;To close the topic of confusing notation, I wanted to bring up a strange similarity of names between the Maximum Likelihood Estimate and the Likelihood term in the Bayesian Inference.
+What confused me in particular was whether MLE &lt;em&gt;should&lt;/em&gt; be used to calculate the value returned by the likelihood term.&lt;/p&gt;
+
+&lt;p&gt;There is no relation between the two:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;As we’ve learned, the likelihood term returns some value or function, which shouldn’t be treated as a probability distribution.&lt;/li&gt;
+  &lt;li&gt;The Maximum Likelihood Estimate is a method to assess the value of distribution parameter &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The two return completely different things. In fact, on the conceptual level, MLE produces the same values that sampling from the posterior returned by Bayesian Inference does:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{cases} \theta \sim MLE(X) \\ \theta \sim P(\Theta | X) \end{cases}&lt;/script&gt;
+
+&lt;h2 id=&quot;how-does-it-work&quot;&gt;How does it work&lt;/h2&gt;
+
+&lt;p&gt;Now that we know how each part of the equation works, I wanted to show how it can be used.&lt;/p&gt;
+
+&lt;p&gt;Allow me to pull some fake data out of the hat and use it to solve our coin tossing problem.
+For example - let’s say that I’ve observed the clown tossing 7 Heads in 10 coin tosses.
+As a reminder, I now need to call the result of the next toss. In order to do that, I need to estimate the “fairness” of the coin, or our parameter &lt;script type=&quot;math/tex&quot;&gt;p&lt;/script&gt; that we have seen used in the Binomial distribution:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;f(n, k, p) = \binom{n}{k}p^k(1-p)^{n-k}&lt;/script&gt;
+
+&lt;p&gt;Once I know the value of that parameter, I will be able to determine which side is more likely to show up on the next toss. If the value is closer to 1 - it will be the Heads, if it’s closer to 0 - Tails.
+The value of 0.5 will put me in a pickle, because it would mean the coin is fair and I would have to guess.&lt;/p&gt;
+
+&lt;p&gt;Maximum Likelihood Estimate would suggest the coin is biased towards Heads. However, I have some other information I can incorporate in my assessment.&lt;/p&gt;
+
+&lt;h1 id=&quot;choosing-a-prior&quot;&gt;Choosing a prior&lt;/h1&gt;
+
+&lt;p&gt;My first clue is that I encountered the clown while taking a shortcut through a dark back alley. Yes, this isn’t a fair, or any other place where you would expect to meet a coin tossing clown.
+I suspect that he will try to trick me and he’s somehow controlling the coin.&lt;/p&gt;
+
+&lt;p&gt;My suspicion is that it’s biased towards Tails.&lt;/p&gt;
+
+&lt;p&gt;I will use a Beta distribution:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(\Theta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)}\theta^{\alpha - 1}(1-\theta)^{\beta - 1}&lt;/script&gt;
+
+&lt;p&gt;with parameters &lt;script type=&quot;math/tex&quot;&gt;alpha=1&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;beta=3&lt;/script&gt; as a prior, which I think best reflects that belief:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(\Theta) = \frac{\Gamma(4)}{\Gamma(1)\Gamma(3)}\theta^{0}(1-\theta)^{2} = 3 (1-\theta)^{2}&lt;/script&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_8.png&quot; alt=&quot;Fig 8&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;choosing-the-likelihood-function&quot;&gt;Choosing the likelihood function&lt;/h1&gt;
+
+&lt;p&gt;The likelihood function needs to appraise the collected data and return a &lt;em&gt;metric&lt;/em&gt; (not a probability, but a metric), how likely that data was given the hypothesized parameter values.
+The choice of the function is arbitrary, and often dictated by a similarity to a particular distribution model.&lt;/p&gt;
+
+&lt;p&gt;That is also why I chose to use the Binomial Distribution function with fixed parameters &lt;script type=&quot;math/tex&quot;&gt;(n, k)&lt;/script&gt; as the likelihood function:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(X\|\Theta) = \binom{10}{7}\theta^{7}(1-\theta)^3=120[\theta^{7}(1-\theta)^3]&lt;/script&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_9.png&quot; alt=&quot;Fig 9&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;calculating-the-evidence-denominator&quot;&gt;Calculating the evidence denominator&lt;/h1&gt;
+
+&lt;p&gt;Let’s start with the integral version of the Bayes Theorem denominator. &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; here has support in range (0, 1), which we will use as the integration limits.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(X) = \int_{0}^{1} P(X\|\Theta) * P(\Theta) d\theta&lt;/script&gt;
+
+&lt;p&gt;Substitute the functions:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(X) = \int_{0}^{1} [3(1-\theta)^{2}] [120[\theta^{7}(1-\theta)^3]] d\theta&lt;/script&gt;
+
+&lt;p&gt;Extract the constants and combine the variables, and then use Wolfram Alpha to calculate the final result:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(X) = 360 \int_{0}^{1} \theta^{7}(1-\theta)^{5} d\theta = \frac{5}{143}&lt;/script&gt;
+
+&lt;p&gt;Notice that this result is a constant. That’s the normalizing constant I was referring to.&lt;/p&gt;
+
+&lt;h1 id=&quot;put-it-all-together&quot;&gt;Put it all together&lt;/h1&gt;
+
+&lt;p&gt;We can now substitute those equations into the Bayes Theorem equation:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(\Theta \| X) = \frac{P(X|\Theta)P(\Theta)}{P(X)} = \frac{[120[\theta^{7}(1-\theta)^3]][3 (1-\theta)^{2}]}{\frac{5}{143}}&lt;/script&gt;
+
+&lt;p&gt;After combining the terms, we get:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(\Theta \| X) = 10296 \theta^{7}(1-\theta)^5&lt;/script&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_10.png&quot; alt=&quot;Fig 10&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And just to verify that it actually represents a probability distribution, its integral in &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; support equals 1:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\int_{0}^{1} 10296 \theta^{7}(1-\theta)^5 = 1&lt;/script&gt;
+
+&lt;h1 id=&quot;conjugate-priors&quot;&gt;Conjugate priors&lt;/h1&gt;
 
 &lt;p&gt;Explain that in order to be able to use posterior as the next iteration prior, MLE and prior need to be conjugate distributions
 Quote Pearse stats book on the conjugate prior
-Beta is a conjugate of the binomial distr.&lt;/p&gt;
-
-&lt;h1 id=&quot;posterior&quot;&gt;Posterior&lt;/h1&gt;
-
-&lt;h1 id=&quot;algebra-to-derive-the-posterior-update-rule&quot;&gt;Algebra to derive the posterior update rule&lt;/h1&gt;
-
-&lt;h1 id=&quot;example&quot;&gt;Example&lt;/h1&gt;
-
-&lt;p&gt;Interactive plot showing a few iterations in which we update the initial belief&lt;/p&gt;
-
-&lt;p&gt;here’s my plot&lt;/p&gt;
-
-&lt;html lang=&quot;en&quot;&gt;
-  &lt;head&gt;
-      &lt;meta charset=&quot;utf-8&quot; /&gt;
-      &lt;title&gt;my plot&lt;/title&gt;  
-        &lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.pydata.org/bokeh/release/bokeh-1.4.0.min.js&quot;&gt;&lt;/script&gt;
-        &lt;script type=&quot;text/javascript&quot;&gt;
-            Bokeh.set_log_level(&quot;info&quot;);
-        &lt;/script&gt;
-        
-      
-      
-    
-  &lt;/head&gt;
-  
-  
-  &lt;body&gt;
-    
-      
-        
-          
-          
-            
-              &lt;div class=&quot;bk-root&quot; id=&quot;ca2a4bcc-13e4-4a2e-b5de-4cfc587902a5&quot; data-root-id=&quot;1001&quot;&gt;&lt;/div&gt;
-            
-          
-        
-      
-      
-        &lt;script type=&quot;application/json&quot; id=&quot;1146&quot;&gt;
-          {&quot;85c49e6c-531d-4827-98bd-4723a9986045&quot;:{&quot;roots&quot;:{&quot;references&quot;:[{&quot;attributes&quot;:{&quot;bottom_units&quot;:&quot;screen&quot;,&quot;fill_alpha&quot;:{&quot;value&quot;:0.5},&quot;fill_color&quot;:{&quot;value&quot;:&quot;lightgrey&quot;},&quot;left_units&quot;:&quot;screen&quot;,&quot;level&quot;:&quot;overlay&quot;,&quot;line_alpha&quot;:{&quot;value&quot;:1.0},&quot;line_color&quot;:{&quot;value&quot;:&quot;black&quot;},&quot;line_dash&quot;:[4,4],&quot;line_width&quot;:{&quot;value&quot;:2},&quot;render_mode&quot;:&quot;css&quot;,&quot;right_units&quot;:&quot;screen&quot;,&quot;top_units&quot;:&quot;screen&quot;},&quot;id&quot;:&quot;1044&quot;,&quot;type&quot;:&quot;BoxAnnotation&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1025&quot;,&quot;type&quot;:&quot;HelpTool&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1045&quot;,&quot;type&quot;:&quot;Selection&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1024&quot;,&quot;type&quot;:&quot;ResetTool&quot;},{&quot;attributes&quot;:{&quot;fill_alpha&quot;:{&quot;value&quot;:0.1},&quot;fill_color&quot;:{&quot;value&quot;:&quot;#1f77b4&quot;},&quot;line_alpha&quot;:{&quot;value&quot;:0.1},&quot;line_color&quot;:{&quot;value&quot;:&quot;#1f77b4&quot;},&quot;x&quot;:{&quot;field&quot;:&quot;x&quot;},&quot;y&quot;:{&quot;field&quot;:&quot;y&quot;}},&quot;id&quot;:&quot;1035&quot;,&quot;type&quot;:&quot;Circle&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1016&quot;,&quot;type&quot;:&quot;BasicTicker&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1008&quot;,&quot;type&quot;:&quot;LinearScale&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1046&quot;,&quot;type&quot;:&quot;UnionRenderers&quot;},{&quot;attributes&quot;:{&quot;source&quot;:{&quot;id&quot;:&quot;1033&quot;,&quot;type&quot;:&quot;ColumnDataSource&quot;}},&quot;id&quot;:&quot;1037&quot;,&quot;type&quot;:&quot;CDSView&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1023&quot;,&quot;type&quot;:&quot;SaveTool&quot;},{&quot;attributes&quot;:{&quot;callback&quot;:null,&quot;data&quot;:{&quot;x&quot;:[1,2],&quot;y&quot;:[3,4]},&quot;selected&quot;:{&quot;id&quot;:&quot;1045&quot;,&quot;type&quot;:&quot;Selection&quot;},&quot;selection_policy&quot;:{&quot;id&quot;:&quot;1046&quot;,&quot;type&quot;:&quot;UnionRenderers&quot;}},&quot;id&quot;:&quot;1033&quot;,&quot;type&quot;:&quot;ColumnDataSource&quot;},{&quot;attributes&quot;:{&quot;dimension&quot;:1,&quot;ticker&quot;:{&quot;id&quot;:&quot;1016&quot;,&quot;type&quot;:&quot;BasicTicker&quot;}},&quot;id&quot;:&quot;1019&quot;,&quot;type&quot;:&quot;Grid&quot;},{&quot;attributes&quot;:{&quot;fill_color&quot;:{&quot;value&quot;:&quot;#1f77b4&quot;},&quot;line_color&quot;:{&quot;value&quot;:&quot;#1f77b4&quot;},&quot;x&quot;:{&quot;field&quot;:&quot;x&quot;},&quot;y&quot;:{&quot;field&quot;:&quot;y&quot;}},&quot;id&quot;:&quot;1034&quot;,&quot;type&quot;:&quot;Circle&quot;},{&quot;attributes&quot;:{&quot;active_drag&quot;:&quot;auto&quot;,&quot;active_inspect&quot;:&quot;auto&quot;,&quot;active_multi&quot;:null,&quot;active_scroll&quot;:&quot;auto&quot;,&quot;active_tap&quot;:&quot;auto&quot;,&quot;tools&quot;:[{&quot;id&quot;:&quot;1020&quot;,&quot;type&quot;:&quot;PanTool&quot;},{&quot;id&quot;:&quot;1021&quot;,&quot;type&quot;:&quot;WheelZoomTool&quot;},{&quot;id&quot;:&quot;1022&quot;,&quot;type&quot;:&quot;BoxZoomTool&quot;},{&quot;id&quot;:&quot;1023&quot;,&quot;type&quot;:&quot;SaveTool&quot;},{&quot;id&quot;:&quot;1024&quot;,&quot;type&quot;:&quot;ResetTool&quot;},{&quot;id&quot;:&quot;1025&quot;,&quot;type&quot;:&quot;HelpTool&quot;}]},&quot;id&quot;:&quot;1026&quot;,&quot;type&quot;:&quot;Toolbar&quot;},{&quot;attributes&quot;:{&quot;formatter&quot;:{&quot;id&quot;:&quot;1040&quot;,&quot;type&quot;:&quot;BasicTickFormatter&quot;},&quot;ticker&quot;:{&quot;id&quot;:&quot;1011&quot;,&quot;type&quot;:&quot;BasicTicker&quot;}},&quot;id&quot;:&quot;1010&quot;,&quot;type&quot;:&quot;LinearAxis&quot;},{&quot;attributes&quot;:{&quot;data_source&quot;:{&quot;id&quot;:&quot;1033&quot;,&quot;type&quot;:&quot;ColumnDataSource&quot;},&quot;glyph&quot;:{&quot;id&quot;:&quot;1034&quot;,&quot;type&quot;:&quot;Circle&quot;},&quot;hover_glyph&quot;:null,&quot;muted_glyph&quot;:null,&quot;nonselection_glyph&quot;:{&quot;id&quot;:&quot;1035&quot;,&quot;type&quot;:&quot;Circle&quot;},&quot;selection_glyph&quot;:null,&quot;view&quot;:{&quot;id&quot;:&quot;1037&quot;,&quot;type&quot;:&quot;CDSView&quot;}},&quot;id&quot;:&quot;1036&quot;,&quot;type&quot;:&quot;GlyphRenderer&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1011&quot;,&quot;type&quot;:&quot;BasicTicker&quot;},{&quot;attributes&quot;:{&quot;callback&quot;:null},&quot;id&quot;:&quot;1004&quot;,&quot;type&quot;:&quot;DataRange1d&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1020&quot;,&quot;type&quot;:&quot;PanTool&quot;},{&quot;attributes&quot;:{&quot;text&quot;:&quot;&quot;},&quot;id&quot;:&quot;1039&quot;,&quot;type&quot;:&quot;Title&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1006&quot;,&quot;type&quot;:&quot;LinearScale&quot;},{&quot;attributes&quot;:{&quot;ticker&quot;:{&quot;id&quot;:&quot;1011&quot;,&quot;type&quot;:&quot;BasicTicker&quot;}},&quot;id&quot;:&quot;1014&quot;,&quot;type&quot;:&quot;Grid&quot;},{&quot;attributes&quot;:{&quot;callback&quot;:null},&quot;id&quot;:&quot;1002&quot;,&quot;type&quot;:&quot;DataRange1d&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1021&quot;,&quot;type&quot;:&quot;WheelZoomTool&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1040&quot;,&quot;type&quot;:&quot;BasicTickFormatter&quot;},{&quot;attributes&quot;:{&quot;formatter&quot;:{&quot;id&quot;:&quot;1042&quot;,&quot;type&quot;:&quot;BasicTickFormatter&quot;},&quot;ticker&quot;:{&quot;id&quot;:&quot;1016&quot;,&quot;type&quot;:&quot;BasicTicker&quot;}},&quot;id&quot;:&quot;1015&quot;,&quot;type&quot;:&quot;LinearAxis&quot;},{&quot;attributes&quot;:{},&quot;id&quot;:&quot;1042&quot;,&quot;type&quot;:&quot;BasicTickFormatter&quot;},{&quot;attributes&quot;:{&quot;overlay&quot;:{&quot;id&quot;:&quot;1044&quot;,&quot;type&quot;:&quot;BoxAnnotation&quot;}},&quot;id&quot;:&quot;1022&quot;,&quot;type&quot;:&quot;BoxZoomTool&quot;},{&quot;attributes&quot;:{&quot;below&quot;:[{&quot;id&quot;:&quot;1010&quot;,&quot;type&quot;:&quot;LinearAxis&quot;}],&quot;center&quot;:[{&quot;id&quot;:&quot;1014&quot;,&quot;type&quot;:&quot;Grid&quot;},{&quot;id&quot;:&quot;1019&quot;,&quot;type&quot;:&quot;Grid&quot;}],&quot;left&quot;:[{&quot;id&quot;:&quot;1015&quot;,&quot;type&quot;:&quot;LinearAxis&quot;}],&quot;renderers&quot;:[{&quot;id&quot;:&quot;1036&quot;,&quot;type&quot;:&quot;GlyphRenderer&quot;}],&quot;title&quot;:{&quot;id&quot;:&quot;1039&quot;,&quot;type&quot;:&quot;Title&quot;},&quot;toolbar&quot;:{&quot;id&quot;:&quot;1026&quot;,&quot;type&quot;:&quot;Toolbar&quot;},&quot;x_range&quot;:{&quot;id&quot;:&quot;1002&quot;,&quot;type&quot;:&quot;DataRange1d&quot;},&quot;x_scale&quot;:{&quot;id&quot;:&quot;1006&quot;,&quot;type&quot;:&quot;LinearScale&quot;},&quot;y_range&quot;:{&quot;id&quot;:&quot;1004&quot;,&quot;type&quot;:&quot;DataRange1d&quot;},&quot;y_scale&quot;:{&quot;id&quot;:&quot;1008&quot;,&quot;type&quot;:&quot;LinearScale&quot;}},&quot;id&quot;:&quot;1001&quot;,&quot;subtype&quot;:&quot;Figure&quot;,&quot;type&quot;:&quot;Plot&quot;}],&quot;root_ids&quot;:[&quot;1001&quot;]},&quot;title&quot;:&quot;Bokeh Application&quot;,&quot;version&quot;:&quot;1.4.0&quot;}}
-        &lt;/script&gt;
-        &lt;script type=&quot;text/javascript&quot;&gt;
-          (function() {
-            var fn = function() {
-              Bokeh.safely(function() {
-                (function(root) {
-                  function embed_document(root) {
-                    
-                  var docs_json = document.getElementById('1146').textContent;
-                  var render_items = [{&quot;docid&quot;:&quot;85c49e6c-531d-4827-98bd-4723a9986045&quot;,&quot;roots&quot;:{&quot;1001&quot;:&quot;ca2a4bcc-13e4-4a2e-b5de-4cfc587902a5&quot;}}];
-                  root.Bokeh.embed.embed_items(docs_json, render_items);
-                
-                  }
-                  if (root.Bokeh !== undefined) {
-                    embed_document(root);
-                  } else {
-                    var attempts = 0;
-                    var timer = setInterval(function(root) {
-                      if (root.Bokeh !== undefined) {
-                        clearInterval(timer);
-                        embed_document(root);
-                      } else {
-                        attempts++;
-                        if (attempts &gt; 100) {
-                          clearInterval(timer);
-                          console.log(&quot;Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing&quot;);
-                        }
-                      }
-                    }, 10, root)
-                  }
-                })(window);
-              });
-            };
-            if (document.readyState != &quot;loading&quot;) fn();
-            else document.addEventListener(&quot;DOMContentLoaded&quot;, fn);
-          })();
-        &lt;/script&gt;
-    
-  &lt;/body&gt;
-  
-&lt;/html&gt;
-
-&lt;p&gt;after the plot&lt;/p&gt;</content><author><name>ptrochim</name></author><summary type="html">Introduction</summary></entry><entry><title type="html">Maximum Likelihood Estimate</title><link href="http://localhost:4000/math/2020/05/15/mle.html" rel="alternate" type="text/html" title="Maximum Likelihood Estimate" /><published>2020-05-15T00:00:00+01:00</published><updated>2020-05-15T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/15/mle</id><content type="html" xml:base="http://localhost:4000/math/2020/05/15/mle.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+Beta is a conjugate of the binomial distr.&lt;/p&gt;</content><author><name>ptrochim</name></author><summary type="html">Introduction</summary></entry><entry><title type="html">Maximum Likelihood Estimate</title><link href="http://localhost:4000/math/2020/05/15/mle.html" rel="alternate" type="text/html" title="Maximum Likelihood Estimate" /><published>2020-05-15T00:00:00+01:00</published><updated>2020-05-15T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/15/mle</id><content type="html" xml:base="http://localhost:4000/math/2020/05/15/mle.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
 
 &lt;p&gt;This is a post in the series about statistical model fitting.
 It’s my attempt to explain various approaches and algorithms in a way I would have liked to learn them when I had first started studying this fascinating topic.&lt;/p&gt;
