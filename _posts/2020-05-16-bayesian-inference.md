@@ -124,10 +124,10 @@ Let's see what different notations mean visually. To get nice visual results, I 
 
 |Notation|Visual representation|Comment|
 |---|---|---|
-|$$P(X)$$|![Fig 1](https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_1.png)|1D probability mass/density function|
-|$$P(X=x)$$|![Fig 2](https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_2.png)|1D probability or density value|
-|$$P(X, Y)$$|![Fig 3](https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_3.png)|Joint (2D) probability mass/density function)
-|$$P(X=x, Y=y)$$|![Fig 4](https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_4.png)|Probability or density value|
+|$$P(X)$$|![Fig 1](https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_1.png)|Probability density function|
+|$$P(X=x)$$|![Fig 2](https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_2.png)|Probability density value|
+|$$P(X, Y)$$|![Fig 3](https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_3.png)|Joint (2D) probability density function)
+|$$P(X=x, Y=y)$$|![Fig 4](https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_4.png)|Probability density value|
 |$$P(X, Y=y)$$ and $$P(X \| Y=y)$$|![Fig 5](https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_5.png)|A slice through a 2D function|
 
 Notice how the conditional probability slices through the data. We could as well use the notation $$P(X, Y=y)$$, but the vertical bar notation was adopted for this purpose, and we call this slice "conditional" probability to emphasize that we are fixing the value of one of the variables.

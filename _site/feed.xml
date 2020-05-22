@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-22T13:22:50+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-22T16:55:33+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
 </subtitle><entry><title type="html">Bayesian Inference</title><link href="http://localhost:4000/math/2020/05/16/bayesian-inference.html" rel="alternate" type="text/html" title="Bayesian Inference" /><published>2020-05-16T00:00:00+01:00</published><updated>2020-05-16T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/16/bayesian-inference</id><content type="html" xml:base="http://localhost:4000/math/2020/05/16/bayesian-inference.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;This is a post in the series about statistical model fitting.
@@ -140,22 +140,22 @@ We know for sure that it’s NOT &lt;script type=&quot;math/tex&quot;&gt;P(\Thet
     &lt;tr&gt;
       &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X)&lt;/script&gt;&lt;/td&gt;
       &lt;td&gt;&lt;img src=&quot;https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_1.png&quot; alt=&quot;Fig 1&quot; /&gt;&lt;/td&gt;
-      &lt;td&gt;1D probability mass/density function&lt;/td&gt;
+      &lt;td&gt;Probability density function&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X=x)&lt;/script&gt;&lt;/td&gt;
       &lt;td&gt;&lt;img src=&quot;https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_2.png&quot; alt=&quot;Fig 2&quot; /&gt;&lt;/td&gt;
-      &lt;td&gt;1D probability or density value&lt;/td&gt;
+      &lt;td&gt;Probability density value&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X, Y)&lt;/script&gt;&lt;/td&gt;
       &lt;td&gt;&lt;img src=&quot;https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_3.png&quot; alt=&quot;Fig 3&quot; /&gt;&lt;/td&gt;
-      &lt;td&gt;Joint (2D) probability mass/density function)&lt;/td&gt;
+      &lt;td&gt;Joint (2D) probability density function)&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X=x, Y=y)&lt;/script&gt;&lt;/td&gt;
       &lt;td&gt;&lt;img src=&quot;https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_4.png&quot; alt=&quot;Fig 4&quot; /&gt;&lt;/td&gt;
-      &lt;td&gt;Probability or density value&lt;/td&gt;
+      &lt;td&gt;Probability density value&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X, Y=y)&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;P(X | Y=y)&lt;/script&gt;&lt;/td&gt;
