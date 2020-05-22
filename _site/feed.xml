@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-22T16:55:33+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-22T17:22:27+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
 </subtitle><entry><title type="html">Bayesian Inference</title><link href="http://localhost:4000/math/2020/05/16/bayesian-inference.html" rel="alternate" type="text/html" title="Bayesian Inference" /><published>2020-05-16T00:00:00+01:00</published><updated>2020-05-16T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/16/bayesian-inference</id><content type="html" xml:base="http://localhost:4000/math/2020/05/16/bayesian-inference.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;This is a post in the series about statistical model fitting.
@@ -27,14 +27,14 @@ I would be far more likely to respond to the challenge if I was attending a fair
 
 &lt;h1 id=&quot;two-distributions&quot;&gt;Two distributions&lt;/h1&gt;
 
-&lt;p&gt;Mathematically speaking, we are still looking for the parameters of a distribution that models the Random Variable that is the clown’s coin.&lt;/p&gt;
+&lt;p&gt;Mathematically speaking, we are still looking for the hyperparameters of a distribution that models the Random Variable that is the clown’s coin.&lt;/p&gt;
 
 &lt;p&gt;However now in addition to solid evidence, we also have our &lt;em&gt;prior&lt;/em&gt; beliefs. Those two combined allow us not only to make a guess about the parameter value, but also reflect our level of &lt;em&gt;confidence&lt;/em&gt; in that guess.&lt;/p&gt;
 
-&lt;p&gt;If you recall, MLE direcly calculated the values of distribution parameters - it didn’t produce any value that would suggest a doubt about that value. It made sense, since the method relied exclusively on the data, which is a solid evidence. So unless there was other data available, the method was 100% confident about its estimate.&lt;/p&gt;
+&lt;p&gt;If you recall, MLE direcly calculated the values of distribution hyperparameters - it didn’t produce any value that would suggest a doubt about that value. It made sense, since the method relied exclusively on the data, which is a solid evidence. So unless there was other data available, the method was 100% confident about its estimate.&lt;/p&gt;
 
 &lt;p&gt;Right now we want to express our &lt;em&gt;doubt&lt;/em&gt;, and &lt;em&gt;doubts&lt;/em&gt; are expressed using… distributions.
-That’s right - we are going to find another distribution, which we will use to &lt;em&gt;sample&lt;/em&gt; the values of our &lt;em&gt;target distribution&lt;/em&gt; parameters.&lt;/p&gt;
+That’s right - we are going to find another distribution, which we will use to &lt;em&gt;sample&lt;/em&gt; the values of our &lt;em&gt;target distribution&lt;/em&gt; hyperparameters.&lt;/p&gt;
 
 &lt;p&gt;To reiterate:&lt;/p&gt;
 
@@ -45,7 +45,7 @@ That’s right - we are going to find another distribution, which we will use to
 
 &lt;h1 id=&quot;bayesian-inference&quot;&gt;Bayesian Inference&lt;/h1&gt;
 
-&lt;p&gt;As a reminder, the task of any parameter inference is to find parameters &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; based on some observed data &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;.
+&lt;p&gt;As a reminder, the task of any parameter inference is to find hyperparameters &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; based on some observed data &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;.
 In the specific case of Bayesian Inference, &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; is estimated indirectly rather than being directly calculated.&lt;/p&gt;
 
 &lt;p&gt;This estimation is achieved by introducing a random variable &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt; that models the distribution of the parameter values.
@@ -57,7 +57,7 @@ Our task now is to calculate the values of &lt;em&gt;that&lt;/em&gt; distributio
 
 &lt;p&gt;The method makes use of the famous &lt;a href=&quot;https://en.wikipedia.org/wiki/Bayes%27_theorem&quot;&gt;Bayes Theorem&lt;/a&gt;.
 It’s quite ubiquitous, and there is a ton of good material out there explaining it in great detail. Therefore I’m going to assume that you’re vaguely familiar with it as well as its main use cases.
-If I may recommend a book that had the largest impact on my understanding, it would be: &lt;a href=&quot;&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+If I may recommend a book that had the largest impact on my understanding, it would be &lt;a href=&quot;https://www.amazon.co.uk/Bayesian-Statistics-Beginners-step-step/dp/0198841302&quot;&gt;Bayesian Statistics for Beginners&lt;/a&gt; by Ruth M. Mickey and Therese Marie Donovan.&lt;/p&gt;
 
 &lt;p&gt;Let’s quickly recap the theorem and how can it lend itself ot our goal:&lt;/p&gt;
 
@@ -85,13 +85,13 @@ If I may recommend a book that had the largest impact on my understanding, it wo
 
 &lt;h1 id=&quot;meaning-of-random-variables-a-and-b&quot;&gt;Meaning of random variables A and B&lt;/h1&gt;
 
-&lt;p&gt;We want to estimate the values of parameters given some observed data, and the left hand side of Bayes theorem is:&lt;/p&gt;
+&lt;p&gt;We want to estimate the values of hyperparameters given some observed data, and the left hand side of Bayes theorem is:&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;P(A|B)&lt;/script&gt;
 
 &lt;p&gt;That would make:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; stand for the random variable that represents the parameters estimation &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; stand for the random variable that represents the hyperparameters estimation &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt;&lt;/li&gt;
   &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;B&lt;/script&gt; be the observed data &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -116,7 +116,7 @@ Notice that &lt;script type=&quot;math/tex&quot;&gt;P(X | \Theta)&lt;/script&gt;
 It is that distribution that will express our belief about the parameterization of the data distribution.&lt;/p&gt;
 
 &lt;p&gt;But then how do we write down the &lt;em&gt;target data distribution&lt;/em&gt;? We have several options, all of which definitely need to take &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt; into account as well as the random variable &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;, which models our data.
-We know for sure that it’s NOT &lt;script type=&quot;math/tex&quot;&gt;P(\Theta)&lt;/script&gt; - that’s the distribution of the parameters. So is it:&lt;/p&gt;
+We know for sure that it’s NOT &lt;script type=&quot;math/tex&quot;&gt;P(\Theta)&lt;/script&gt; - that’s the distribution of the hyperparameters. So is it:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X, \Theta)&lt;/script&gt; ?&lt;/li&gt;
@@ -170,7 +170,7 @@ We know for sure that it’s NOT &lt;script type=&quot;math/tex&quot;&gt;P(\Thet
 &lt;p&gt;Let’s see which type of notation best describe the &lt;em&gt;target distribution&lt;/em&gt;:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X, \Theta)&lt;/script&gt; - both the data &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt; and the parameters &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt; haven’t been sampled, and we are talking about a joint function of both&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X, \Theta)&lt;/script&gt; - both the data &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt; and the hyperparameters &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt; haven’t been sampled, and we are talking about a joint function of both&lt;/li&gt;
   &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;P(X \| \Theta)&lt;/script&gt; - we have observed some value of &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt; and we want to use it to take a slice from &lt;script type=&quot;math/tex&quot;&gt;P(X, \Theta)&lt;/script&gt;. We will consider this slice a 1D distribution of &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;.&lt;/li&gt;
   &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;P(\Theta \| X)&lt;/script&gt; - we have observed some value of &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt; and we want to use it to take a slice from &lt;script type=&quot;math/tex&quot;&gt;P(X, \Theta)&lt;/script&gt;. We will consider this slice a 1D distribution of &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -234,7 +234,7 @@ It should be written as &lt;script type=&quot;math/tex&quot;&gt;P(X=x|\Theta=\th
 
 &lt;p&gt;So why is it that in the case of likelihood it wouldn’t?&lt;/p&gt;
 
-&lt;h1 id=&quot;the-parameters-of-the-likelihood-function&quot;&gt;The parameters of the likelihood function&lt;/h1&gt;
+&lt;h1 id=&quot;the-hyperparameters-of-the-likelihood-function&quot;&gt;The hyperparameters of the likelihood function&lt;/h1&gt;
 
 &lt;p&gt;The answer lies in the function support - another nuance of the notation we usually don’t bother to focus on at all.&lt;/p&gt;
 
@@ -243,8 +243,8 @@ It should be written as &lt;script type=&quot;math/tex&quot;&gt;P(X=x|\Theta=\th
 &lt;p&gt;The equation of Binomial distribution probability &lt;em&gt;mass&lt;/em&gt; function: &lt;script type=&quot;math/tex&quot;&gt;f(k, n, p) = \binom{n}{k} p^{k}(1-p)^{n-k}&lt;/script&gt;. It’s a discrete distribution.
 It’s discreteness stems from the fact that its support is a subset of integers defined as &lt;script type=&quot;math/tex&quot;&gt;k \in {0..n}&lt;/script&gt;.&lt;/p&gt;
 
-&lt;p&gt;One would use this equation to express a distribution of probability by choosing some value of &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;p&lt;/script&gt;, and then iterating over all possible values of &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; and running the three through this equation.
-Let’s say that we want to model the distribution of getting k Heads in 10 tosses, and the tosses are performed with a fair coin (p=0.5).
+&lt;p&gt;One would use this equation to express a distribution of probability by choosing some value of &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;p&lt;/script&gt;, and then iterating over all possible values of parameter &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; and running the three through this equation.
+Let’s say that we want to model the distribution of getting &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; Heads in 10 tosses, and the tosses are performed with a fair coin with the hyperparameter &lt;script type=&quot;math/tex&quot;&gt;p=0.5&lt;/script&gt;.
 The equation would then take the form:&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;f(10, k, 0.5) = \binom{10}{k} 0.5^{k}(1-0.5)^{10-k}&lt;/script&gt;
@@ -272,7 +272,7 @@ To be more specific - we have performed 10 tosses, 3 of them were Heads. How doe
 &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;f(n, k, p) = P(X \| \Theta)&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;X: k&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\Theta: (n, p)&lt;/script&gt;.&lt;/p&gt;
 
 &lt;p&gt;The only justification I can think of at the time of writing this article is that this is a notation abuse.
-As we’ve seen in the case of Binomial distribution function (and other functions follow suite), there is a very specific support defined and one can’t just turn other parameters into random variables and expect to obtain a joint distributon.&lt;/p&gt;
+As we’ve seen in the case of Binomial distribution function (and other functions follow suite), there is a very specific support defined and one can’t just turn other hyperparameters into random variables and expect to obtain a joint distributon.&lt;/p&gt;
 
 &lt;p&gt;In addition to causing confusion, it also introduces mathematical discrepancy - the nominator can no longer be treated as a distribution. So in order to bring the posterior back on track to being a regular distribution, another term needs to step in and act as a normalizer.&lt;/p&gt;
 
@@ -329,7 +329,7 @@ I suspect that he will try to trick me and he’s somehow controlling the coin.&
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;P(\Theta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)}\theta^{\alpha - 1}(1-\theta)^{\beta - 1}&lt;/script&gt;
 
-&lt;p&gt;with parameters &lt;script type=&quot;math/tex&quot;&gt;alpha=1&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;beta=3&lt;/script&gt; as a prior, which I think best reflects that belief:&lt;/p&gt;
+&lt;p&gt;with hyperparameters &lt;script type=&quot;math/tex&quot;&gt;alpha=1&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;beta=3&lt;/script&gt; as a prior, which I think best reflects that belief:&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;P(\Theta) = \frac{\Gamma(4)}{\Gamma(1)\Gamma(3)}\theta^{0}(1-\theta)^{2} = 3 (1-\theta)^{2}&lt;/script&gt;
 
@@ -340,7 +340,7 @@ I suspect that he will try to trick me and he’s somehow controlling the coin.&
 &lt;p&gt;The likelihood function needs to appraise the collected data and return a &lt;em&gt;metric&lt;/em&gt; (not a probability, but a metric), how likely that data was given the hypothesized parameter values.
 The choice of the function is arbitrary, and often dictated by a similarity to a particular distribution model.&lt;/p&gt;
 
-&lt;p&gt;That is also why I chose to use the Binomial Distribution function with fixed parameters &lt;script type=&quot;math/tex&quot;&gt;(n, k)&lt;/script&gt; as the likelihood function:&lt;/p&gt;
+&lt;p&gt;That is also why I chose to use the Binomial Distribution function with fixed hyperparameter &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; and fixed parameter &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; as the likelihood function:&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;P(X\|\Theta) = \binom{10}{7}\theta^{7}(1-\theta)^3=120[\theta^{7}(1-\theta)^3]&lt;/script&gt;
 
@@ -374,15 +374,69 @@ The choice of the function is arbitrary, and often dictated by a similarity to a
 
 &lt;p&gt;&lt;img src=&quot;https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_10.png&quot; alt=&quot;Fig 10&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;And just to verify that it actually represents a probability distribution, its integral in &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; support equals 1:&lt;/p&gt;
+&lt;p&gt;I marked the mean with the red bar. Notice that despite our prior belief that the coin if biased towards Tails and that the clown is somehow controlling it, in light of the evidence (7 Heads out of 10 tosses) we revised our belief and now we are inclined to think that the coin is slightly biased towards the Heads.&lt;/p&gt;
+
+&lt;p&gt;And just to verify that the result actually represents a probability distribution, its integral in &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; support equals 1:&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\int_{0}^{1} 10296 \theta^{7}(1-\theta)^5 = 1&lt;/script&gt;
 
+&lt;h2 id=&quot;continuous-update-of-the-belief&quot;&gt;Continuous update of the belief&lt;/h2&gt;
+
+&lt;p&gt;In the example above we have observed a single outcome of the experiment - the clown tossed Heads 7 times. However imagine a situation when instead of engaging the clown immediately, you stand and watch as other passers by give the challenge a go.&lt;/p&gt;
+
+&lt;p&gt;The framework of Bayesian Inference is built for the very purpose of continuous refinement of your beliefs in light of new evidence. It is achieved by substituting the posterior for the prior.&lt;/p&gt;
+
+&lt;p&gt;There is a small caveat though, and it’s related to being able to reuse the same math over and over again. It involves using something called “Conjugate priors”.&lt;/p&gt;
+
 &lt;h1 id=&quot;conjugate-priors&quot;&gt;Conjugate priors&lt;/h1&gt;
 
-&lt;p&gt;Explain that in order to be able to use posterior as the next iteration prior, MLE and prior need to be conjugate distributions
-Quote Pearse stats book on the conjugate prior
-Beta is a conjugate of the binomial distr.&lt;/p&gt;</content><author><name>ptrochim</name></author><summary type="html">Introduction</summary></entry><entry><title type="html">Maximum Likelihood Estimate</title><link href="http://localhost:4000/math/2020/05/15/mle.html" rel="alternate" type="text/html" title="Maximum Likelihood Estimate" /><published>2020-05-15T00:00:00+01:00</published><updated>2020-05-15T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/15/mle</id><content type="html" xml:base="http://localhost:4000/math/2020/05/15/mle.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;There are some distribution functions which, when multiplied by other distribution functions, produce the updated versions of themselves.
+They are called conjugate priors, and several such pairs exist. I list some of them below, but please have a look at this &lt;a href=&quot;https://en.wikipedia.org/wiki/Conjugate_prior&quot;&gt;Wikipedia page&lt;/a&gt; for a comprehensive list coupled with the hyperparameter update rules:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Likelihood&lt;/th&gt;
+      &lt;th&gt;Conjugate Prior&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Bernoulli&lt;/td&gt;
+      &lt;td&gt;Beta&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Binomial&lt;/td&gt;
+      &lt;td&gt;Beta&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Normal&lt;/td&gt;
+      &lt;td&gt;Normal&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Poisson&lt;/td&gt;
+      &lt;td&gt;Gamma&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Multinomial&lt;/td&gt;
+      &lt;td&gt;Dirichlet&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;This is a higly sought after property. Not only does it allow to directly plug in the posterior as the prior. In all cases we end up with simple parameter update rules that allow us to perform Bayesian Inference with very little math.&lt;/p&gt;
+
+&lt;p&gt;In the example above I went through a lot of math - even some integrals were there. All of that disappears when you’re using Conjugate Priors.&lt;/p&gt;
+
+&lt;h1 id=&quot;literature&quot;&gt;Literature&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://books.google.co.uk/books?id=fCmpBwAAQBAJ&amp;amp;source=gbs_similarbooks&quot;&gt;Probability and statistics&lt;/a&gt;, Morris DeGroot, Mark Schervish&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.amazon.co.uk/Bayesian-Statistics-Beginners-step-step/dp/0198841302&quot;&gt;Bayesian Statistics for Beginners&lt;/a&gt;, Ruth M. Mickey, Therese Marie Donovan&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Bayes%27_theorem&quot;&gt;Wikipedia: Bayes Theorem&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Bayesian_inference&quot;&gt;Wikipedia: Bayesian Inference&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Conjugate_prior&quot;&gt;Wikipedia: Conjugate prior&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>ptrochim</name></author><summary type="html">Introduction</summary></entry><entry><title type="html">Maximum Likelihood Estimate</title><link href="http://localhost:4000/math/2020/05/15/mle.html" rel="alternate" type="text/html" title="Maximum Likelihood Estimate" /><published>2020-05-15T00:00:00+01:00</published><updated>2020-05-15T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/15/mle</id><content type="html" xml:base="http://localhost:4000/math/2020/05/15/mle.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
 
 &lt;p&gt;This is a post in the series about statistical model fitting.
 It’s my attempt to explain various approaches and algorithms in a way I would have liked to learn them when I had first started studying this fascinating topic.&lt;/p&gt;

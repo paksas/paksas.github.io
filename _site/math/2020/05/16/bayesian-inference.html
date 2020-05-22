@@ -97,14 +97,14 @@ I would be far more likely to respond to the challenge if I was attending a fair
 
 <h1 id="two-distributions">Two distributions</h1>
 
-<p>Mathematically speaking, we are still looking for the parameters of a distribution that models the Random Variable that is the clown’s coin.</p>
+<p>Mathematically speaking, we are still looking for the hyperparameters of a distribution that models the Random Variable that is the clown’s coin.</p>
 
 <p>However now in addition to solid evidence, we also have our <em>prior</em> beliefs. Those two combined allow us not only to make a guess about the parameter value, but also reflect our level of <em>confidence</em> in that guess.</p>
 
-<p>If you recall, MLE direcly calculated the values of distribution parameters - it didn’t produce any value that would suggest a doubt about that value. It made sense, since the method relied exclusively on the data, which is a solid evidence. So unless there was other data available, the method was 100% confident about its estimate.</p>
+<p>If you recall, MLE direcly calculated the values of distribution hyperparameters - it didn’t produce any value that would suggest a doubt about that value. It made sense, since the method relied exclusively on the data, which is a solid evidence. So unless there was other data available, the method was 100% confident about its estimate.</p>
 
 <p>Right now we want to express our <em>doubt</em>, and <em>doubts</em> are expressed using… distributions.
-That’s right - we are going to find another distribution, which we will use to <em>sample</em> the values of our <em>target distribution</em> parameters.</p>
+That’s right - we are going to find another distribution, which we will use to <em>sample</em> the values of our <em>target distribution</em> hyperparameters.</p>
 
 <p>To reiterate:</p>
 
@@ -115,7 +115,7 @@ That’s right - we are going to find another distribution, which we will use to
 
 <h1 id="bayesian-inference">Bayesian Inference</h1>
 
-<p>As a reminder, the task of any parameter inference is to find parameters <script type="math/tex">\theta</script> based on some observed data <script type="math/tex">X</script>.
+<p>As a reminder, the task of any parameter inference is to find hyperparameters <script type="math/tex">\theta</script> based on some observed data <script type="math/tex">X</script>.
 In the specific case of Bayesian Inference, <script type="math/tex">\theta</script> is estimated indirectly rather than being directly calculated.</p>
 
 <p>This estimation is achieved by introducing a random variable <script type="math/tex">\Theta</script> that models the distribution of the parameter values.
@@ -127,7 +127,7 @@ Our task now is to calculate the values of <em>that</em> distribution, rather th
 
 <p>The method makes use of the famous <a href="https://en.wikipedia.org/wiki/Bayes%27_theorem">Bayes Theorem</a>.
 It’s quite ubiquitous, and there is a ton of good material out there explaining it in great detail. Therefore I’m going to assume that you’re vaguely familiar with it as well as its main use cases.
-If I may recommend a book that had the largest impact on my understanding, it would be: <a href=""></a></p>
+If I may recommend a book that had the largest impact on my understanding, it would be <a href="https://www.amazon.co.uk/Bayesian-Statistics-Beginners-step-step/dp/0198841302">Bayesian Statistics for Beginners</a> by Ruth M. Mickey and Therese Marie Donovan.</p>
 
 <p>Let’s quickly recap the theorem and how can it lend itself ot our goal:</p>
 
@@ -155,13 +155,13 @@ If I may recommend a book that had the largest impact on my understanding, it wo
 
 <h1 id="meaning-of-random-variables-a-and-b">Meaning of random variables A and B</h1>
 
-<p>We want to estimate the values of parameters given some observed data, and the left hand side of Bayes theorem is:</p>
+<p>We want to estimate the values of hyperparameters given some observed data, and the left hand side of Bayes theorem is:</p>
 
 <script type="math/tex; mode=display">P(A|B)</script>
 
 <p>That would make:</p>
 <ul>
-  <li><script type="math/tex">A</script> stand for the random variable that represents the parameters estimation <script type="math/tex">\Theta</script></li>
+  <li><script type="math/tex">A</script> stand for the random variable that represents the hyperparameters estimation <script type="math/tex">\Theta</script></li>
   <li><script type="math/tex">B</script> be the observed data <script type="math/tex">X</script></li>
 </ul>
 
@@ -186,7 +186,7 @@ Notice that <script type="math/tex">P(X | \Theta)</script> appears in the Bayesi
 It is that distribution that will express our belief about the parameterization of the data distribution.</p>
 
 <p>But then how do we write down the <em>target data distribution</em>? We have several options, all of which definitely need to take <script type="math/tex">\Theta</script> into account as well as the random variable <script type="math/tex">X</script>, which models our data.
-We know for sure that it’s NOT <script type="math/tex">P(\Theta)</script> - that’s the distribution of the parameters. So is it:</p>
+We know for sure that it’s NOT <script type="math/tex">P(\Theta)</script> - that’s the distribution of the hyperparameters. So is it:</p>
 
 <ul>
   <li><script type="math/tex">P(X, \Theta)</script> ?</li>
@@ -240,7 +240,7 @@ We know for sure that it’s NOT <script type="math/tex">P(\Theta)</script> - th
 <p>Let’s see which type of notation best describe the <em>target distribution</em>:</p>
 
 <ul>
-  <li><script type="math/tex">P(X, \Theta)</script> - both the data <script type="math/tex">X</script> and the parameters <script type="math/tex">\Theta</script> haven’t been sampled, and we are talking about a joint function of both</li>
+  <li><script type="math/tex">P(X, \Theta)</script> - both the data <script type="math/tex">X</script> and the hyperparameters <script type="math/tex">\Theta</script> haven’t been sampled, and we are talking about a joint function of both</li>
   <li><script type="math/tex">P(X \| \Theta)</script> - we have observed some value of <script type="math/tex">\Theta</script> and we want to use it to take a slice from <script type="math/tex">P(X, \Theta)</script>. We will consider this slice a 1D distribution of <script type="math/tex">X</script>.</li>
   <li><script type="math/tex">P(\Theta \| X)</script> - we have observed some value of <script type="math/tex">X</script> and we want to use it to take a slice from <script type="math/tex">P(X, \Theta)</script>. We will consider this slice a 1D distribution of <script type="math/tex">\Theta</script></li>
 </ul>
@@ -304,7 +304,7 @@ It should be written as <script type="math/tex">P(X=x|\Theta=\theta)</script> ra
 
 <p>So why is it that in the case of likelihood it wouldn’t?</p>
 
-<h1 id="the-parameters-of-the-likelihood-function">The parameters of the likelihood function</h1>
+<h1 id="the-hyperparameters-of-the-likelihood-function">The hyperparameters of the likelihood function</h1>
 
 <p>The answer lies in the function support - another nuance of the notation we usually don’t bother to focus on at all.</p>
 
@@ -313,8 +313,8 @@ It should be written as <script type="math/tex">P(X=x|\Theta=\theta)</script> ra
 <p>The equation of Binomial distribution probability <em>mass</em> function: <script type="math/tex">f(k, n, p) = \binom{n}{k} p^{k}(1-p)^{n-k}</script>. It’s a discrete distribution.
 It’s discreteness stems from the fact that its support is a subset of integers defined as <script type="math/tex">k \in {0..n}</script>.</p>
 
-<p>One would use this equation to express a distribution of probability by choosing some value of <script type="math/tex">n</script> and <script type="math/tex">p</script>, and then iterating over all possible values of <script type="math/tex">k</script> and running the three through this equation.
-Let’s say that we want to model the distribution of getting k Heads in 10 tosses, and the tosses are performed with a fair coin (p=0.5).
+<p>One would use this equation to express a distribution of probability by choosing some value of <script type="math/tex">n</script> and <script type="math/tex">p</script>, and then iterating over all possible values of parameter <script type="math/tex">k</script> and running the three through this equation.
+Let’s say that we want to model the distribution of getting <script type="math/tex">k</script> Heads in 10 tosses, and the tosses are performed with a fair coin with the hyperparameter <script type="math/tex">p=0.5</script>.
 The equation would then take the form:</p>
 
 <script type="math/tex; mode=display">f(10, k, 0.5) = \binom{10}{k} 0.5^{k}(1-0.5)^{10-k}</script>
@@ -342,7 +342,7 @@ To be more specific - we have performed 10 tosses, 3 of them were Heads. How doe
 <p><script type="math/tex">f(n, k, p) = P(X \| \Theta)</script> where <script type="math/tex">X: k</script> and <script type="math/tex">\Theta: (n, p)</script>.</p>
 
 <p>The only justification I can think of at the time of writing this article is that this is a notation abuse.
-As we’ve seen in the case of Binomial distribution function (and other functions follow suite), there is a very specific support defined and one can’t just turn other parameters into random variables and expect to obtain a joint distributon.</p>
+As we’ve seen in the case of Binomial distribution function (and other functions follow suite), there is a very specific support defined and one can’t just turn other hyperparameters into random variables and expect to obtain a joint distributon.</p>
 
 <p>In addition to causing confusion, it also introduces mathematical discrepancy - the nominator can no longer be treated as a distribution. So in order to bring the posterior back on track to being a regular distribution, another term needs to step in and act as a normalizer.</p>
 
@@ -399,7 +399,7 @@ I suspect that he will try to trick me and he’s somehow controlling the coin.<
 
 <script type="math/tex; mode=display">P(\Theta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)}\theta^{\alpha - 1}(1-\theta)^{\beta - 1}</script>
 
-<p>with parameters <script type="math/tex">alpha=1</script> and <script type="math/tex">beta=3</script> as a prior, which I think best reflects that belief:</p>
+<p>with hyperparameters <script type="math/tex">alpha=1</script> and <script type="math/tex">beta=3</script> as a prior, which I think best reflects that belief:</p>
 
 <script type="math/tex; mode=display">P(\Theta) = \frac{\Gamma(4)}{\Gamma(1)\Gamma(3)}\theta^{0}(1-\theta)^{2} = 3 (1-\theta)^{2}</script>
 
@@ -410,7 +410,7 @@ I suspect that he will try to trick me and he’s somehow controlling the coin.<
 <p>The likelihood function needs to appraise the collected data and return a <em>metric</em> (not a probability, but a metric), how likely that data was given the hypothesized parameter values.
 The choice of the function is arbitrary, and often dictated by a similarity to a particular distribution model.</p>
 
-<p>That is also why I chose to use the Binomial Distribution function with fixed parameters <script type="math/tex">(n, k)</script> as the likelihood function:</p>
+<p>That is also why I chose to use the Binomial Distribution function with fixed hyperparameter <script type="math/tex">n</script> and fixed parameter <script type="math/tex">k</script> as the likelihood function:</p>
 
 <script type="math/tex; mode=display">P(X\|\Theta) = \binom{10}{7}\theta^{7}(1-\theta)^3=120[\theta^{7}(1-\theta)^3]</script>
 
@@ -444,15 +444,69 @@ The choice of the function is arbitrary, and often dictated by a similarity to a
 
 <p><img src="https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_10.png" alt="Fig 10" /></p>
 
-<p>And just to verify that it actually represents a probability distribution, its integral in <script type="math/tex">\theta</script> support equals 1:</p>
+<p>I marked the mean with the red bar. Notice that despite our prior belief that the coin if biased towards Tails and that the clown is somehow controlling it, in light of the evidence (7 Heads out of 10 tosses) we revised our belief and now we are inclined to think that the coin is slightly biased towards the Heads.</p>
+
+<p>And just to verify that the result actually represents a probability distribution, its integral in <script type="math/tex">\theta</script> support equals 1:</p>
 
 <script type="math/tex; mode=display">\int_{0}^{1} 10296 \theta^{7}(1-\theta)^5 = 1</script>
 
+<h2 id="continuous-update-of-the-belief">Continuous update of the belief</h2>
+
+<p>In the example above we have observed a single outcome of the experiment - the clown tossed Heads 7 times. However imagine a situation when instead of engaging the clown immediately, you stand and watch as other passers by give the challenge a go.</p>
+
+<p>The framework of Bayesian Inference is built for the very purpose of continuous refinement of your beliefs in light of new evidence. It is achieved by substituting the posterior for the prior.</p>
+
+<p>There is a small caveat though, and it’s related to being able to reuse the same math over and over again. It involves using something called “Conjugate priors”.</p>
+
 <h1 id="conjugate-priors">Conjugate priors</h1>
 
-<p>Explain that in order to be able to use posterior as the next iteration prior, MLE and prior need to be conjugate distributions
-Quote Pearse stats book on the conjugate prior
-Beta is a conjugate of the binomial distr.</p>
+<p>There are some distribution functions which, when multiplied by other distribution functions, produce the updated versions of themselves.
+They are called conjugate priors, and several such pairs exist. I list some of them below, but please have a look at this <a href="https://en.wikipedia.org/wiki/Conjugate_prior">Wikipedia page</a> for a comprehensive list coupled with the hyperparameter update rules:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Likelihood</th>
+      <th>Conjugate Prior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Bernoulli</td>
+      <td>Beta</td>
+    </tr>
+    <tr>
+      <td>Binomial</td>
+      <td>Beta</td>
+    </tr>
+    <tr>
+      <td>Normal</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <td>Poisson</td>
+      <td>Gamma</td>
+    </tr>
+    <tr>
+      <td>Multinomial</td>
+      <td>Dirichlet</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This is a higly sought after property. Not only does it allow to directly plug in the posterior as the prior. In all cases we end up with simple parameter update rules that allow us to perform Bayesian Inference with very little math.</p>
+
+<p>In the example above I went through a lot of math - even some integrals were there. All of that disappears when you’re using Conjugate Priors.</p>
+
+<h1 id="literature">Literature</h1>
+
+<ol>
+  <li><a href="https://books.google.co.uk/books?id=fCmpBwAAQBAJ&amp;source=gbs_similarbooks">Probability and statistics</a>, Morris DeGroot, Mark Schervish</li>
+  <li><a href="https://www.amazon.co.uk/Bayesian-Statistics-Beginners-step-step/dp/0198841302">Bayesian Statistics for Beginners</a>, Ruth M. Mickey, Therese Marie Donovan</li>
+  <li><a href="https://en.wikipedia.org/wiki/Bayes%27_theorem">Wikipedia: Bayes Theorem</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Bayesian_inference">Wikipedia: Bayesian Inference</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Conjugate_prior">Wikipedia: Conjugate prior</a></li>
+</ol>
 
 
   </div><a class="u-url" href="/math/2020/05/16/bayesian-inference.html" hidden></a>

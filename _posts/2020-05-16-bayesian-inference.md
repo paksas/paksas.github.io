@@ -31,14 +31,14 @@ A fair clown is something rather desired, whereas one encounteres in a back alle
 
 # Two distributions
 
-Mathematically speaking, we are still looking for the parameters of a distribution that models the Random Variable that is the clown's coin.
+Mathematically speaking, we are still looking for the hyperparameters of a distribution that models the Random Variable that is the clown's coin.
 
 However now in addition to solid evidence, we also have our *prior* beliefs. Those two combined allow us not only to make a guess about the parameter value, but also reflect our level of *confidence* in that guess.
 
-If you recall, MLE direcly calculated the values of distribution parameters - it didn't produce any value that would suggest a doubt about that value. It made sense, since the method relied exclusively on the data, which is a solid evidence. So unless there was other data available, the method was 100% confident about its estimate.
+If you recall, MLE direcly calculated the values of distribution hyperparameters - it didn't produce any value that would suggest a doubt about that value. It made sense, since the method relied exclusively on the data, which is a solid evidence. So unless there was other data available, the method was 100% confident about its estimate.
 
 Right now we want to express our *doubt*, and *doubts* are expressed using... distributions.
-That's right - we are going to find another distribution, which we will use to *sample* the values of our *target distribution* parameters.
+That's right - we are going to find another distribution, which we will use to *sample* the values of our *target distribution* hyperparameters.
 
 To reiterate:
 
@@ -47,7 +47,7 @@ To reiterate:
 
 # Bayesian Inference
 
-As a reminder, the task of any parameter inference is to find parameters $$\theta$$ based on some observed data $$X$$.
+As a reminder, the task of any parameter inference is to find hyperparameters $$\theta$$ based on some observed data $$X$$.
 In the specific case of Bayesian Inference, $$\theta$$ is estimated indirectly rather than being directly calculated. 
 
 This estimation is achieved by introducing a random variable $$\Theta$$ that models the distribution of the parameter values.
@@ -59,7 +59,7 @@ $$\begin{cases} \theta \sim P(\Theta) \\ x \sim P(X | \Theta=\theta) \end{cases}
 
 The method makes use of the famous [Bayes Theorem](https://en.wikipedia.org/wiki/Bayes%27_theorem).
 It's quite ubiquitous, and there is a ton of good material out there explaining it in great detail. Therefore I'm going to assume that you're vaguely familiar with it as well as its main use cases.
-If I may recommend a book that had the largest impact on my understanding, it would be: []()
+If I may recommend a book that had the largest impact on my understanding, it would be [Bayesian Statistics for Beginners](https://www.amazon.co.uk/Bayesian-Statistics-Beginners-step-step/dp/0198841302) by Ruth M. Mickey and Therese Marie Donovan.
 
 Let's quickly recap the theorem and how can it lend itself ot our goal:
 
@@ -83,12 +83,12 @@ I want to focs on building thorough understanding of this before proceeding to t
 
 # Meaning of random variables A and B
 
-We want to estimate the values of parameters given some observed data, and the left hand side of Bayes theorem is:
+We want to estimate the values of hyperparameters given some observed data, and the left hand side of Bayes theorem is:
 
 $$P(A|B)$$
 
 That would make:
-* $$A$$ stand for the random variable that represents the parameters estimation $$\Theta$$
+* $$A$$ stand for the random variable that represents the hyperparameters estimation $$\Theta$$
 * $$B$$ be the observed data $$X$$
 
 Then we get:
@@ -112,7 +112,7 @@ The answer is NO. We are looking for P(\Theta), but the one that takes into acco
 It is that distribution that will express our belief about the parameterization of the data distribution.
 
 But then how do we write down the *target data distribution*? We have several options, all of which definitely need to take $$\Theta$$ into account as well as the random variable $$X$$, which models our data.
-We know for sure that it's NOT $$P(\Theta)$$ - that's the distribution of the parameters. So is it:
+We know for sure that it's NOT $$P(\Theta)$$ - that's the distribution of the hyperparameters. So is it:
 
 * $$P(X, \Theta)$$ ?
 * $$P(X \| \Theta)$$ ?
@@ -134,7 +134,7 @@ Notice how the conditional probability slices through the data. We could as well
 
 Let's see which type of notation best describe the *target distribution*:
 
-* $$P(X, \Theta)$$ - both the data $$X$$ and the parameters $$\Theta$$ haven't been sampled, and we are talking about a joint function of both
+* $$P(X, \Theta)$$ - both the data $$X$$ and the hyperparameters $$\Theta$$ haven't been sampled, and we are talking about a joint function of both
 * $$P(X \| \Theta)$$ - we have observed some value of $$\Theta$$ and we want to use it to take a slice from $$P(X, \Theta)$$. We will consider this slice a 1D distribution of $$X$$.
 * $$P(\Theta \| X)$$ - we have observed some value of $$X$$ and we want to use it to take a slice from $$P(X, \Theta)$$. We will consider this slice a 1D distribution of $$\Theta$$
 
@@ -170,7 +170,7 @@ Probability density, because that's the density I'm referring to, isn't equivale
 
 So why is it that in the case of likelihood it wouldn't?
 
-# The parameters of the likelihood function
+# The hyperparameters of the likelihood function
 
 The answer lies in the function support - another nuance of the notation we usually don't bother to focus on at all.
 
@@ -179,8 +179,8 @@ As I mentioned before, the likelihood term is expressed using a regular distribu
 The equation of Binomial distribution probability *mass* function: $$f(k, n, p) = \binom{n}{k} p^{k}(1-p)^{n-k}$$. It's a discrete distribution.
 It's discreteness stems from the fact that its support is a subset of integers defined as $$k \in {0..n}$$.
 
-One would use this equation to express a distribution of probability by choosing some value of $$n$$ and $$p$$, and then iterating over all possible values of $$k$$ and running the three through this equation.
-Let's say that we want to model the distribution of getting k Heads in 10 tosses, and the tosses are performed with a fair coin (p=0.5).
+One would use this equation to express a distribution of probability by choosing some value of $$n$$ and $$p$$, and then iterating over all possible values of parameter $$k$$ and running the three through this equation.
+Let's say that we want to model the distribution of getting $$k$$ Heads in 10 tosses, and the tosses are performed with a fair coin with the hyperparameter $$p=0.5$$.
 The equation would then take the form:
 
 $$f(10, k, 0.5) = \binom{10}{k} 0.5^{k}(1-0.5)^{10-k}$$
@@ -206,7 +206,7 @@ Bayesian Inference writes the likelihood as if it was something that can be mode
 $$f(n, k, p) = P(X \| \Theta)$$ where $$X: k$$ and $$\Theta: (n, p)$$.
 
 The only justification I can think of at the time of writing this article is that this is a notation abuse.
-As we've seen in the case of Binomial distribution function (and other functions follow suite), there is a very specific support defined and one can't just turn other parameters into random variables and expect to obtain a joint distributon.
+As we've seen in the case of Binomial distribution function (and other functions follow suite), there is a very specific support defined and one can't just turn other hyperparameters into random variables and expect to obtain a joint distributon.
 
 In addition to causing confusion, it also introduces mathematical discrepancy - the nominator can no longer be treated as a distribution. So in order to bring the posterior back on track to being a regular distribution, another term needs to step in and act as a normalizer.
 
@@ -261,7 +261,7 @@ I will use a Beta distribution:
 
 $$P(\Theta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)}\theta^{\alpha - 1}(1-\theta)^{\beta - 1}$$
 
-with parameters $$alpha=1$$ and $$beta=3$$ as a prior, which I think best reflects that belief:
+with hyperparameters $$alpha=1$$ and $$beta=3$$ as a prior, which I think best reflects that belief:
 
 $$P(\Theta) = \frac{\Gamma(4)}{\Gamma(1)\Gamma(3)}\theta^{0}(1-\theta)^{2} = 3 (1-\theta)^{2}$$
 
@@ -272,7 +272,7 @@ $$P(\Theta) = \frac{\Gamma(4)}{\Gamma(1)\Gamma(3)}\theta^{0}(1-\theta)^{2} = 3 (
 The likelihood function needs to appraise the collected data and return a *metric* (not a probability, but a metric), how likely that data was given the hypothesized parameter values.
 The choice of the function is arbitrary, and often dictated by a similarity to a particular distribution model.
 
-That is also why I chose to use the Binomial Distribution function with fixed parameters $$(n, k)$$ as the likelihood function:
+That is also why I chose to use the Binomial Distribution function with fixed hyperparameter $$n$$ and fixed parameter $$k$$ as the likelihood function:
 
 $$P(X\|\Theta) = \binom{10}{7}\theta^{7}(1-\theta)^3=120[\theta^{7}(1-\theta)^3]$$
 
@@ -306,13 +306,42 @@ $$P(\Theta \| X) = 10296 \theta^{7}(1-\theta)^5$$
 
 ![Fig 10](https://github.com/paksas/paksas.github.io/raw/master/_images/bayes_infr_fig_10.png)
 
-And just to verify that it actually represents a probability distribution, its integral in $$\theta$$ support equals 1:
+I marked the mean with the red bar. Notice that despite our prior belief that the coin if biased towards Tails and that the clown is somehow controlling it, in light of the evidence (7 Heads out of 10 tosses) we revised our belief and now we are inclined to think that the coin is slightly biased towards the Heads.
+
+And just to verify that the result actually represents a probability distribution, its integral in $$\theta$$ support equals 1:
 
 $$\int_{0}^{1} 10296 \theta^{7}(1-\theta)^5 = 1$$
 
+## Continuous update of the belief
+
+In the example above we have observed a single outcome of the experiment - the clown tossed Heads 7 times. However imagine a situation when instead of engaging the clown immediately, you stand and watch as other passers by give the challenge a go.
+
+The framework of Bayesian Inference is built for the very purpose of continuous refinement of your beliefs in light of new evidence. It is achieved by substituting the posterior for the prior.
+
+There is a small caveat though, and it's related to being able to reuse the same math over and over again. It involves using something called "Conjugate priors".
+
 # Conjugate priors
 
-Explain that in order to be able to use posterior as the next iteration prior, MLE and prior need to be conjugate distributions
-Quote Pearse stats book on the conjugate prior
-Beta is a conjugate of the binomial distr.
+There are some distribution functions which, when multiplied by other distribution functions, produce the updated versions of themselves.
+They are called conjugate priors, and several such pairs exist. I list some of them below, but please have a look at this [Wikipedia page](https://en.wikipedia.org/wiki/Conjugate_prior) for a comprehensive list coupled with the hyperparameter update rules:
+
+|Likelihood|Conjugate Prior|
+|---|---|
+|Bernoulli|Beta|
+|Binomial|Beta|
+|Normal|Normal|
+|Poisson|Gamma|
+|Multinomial|Dirichlet|
+
+This is a higly sought after property. Not only does it allow to directly plug in the posterior as the prior. In all cases we end up with simple parameter update rules that allow us to perform Bayesian Inference with very little math. 
+
+In the example above I went through a lot of math - even some integrals were there. All of that disappears when you're using Conjugate Priors. 
+
+# Literature
+
+1. [Probability and statistics](https://books.google.co.uk/books?id=fCmpBwAAQBAJ&source=gbs_similarbooks), Morris DeGroot, Mark Schervish
+2. [Bayesian Statistics for Beginners](https://www.amazon.co.uk/Bayesian-Statistics-Beginners-step-step/dp/0198841302), Ruth M. Mickey, Therese Marie Donovan
+3. [Wikipedia: Bayes Theorem](https://en.wikipedia.org/wiki/Bayes%27_theorem)
+3. [Wikipedia: Bayesian Inference](https://en.wikipedia.org/wiki/Bayesian_inference)
+4. [Wikipedia: Conjugate prior](https://en.wikipedia.org/wiki/Conjugate_prior)
 
