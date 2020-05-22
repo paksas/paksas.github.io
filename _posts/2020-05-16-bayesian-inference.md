@@ -120,7 +120,7 @@ We know for sure that it's NOT $$P(\Theta)$$ - that's the distribution of the pa
 
 # Distribution function notation
 
-Let's see what different notations mean visually:
+Let's see what different notations mean visually. To get nice visual results, I used a Normal distribution $$N(\mu=0, \sigma=1)$$:
 
 |Notation|Visual representation|Comment|
 |---|---|---|
@@ -199,7 +199,7 @@ $$f(10, 3, p) = \binom{10}{3} p^{3}(1-p)^{10-3} = 120 p^{3}(1-p)^{7}$$
 Notice a few things off the bat:
 * the plot is no longer choppy.
 * it has a different range - (0, 1) rather than {0..10}
-* and I can guarantee that if you calculated the integral, it wouldn't add up to 1.
+* the integral of this function equals 0.09, instead of 1, which should be the case if this was a proper distribution function.
 
 Bayesian Inference writes the likelihood as if it was something that can be modelled as a joint distribution of two variables - the data and the parameterization. Specifically:
 

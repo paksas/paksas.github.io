@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-22T12:38:17+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-22T13:11:25+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Piotr Trochim’s blog</title><subtitle>Thoughts and results I wish to persist.
 </subtitle><entry><title type="html">Bayesian Inference</title><link href="http://localhost:4000/math/2020/05/16/bayesian-inference.html" rel="alternate" type="text/html" title="Bayesian Inference" /><published>2020-05-16T00:00:00+01:00</published><updated>2020-05-16T00:00:00+01:00</updated><id>http://localhost:4000/math/2020/05/16/bayesian-inference</id><content type="html" xml:base="http://localhost:4000/math/2020/05/16/bayesian-inference.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;This is a post in the series about statistical model fitting.
@@ -126,7 +126,7 @@ We know for sure that it’s NOT &lt;script type=&quot;math/tex&quot;&gt;P(\Thet
 
 &lt;h1 id=&quot;distribution-function-notation&quot;&gt;Distribution function notation&lt;/h1&gt;
 
-&lt;p&gt;Let’s see what different notations mean visually:&lt;/p&gt;
+&lt;p&gt;Let’s see what different notations mean visually. To get nice visual results, I used a Normal distribution &lt;script type=&quot;math/tex&quot;&gt;N(\mu=0, \sigma=1)&lt;/script&gt;:&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -264,7 +264,7 @@ To be more specific - we have performed 10 tosses, 3 of them were Heads. How doe
 &lt;ul&gt;
   &lt;li&gt;the plot is no longer choppy.&lt;/li&gt;
   &lt;li&gt;it has a different range - (0, 1) rather than {0..10}&lt;/li&gt;
-  &lt;li&gt;and I can guarantee that if you calculated the integral, it wouldn’t add up to 1.&lt;/li&gt;
+  &lt;li&gt;the integral of this function equals 0.09, instead of 1, which should be the case if this was a proper distribution function.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Bayesian Inference writes the likelihood as if it was something that can be modelled as a joint distribution of two variables - the data and the parameterization. Specifically:&lt;/p&gt;
