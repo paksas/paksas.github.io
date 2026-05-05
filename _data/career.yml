@@ -1,124 +1,30 @@
-- dates: "2026 —"
-  org: "Pavo AI"
-  role: "Director of ML"
+- dates: "2023 — present"
+  title: "Entrepreneur"
   body: |
-    On the leadership team of a seed-stage startup building an autonomous, life-long-learning
-    coding agent for the enterprise. Building the infrastructure and research teams, setting
-    the technical and scientific roadmap for life-long learning, raising funds, and shipping
-    the early end-to-end prototypes.
+    Building AI-first companies. Director of ML at Pavo AI; founding member of the AI
+    Incubator at the [Tony Blair Institute](https://institute.global/); Head of ML Ops at
+    the [Ellison Institute of Technology](https://eit.org/), Oxford; co-founder and VP of
+    Applied Research at Leapfrog Studios.
 
-- dates: "2025"
-  org: "Tony Blair Institute for Global Change"
-  org_url: "https://institute.global/"
-  role: "Head of ML, AI Incubator (founding team)"
+- dates: "2017 - 2023"
+  title: "Deep Learning"
   body: |
-    Founding member of a new AI Incubator for governments. Defined the ML infrastructure and
-    product strategy, recruited the engineering team across software and cloud systems, and
-    shipped prototypes of agentic government applications. Used reinforcement learning to
-    train World-Action models that simulate the short- and long-term effects of legislation
-    and policy actions.
+    Built ML infrastructure and shipped research at [DeepMind](https://deepmind.google/)
+    and [Meta](https://meta.com/). At DeepMind, tech lead across model-based RL, robot
+    perception, causal reasoning, and the simulator infrastructure behind BCOOLER. At
+    Meta, Uber-Tech Lead for online experimentation infrastructure powering Ads Ranking.
 
-- dates: "2024 - 2025"
-  org: "Ellison Institute of Technology"
-  org_url: "https://eit.org/"
-  role: "Head of ML Ops (founding member, AI & Data team)"
+- dates: "2008 - 2016"
+  title: "Embodied Intelligence for Games"
   body: |
-    Founding member of the horizontal AI & Data team that enabled all of EIT's ML and AI
-    efforts across its four domains: medical sciences, climate, agriculture & sustainability,
-    and government efficiency. Defined the institute's ML infrastructure strategy, built the
-    engineering team, and managed the partnership with Oracle.
+    Animation, AI, and physics for games. Senior Gameplay/AI Programmer at CD Projekt RED
+    on _The Witcher 2_; Senior Software Engineer at Havok building character and vehicle
+    libraries used across the games industry; Crytek Frankfurt on the locomotion of the
+    dinosaurs in _Robinson the Journey_ (VR).
 
-- dates: "2023 - 2024"
-  org: "Leapfrog Studios"
-  role: "VP Applied Research, Co-founder"
+- dates: "2005 - 2008"
+  title: "Discovering Software Engineering"
   body: |
-    Co-founded a studio applying machine learning to invent new ways for video games to
-    engage players. Historically, gaming innovation has tracked hardware cycles; this is
-    the first era where algorithmic innovation alone offers a comparable opportunity. Grew
-    and led a team of research scientists and engineers exploring the space.
-
-- dates: "2022 - 2023"
-  org: "Meta"
-  org_url: "https://meta.com/"
-  role: "Staff Software Engineer, Ads"
-  body: |
-    Uber-Tech Lead for the online experimentation infrastructure underpinning Ads Ranking,
-    leading 20 engineers across six projects spanning statistical research and full-stack
-    engineering. Tackled experiment correctness in the face of effects below the platform's
-    detectability threshold, p-hacking-friendly UX, and feedback-loop confounders. Earned
-    "Greatly Exceeds Expectations" for unblocking ~50% more model innovation than originally
-    planned.
-
-- dates: "2017 - 2022"
-  org: "DeepMind"
-  org_url: "https://deepmind.google/"
-  role: "Senior Software Engineer"
-  body: |
-    Tech lead and infrastructure builder across multiple research projects: distributed
-    training infrastructure for model-based RL agents on continuous-control environments;
-    a third-party-tech adoption framework that cut multi-week onboarding to hours;
-    large-scale supervised-learning data collection from specialized scientific simulators;
-    3D environment suites for robot perception and causal-reasoning research. Co-author of
-    [_Using Unity to Help Solve Intelligence_](https://arxiv.org/abs/2011.09294) and
-    maintainer of the [DeepMind Control Suite](https://github.com/google-deepmind/dm_control)
-    visualizer.
-
-- dates: "2016 - 2017"
-  org: "Botperfect & Crytek"
-  role: "Founder, contractor"
-  body: |
-    Brief stint at Crytek Frankfurt building the locomotion system for the dinosaurs in
-    _Robinson the Journey_ (VR) — bipedal anatomy with a long, snake-like tail required
-    blending traditional bipedal techniques with serpentine motion. Otherwise running my
-    own consultancy: a Kanban task manager for accountancy offices, plus contract work on
-    _Hatred_ (UE4 prototype) and a virtual battlefield simulation handling 5000+ units
-    on screen.
-
-- dates: "2011 - 2015"
-  org: "Havok"
-  role: "Senior Software Engineer (Dublin & Warsaw)"
-  body: |
-    Built character and vehicle libraries ready for immediate deployment in client
-    simulations. Designed parametric blend trees for locomotion, aiming, and pose-on-demand;
-    integrated them with Havok AI for navigation; built a velocity-domain animation
-    synchronizer that eliminated artifacts from time-based warping; implemented the ragdoll
-    system and pose-driving controllers for the new physics library; designed the content
-    authoring pipeline for 3ds Max and Maya.
-
-- dates: "2009 - 2011"
-  org: "CD Projekt RED"
-  role: "Senior Gameplay / AI Programmer"
-  body: |
-    Worked on _The Witcher 2_ (PC and Xbox 360). Built the non-linear quest authoring system
-    — a visual block language similar to Unreal Blueprints that orchestrated every gameplay
-    system in RedEngine and was used end-to-end by writers and designers. Integrated
-    PathEngine navigation with the in-house animation system, designed kinematic constraints
-    for obstacle avoidance and docking, and worked on engine systems including game-saves
-    integrated with the realtime scripting language and world streaming.
-
-- dates: "2008 - 2009"
-  org: "Coversion"
-  role: "Founder, Software Engineer"
-  body: |
-    Designed and built core subsystems (input, animation, sound, scene graph, AI,
-    serialization) of a multi-platform game engine for PC and Wii, outsourced for Bloober
-    Team. Also developed a game editor for a Nintendo DS turn-based strategy title.
-
-- dates: "2006 - 2008"
-  org: "Sabre Holdings"
-  role: "Software Engineer"
-  body: |
-    Architecture work for a next-generation data-mining application; mentored teams on TDD
-    and OOAD.
-
-- dates: "2005 - 2006"
-  org: "Motorola"
-  role: "Software Engineer"
-  body: |
-    Designed and developed a packet data router for a Tetra-standard telecom system.
-
-- dates: "1999 - 2005"
-  org: "Technical University of Lublin"
-  role: "M.Sc., Electronics & Information Technology"
-  body: |
-    Master's thesis: _Adaptive regulation of randomly disrupted plants_.
+    First professional roles. Software Engineer at Motorola working on a Tetra-standard
+    packet data router. Later at Sabre Holdings, on next-generation data-mining
+    architecture and mentoring teams on TDD and OOAD.

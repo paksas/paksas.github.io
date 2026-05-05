@@ -1,0 +1,26 @@
+- name: "The Witcher 2"
+  org: "CD Projekt RED"
+  url: "https://en.wikipedia.org/wiki/The_Witcher_2:_Assassins_of_Kings"
+  body: |
+    Built the non-linear quest authoring system — a visual block language similar to
+    Unreal Blueprints that orchestrated every gameplay system in RedEngine and was used
+    end-to-end by writers and designers. Also designed the PathEngine ↔ animation
+    integration, kinematic constraints for obstacle avoidance and docking, and engine
+    systems including game-saves and world streaming.
+
+- name: "BCOOLER — Industrial Cooling RL"
+  org: "DeepMind"
+  url: "https://arxiv.org/abs/2207.13131"
+  body: |
+    Hybrid simulator combining analytical solutions with multi-physics simulation, used
+    as the training environment for DeepMind's commercial-cooling RL system. The deployed
+    policies cut energy use by ~9–13 % at the live experiment sites
+    ([deployment paper](https://arxiv.org/abs/2211.07357)).
+
+- name: "DeepMind Control Suite"
+  org: "DeepMind"
+  url: "https://github.com/google-deepmind/dm_control"
+  body: |
+    Open-source physics-based environments for continuous control, widely used as a
+    benchmark in the RL research community. I built and open-sourced the visualizer for
+    the suite, in desktop and web/Colab versions, and supported the user community.

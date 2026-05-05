@@ -1,82 +1,87 @@
 ---
 layout: default
 ---
-<header class="profile">
-  <img class="profile-photo" src="{{ '/_images/piotr.jpg' | relative_url }}" alt="{{ site.author }}">
-  <div class="profile-text">
-    <h1 class="profile-name">{{ site.author }}</h1>
-    <p class="profile-tagline">{{ page.tagline | default: site.description }}</p>
-    <nav class="profile-links">
-      {% if site.github_username %}<a href="https://github.com/{{ site.github_username }}">GitHub</a>{% endif %}
-      {% if site.substack_url %}<a href="{{ site.substack_url }}">Substack</a>{% endif %}
-      <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
-      <a href="mailto:{{ site.email }}">Email</a>
-    </nav>
+  <header class="profile">
+    <img class="profile-photo" src="{{ '/_images/piotr.jpg' | relative_url }}" alt="{{ site.author }}">
+    <div class="profile-text">
+      <h1 class="profile-name">{{ site.author }}</h1>
+      <p class="profile-tagline">{{ page.tagline | default: site.description }}</p>
+      <nav class="profile-links">
+        {% if site.github_username %}<a href="https://github.com/{{ site.github_username }}">GitHub</a>{% endif %}
+        {% if site.substack_url %}<a href="{{ site.substack_url }}">Substack</a>{% endif %}
+        <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+        <a href="mailto:{{ site.email }}">Email</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="layout-grid">
+    <main class="layout-main">
+      {% if site.data.career %}
+      <section class="block">
+        <h2 class="block-heading">Career</h2>
+        <ol class="era-list">
+          {% for entry in site.data.career %}
+          <li class="era-entry">
+            <div class="era-head">
+              <span class="era-dates">{{ entry.dates }}</span>
+              <h3 class="era-title">{{ entry.title }}</h3>
+            </div>
+            <div class="era-body">{{ entry.body | markdownify }}</div>
+          </li>
+          {% endfor %}
+        </ol>
+      </section>
+      {% endif %}
+
+      {% if site.data.projects %}
+      <section class="block">
+        <h2 class="block-heading">Projects I'm proud of</h2>
+        <ul class="project-list">
+          {% for proj in site.data.projects %}
+          <li class="project-entry">
+            <h3 class="project-title">
+              {% if proj.url %}<a href="{{ proj.url }}">{{ proj.name }}</a>{% else %}{{ proj.name }}{% endif %}{% if proj.org %} <span class="project-org">· {{ proj.org }}</span>{% endif %}
+            </h3>
+            <div class="project-body">{{ proj.body | markdownify }}</div>
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+
+      {% if site.data.publications %}
+      <section class="block">
+        <h2 class="block-heading">Publications</h2>
+        <ul class="publications-list">
+          {% for pub in site.data.publications %}
+          <li class="publication-item">
+            <span class="publication-year">{{ pub.year }}</span>
+            <span class="publication-type">{{ pub.type }}</span>
+            <a href="{{ pub.url }}" class="publication-title">{{ pub.title }}</a>
+            {% if pub.ref %}<span class="publication-ref">{{ pub.ref }}</span>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+    </main>
+
+    {% if site.posts.size > 0 %}
+    <aside class="layout-sidebar">
+      <section class="block">
+        <h2 class="block-heading">Writing</h2>
+        <ul class="writing-list">
+          {% for post in site.posts %}
+          <li class="writing-item">
+            <a href="{{ post.url | relative_url }}" class="writing-link">
+              <time class="writing-date">{{ post.date | date: "%b %Y" }}</time>
+              <span class="writing-title">{{ post.title }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+    </aside>
+    {% endif %}
   </div>
-</header>
-
-<div class="page-content">
-  {{ content }}
-</div>
-
-{% if site.data.career %}
-<section class="timeline career">
-  <ol class="timeline-list">
-    {% for entry in site.data.career %}
-    <li class="timeline-entry">
-      <time class="timeline-date">{{ entry.dates }}</time>
-      <div class="timeline-body">
-        <h3 class="timeline-title">
-          {% if entry.org_url %}<a href="{{ entry.org_url }}">{{ entry.org }}</a>{% else %}{{ entry.org }}{% endif %}{% if entry.role %} <span class="timeline-role">· {{ entry.role }}</span>{% endif %}
-        </h3>
-        <div class="timeline-excerpt">{{ entry.body | markdownify }}</div>
-      </div>
-    </li>
-    {% endfor %}
-  </ol>
-</section>
-{% endif %}
-
-{% if site.posts.size > 0 %}
-<section class="timeline">
-  <h2 class="timeline-heading">Writing</h2>
-  <ol class="timeline-list">
-    {% for post in site.posts %}
-    <li class="timeline-entry">
-      <time class="timeline-date" datetime="{{ post.date | date_to_xmlschema }}">
-        {{ post.date | date: "%Y" }}
-      </time>
-      <div class="timeline-body">
-        <h3 class="timeline-title">
-          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        </h3>
-        {% if post.excerpt %}
-        <div class="timeline-excerpt">{{ post.excerpt | strip_html | truncatewords: 40 }}</div>
-        {% endif %}
-        {% if post.categories.size > 0 %}
-        <div class="timeline-meta">
-          {% for cat in post.categories %}<span class="tag">{{ cat }}</span>{% endfor %}
-        </div>
-        {% endif %}
-      </div>
-    </li>
-    {% endfor %}
-  </ol>
-</section>
-{% endif %}
-
-{% if site.data.publications %}
-<section class="publications">
-  <h2 class="timeline-heading">Publications</h2>
-  <ul class="publications-list">
-    {% for pub in site.data.publications %}
-    <li class="publication-item">
-      <span class="publication-year">{{ pub.year }}</span>
-      <span class="publication-type">{{ pub.type }}</span>
-      <a href="{{ pub.url }}" class="publication-title">{{ pub.title }}</a>
-      {% if pub.ref %}<span class="publication-ref">{{ pub.ref }}</span>{% endif %}
-    </li>
-    {% endfor %}
-  </ul>
-</section>
-{% endif %}
