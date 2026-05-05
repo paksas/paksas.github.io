@@ -7,10 +7,10 @@ layout: default
     <h1 class="profile-name">{{ site.author }}</h1>
     <p class="profile-tagline">{{ page.tagline | default: site.description }}</p>
     <nav class="profile-links">
-      {% if site.twitter_username %}<a href="https://twitter.com/{{ site.twitter_username }}" aria-label="Twitter">Twitter</a>{% endif %}
-      {% if site.github_username %}<a href="https://github.com/{{ site.github_username }}" aria-label="GitHub">GitHub</a>{% endif %}
-      <a href="{{ '/feed.xml' | relative_url }}" aria-label="RSS feed">RSS</a>
-      <a href="mailto:{{ site.email }}" aria-label="Email">Email</a>
+      {% if site.github_username %}<a href="https://github.com/{{ site.github_username }}">GitHub</a>{% endif %}
+      {% if site.substack_url %}<a href="{{ site.substack_url }}">Substack</a>{% endif %}
+      <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+      <a href="mailto:{{ site.email }}">Email</a>
     </nav>
   </div>
 </header>
@@ -18,6 +18,24 @@ layout: default
 <div class="page-content">
   {{ content }}
 </div>
+
+{% if site.data.career %}
+<section class="timeline career">
+  <ol class="timeline-list">
+    {% for entry in site.data.career %}
+    <li class="timeline-entry">
+      <time class="timeline-date">{{ entry.dates }}</time>
+      <div class="timeline-body">
+        <h3 class="timeline-title">
+          {% if entry.org_url %}<a href="{{ entry.org_url }}">{{ entry.org }}</a>{% else %}{{ entry.org }}{% endif %}{% if entry.role %} <span class="timeline-role">· {{ entry.role }}</span>{% endif %}
+        </h3>
+        <div class="timeline-excerpt">{{ entry.body | markdownify }}</div>
+      </div>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+{% endif %}
 
 {% if site.posts.size > 0 %}
 <section class="timeline">
@@ -44,5 +62,21 @@ layout: default
     </li>
     {% endfor %}
   </ol>
+</section>
+{% endif %}
+
+{% if site.data.publications %}
+<section class="publications">
+  <h2 class="timeline-heading">Publications</h2>
+  <ul class="publications-list">
+    {% for pub in site.data.publications %}
+    <li class="publication-item">
+      <span class="publication-year">{{ pub.year }}</span>
+      <span class="publication-type">{{ pub.type }}</span>
+      <a href="{{ pub.url }}" class="publication-title">{{ pub.title }}</a>
+      {% if pub.ref %}<span class="publication-ref">{{ pub.ref }}</span>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
 </section>
 {% endif %}

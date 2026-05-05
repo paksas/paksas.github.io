@@ -203,12 +203,25 @@ th { font-weight: 600; }
 }
 .timeline-title a { color: var(--fg); }
 .timeline-title a:hover { color: var(--link); border-bottom-color: transparent; }
+.timeline-role {
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
 
 .timeline-excerpt {
   color: var(--muted);
   font-size: 0.97rem;
   line-height: 1.55;
 }
+.timeline-excerpt p { margin: 0 0 0.6em; }
+.timeline-excerpt p:last-child { margin-bottom: 0; }
+.timeline-excerpt a { color: var(--link); }
+
+/* The career timeline carries multiple consecutive entries; tighten spacing
+   and let the section sit before "Writing" without an extra heading. */
+.timeline.career { margin-bottom: 56px; }
+.timeline.career + .timeline { margin-top: 0; }
 .timeline-meta { margin-top: 8px; }
 .tag {
   display: inline-block;
@@ -275,4 +288,42 @@ th { font-weight: 600; }
 @media (max-width: 540px) {
   .post-title { font-size: 1.8rem; }
   .post-content { font-size: 1.05rem; }
+}
+
+/* ---- Publications ---- */
+.publications { margin-top: 56px; }
+.publications-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.publication-item {
+  display: grid;
+  grid-template-columns: 60px 80px 1fr;
+  column-gap: 16px;
+  padding: 10px 0;
+  font-size: 0.97rem;
+  align-items: baseline;
+  border-bottom: 1px solid var(--rule);
+}
+.publication-item:last-child { border-bottom: 0; }
+.publication-year { color: var(--muted); font-size: 0.92rem; text-align: right; }
+.publication-type {
+  color: var(--muted);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.publication-title { color: var(--fg); }
+.publication-title:hover { color: var(--link); border-bottom-color: transparent; }
+.publication-ref {
+  display: block;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  margin-top: 2px;
+}
+@media (max-width: 540px) {
+  .publication-item { grid-template-columns: 44px 1fr; column-gap: 12px; }
+  .publication-type { display: none; }
 }

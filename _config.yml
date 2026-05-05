@@ -1,12 +1,12 @@
 title: Piotr Trochim
-email: ptrochim@gmail.com
+email: ptrochim@pm.me
 author: Piotr Trochim
 description: >
   Thoughts and results I wish to persist.
 baseurl: ""
 url: "https://piotrtrochim.net"
-twitter_username: piotrtrochim
 github_username: paksas
+substack_url: "https://substack.com/@piotrtrochim/posts"
 
 markdown: kramdown
 kramdown:
