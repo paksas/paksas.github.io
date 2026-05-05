@@ -1,4 +1,9 @@
-# Ubuntu 22.04 setup on Razer Blade 15 2022
+---
+title: "Ubuntu 22.04 setup on Razer Blade 15 2022"
+author: ptrochim
+categories: linux
+---
+
 
 ## Closing the lid doesn't suspend the laptop
 

@@ -1,19 +1,31 @@
-title: Piotr Trochim's blog
+title: Piotr Trochim
 email: ptrochim@gmail.com
-description: > # this means to ignore newlines until "baseurl:"
+author: Piotr Trochim
+description: >
   Thoughts and results I wish to persist.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://paksas.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: ""
+url: "https://piotrtrochim.com"
 twitter_username: piotrtrochim
-github_username:  paksas
+github_username: paksas
 
-# Build settings
 markdown: kramdown
 kramdown:
   math_engine: mathjax
-theme: minima
+
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+permalink: /:year/:month/:day/:title/
+
+include:
+  - _images
+
 exclude:
   - Gemfile
   - Gemfile.lock
+  - build.sh
+  - test.sh
+  - README.md
+  - vendor

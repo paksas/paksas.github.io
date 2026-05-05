@@ -1,0 +1,48 @@
+---
+layout: default
+---
+<header class="profile">
+  <img class="profile-photo" src="{{ '/_images/piotr.jpg' | relative_url }}" alt="{{ site.author }}">
+  <div class="profile-text">
+    <h1 class="profile-name">{{ site.author }}</h1>
+    <p class="profile-tagline">{{ page.tagline | default: site.description }}</p>
+    <nav class="profile-links">
+      {% if site.twitter_username %}<a href="https://twitter.com/{{ site.twitter_username }}" aria-label="Twitter">Twitter</a>{% endif %}
+      {% if site.github_username %}<a href="https://github.com/{{ site.github_username }}" aria-label="GitHub">GitHub</a>{% endif %}
+      <a href="{{ '/feed.xml' | relative_url }}" aria-label="RSS feed">RSS</a>
+      <a href="mailto:{{ site.email }}" aria-label="Email">Email</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-content">
+  {{ content }}
+</div>
+
+{% if site.posts.size > 0 %}
+<section class="timeline">
+  <h2 class="timeline-heading">Writing</h2>
+  <ol class="timeline-list">
+    {% for post in site.posts %}
+    <li class="timeline-entry">
+      <time class="timeline-date" datetime="{{ post.date | date_to_xmlschema }}">
+        {{ post.date | date: "%Y" }}
+      </time>
+      <div class="timeline-body">
+        <h3 class="timeline-title">
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </h3>
+        {% if post.excerpt %}
+        <div class="timeline-excerpt">{{ post.excerpt | strip_html | truncatewords: 40 }}</div>
+        {% endif %}
+        {% if post.categories.size > 0 %}
+        <div class="timeline-meta">
+          {% for cat in post.categories %}<span class="tag">{{ cat }}</span>{% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+{% endif %}

@@ -1,0 +1,278 @@
+---
+---
+
+/* ---- Tokens ---- */
+:root {
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #6b6b6b;
+  --rule: #e6e6e6;
+  --link: #1259c3;
+  --link-hover: #0a3a82;
+  --tag-bg: #f1f1f1;
+  --tag-fg: #555;
+  --max-width: 760px;
+  --serif: "Iowan Old Style", "Charter", Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #131314;
+    --fg: #ececec;
+    --muted: #9a9a9a;
+    --rule: #2a2a2a;
+    --link: #6aa9ff;
+    --link-hover: #b6d2ff;
+    --tag-bg: #232325;
+    --tag-fg: #c2c2c2;
+  }
+}
+
+/* ---- Base ---- */
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+a:hover { color: var(--link-hover); border-bottom-color: currentColor; }
+
+h1, h2, h3, h4 { font-weight: 600; line-height: 1.25; }
+
+img { max-width: 100%; height: auto; }
+
+code, pre {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.92em;
+}
+pre {
+  background: var(--tag-bg);
+  padding: 14px 16px;
+  border-radius: 6px;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+code { background: var(--tag-bg); padding: 1px 5px; border-radius: 4px; }
+pre code { background: transparent; padding: 0; border-radius: 0; }
+
+blockquote {
+  border-left: 3px solid var(--rule);
+  margin: 1.4em 0;
+  padding: 0.2em 1em;
+  color: var(--muted);
+}
+
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.4em 0; }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.4em 0;
+}
+th, td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--rule);
+}
+th { font-weight: 600; }
+
+.page {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 64px 24px 96px;
+}
+
+/* ---- Profile header (home) ---- */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 48px;
+}
+.profile-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.profile-name {
+  font-size: 2rem;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+.profile-tagline {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-style: italic;
+}
+.profile-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 0.95rem;
+}
+.profile-links a {
+  color: var(--muted);
+}
+.profile-links a:hover { color: var(--fg); }
+
+@media (max-width: 540px) {
+  .profile { flex-direction: column; align-items: flex-start; gap: 18px; }
+  .profile-photo { width: 96px; height: 96px; }
+  .profile-name { font-size: 1.6rem; }
+}
+
+/* ---- Page-content (markdown shown above timeline, used by home.html) ---- */
+.page-content { margin-bottom: 36px; }
+
+/* ---- Timeline ---- */
+.timeline-heading {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  font-weight: 600;
+  margin: 0 0 24px;
+}
+
+.timeline-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+.timeline-list::before {
+  content: "";
+  position: absolute;
+  left: 60px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--rule);
+}
+
+.timeline-entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  column-gap: 32px;
+  padding: 18px 0;
+}
+.timeline-entry::before {
+  content: "";
+  position: absolute;
+  left: 56px;
+  top: 26px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--muted);
+}
+
+.timeline-date {
+  color: var(--muted);
+  font-size: 0.92rem;
+  padding-top: 2px;
+  text-align: right;
+  padding-right: 4px;
+}
+
+.timeline-title {
+  font-size: 1.18rem;
+  margin: 0 0 6px;
+  font-weight: 600;
+}
+.timeline-title a { color: var(--fg); }
+.timeline-title a:hover { color: var(--link); border-bottom-color: transparent; }
+
+.timeline-excerpt {
+  color: var(--muted);
+  font-size: 0.97rem;
+  line-height: 1.55;
+}
+.timeline-meta { margin-top: 8px; }
+.tag {
+  display: inline-block;
+  background: var(--tag-bg);
+  color: var(--tag-fg);
+  font-size: 0.74rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-right: 6px;
+  text-transform: lowercase;
+}
+
+@media (max-width: 540px) {
+  .timeline-list::before { left: 40px; }
+  .timeline-entry { grid-template-columns: 40px 1fr; column-gap: 18px; }
+  .timeline-entry::before { left: 36px; }
+  .timeline-date { font-size: 0.82rem; }
+}
+
+/* ---- Post layout ---- */
+.post-header { margin-bottom: 36px; }
+.post-date {
+  color: var(--muted);
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 16px;
+}
+.post-date a { color: var(--muted); }
+.post-date a:hover { color: var(--fg); border-bottom-color: transparent; }
+.post-date-sep { margin: 0 8px; }
+
+.post-title {
+  font-size: 2.4rem;
+  margin: 0;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+
+.post-content {
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  line-height: 1.7;
+}
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4 { font-family: var(--sans); margin-top: 1.8em; margin-bottom: 0.5em; }
+.post-content h1 { font-size: 1.7rem; }
+.post-content h2 { font-size: 1.35rem; }
+.post-content h3 { font-size: 1.15rem; }
+.post-content p { margin: 1em 0; }
+.post-content img { display: block; margin: 1.6em auto; border-radius: 4px; }
+
+.post-footer {
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  font-size: 0.95rem;
+}
+.post-footer a { color: var(--muted); }
+.post-footer a:hover { color: var(--fg); border-bottom-color: transparent; }
+
+@media (max-width: 540px) {
+  .post-title { font-size: 1.8rem; }
+  .post-content { font-size: 1.05rem; }
+}
