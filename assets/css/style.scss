@@ -161,31 +161,50 @@ body.layout-home .page { max-width: var(--max-width-home); }
   margin: 0 0 24px;
 }
 
-/* ---- Career: era list (4 entries, no dot/line) ---- */
-.era-list { list-style: none; padding: 0; margin: 0; }
+/* ---- Career: era list (Karpathy-style timeline with dates + logos) ---- */
+.era-list { list-style: none; padding: 0; margin: 0; position: relative; }
 .era-entry {
-  padding: 18px 0;
-  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 28px;
+  padding: 24px 0;
 }
-.era-entry:first-child { border-top: 0; padding-top: 0; }
-.era-head {
-  display: flex;
-  align-items: baseline;
-  gap: 14px;
-  margin-bottom: 6px;
-  flex-wrap: wrap;
-}
+.era-entry + .era-entry { border-top: 1px solid var(--rule); }
 .era-dates {
   color: var(--muted);
   font-size: 0.86rem;
   font-variant-numeric: tabular-nums;
+  padding-top: 6px;
   white-space: nowrap;
 }
+.era-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
 .era-title {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   margin: 0;
   font-weight: 600;
   letter-spacing: -0.005em;
+}
+.era-logos {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.era-logo {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: var(--tag-bg);
+  padding: 3px;
+}
+@media (prefers-color-scheme: dark) {
+  .era-logo { background: #f3f3f3; }   /* keep logos legible on dark bg */
 }
 .era-body {
   color: var(--muted);
@@ -196,24 +215,30 @@ body.layout-home .page { max-width: var(--max-width-home); }
 .era-body p + p { margin-top: 0.6em; }
 .era-body a { color: var(--link); }
 
-/* ---- Projects ---- */
+@media (max-width: 540px) {
+  .era-entry { grid-template-columns: 1fr; gap: 6px; }
+  .era-dates { padding-top: 0; }
+}
+
+/* ---- Projects (no date column; bolder title; pretty separator) ---- */
 .project-list { list-style: none; padding: 0; margin: 0; }
 .project-entry {
-  padding: 18px 0;
-  border-top: 1px solid var(--rule);
+  padding: 22px 0;
+  border-top: 1px dashed var(--rule);
 }
-.project-entry:first-child { border-top: 0; padding-top: 0; }
+.project-entry:first-child { border-top: 0; padding-top: 6px; }
 .project-title {
-  font-size: 1.1rem;
-  margin: 0 0 6px;
-  font-weight: 600;
+  font-size: 1.18rem;
+  margin: 0 0 8px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
 }
 .project-title a { color: var(--fg); }
 .project-title a:hover { color: var(--link); border-bottom-color: transparent; }
-.project-org { font-weight: 400; color: var(--muted); font-size: 0.94rem; }
+.project-org { font-weight: 400; color: var(--muted); font-size: 0.92rem; }
 .project-body {
-  color: var(--muted);
-  font-size: 0.99rem;
+  color: var(--fg);
+  font-size: 0.97rem;
   line-height: 1.6;
 }
 .project-body p { margin: 0; }

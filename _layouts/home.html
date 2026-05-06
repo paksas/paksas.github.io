@@ -23,11 +23,20 @@ layout: default
         <ol class="era-list">
           {% for entry in site.data.career %}
           <li class="era-entry">
-            <div class="era-head">
-              <span class="era-dates">{{ entry.dates }}</span>
-              <h3 class="era-title">{{ entry.title }}</h3>
+            <div class="era-dates">{{ entry.dates }}</div>
+            <div class="era-content">
+              <div class="era-head">
+                <h3 class="era-title">{{ entry.title }}</h3>
+                {% if entry.logos %}
+                <div class="era-logos">
+                  {% for logo in entry.logos %}
+                  <img class="era-logo" src="{{ logo.file | relative_url }}" alt="{{ logo.name }}" title="{{ logo.name }}" loading="lazy">
+                  {% endfor %}
+                </div>
+                {% endif %}
+              </div>
+              <div class="era-body">{{ entry.body | markdownify }}</div>
             </div>
-            <div class="era-body">{{ entry.body | markdownify }}</div>
           </li>
           {% endfor %}
         </ol>

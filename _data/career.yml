@@ -1,21 +1,28 @@
 - dates: "2023 — present"
-  title: "Entrepreneur"
+  title: "Deep Learning Entrepreneur"
   body: |
-    Building AI-first companies. Director of ML at Pavo AI; founding member of the AI
-    Incubator at the [Tony Blair Institute](https://institute.global/); Head of ML Ops at
-    the [Ellison Institute of Technology](https://eit.org/), Oxford; co-founder and VP of
-    Applied Research at Leapfrog Studios.
+    Independent. Searching for a research bet to commit to. Working on life-long
+    learning for LLM agents — how to make models that keep learning from their own
+    experience after training, and how to keep their behaviour grounded as they do.
 
 - dates: "2017 - 2023"
-  title: "Deep Learning"
+  title: "Deep Learning Apprentice"
+  logos:
+    - { name: "DeepMind", file: "/_images/logos/deepmind.png" }
+    - { name: "Meta", file: "/_images/logos/meta.png" }
   body: |
-    Built ML infrastructure and shipped research at [DeepMind](https://deepmind.google/)
-    and [Meta](https://meta.com/). At DeepMind, tech lead across model-based RL, robot
-    perception, causal reasoning, and the simulator infrastructure behind BCOOLER. At
-    Meta, Uber-Tech Lead for online experimentation infrastructure powering Ads Ranking.
+    ML infrastructure and research at [DeepMind](https://deepmind.google/) and
+    [Meta](https://meta.com/). At DeepMind, tech lead across model-based RL, robot
+    perception, causal reasoning, and the simulator infrastructure behind BCOOLER.
+    At Meta, Uber-Tech Lead for the online experimentation infrastructure
+    underpinning Ads Ranking.
 
 - dates: "2008 - 2016"
   title: "Embodied Intelligence for Games"
+  logos:
+    - { name: "CD Projekt RED", file: "/_images/logos/cdprojektred.png" }
+    - { name: "Havok", file: "/_images/logos/havok.png" }
+    - { name: "Crytek", file: "/_images/logos/crytek.png" }
   body: |
     Animation, AI, and physics for games. Senior Gameplay/AI Programmer at CD Projekt RED
     on _The Witcher 2_; Senior Software Engineer at Havok building character and vehicle
@@ -24,7 +31,10 @@
 
 - dates: "2005 - 2008"
   title: "Discovering Software Engineering"
+  logos:
+    - { name: "Motorola", file: "/_images/logos/motorola.png" }
+    - { name: "Sabre", file: "/_images/logos/sabre.png" }
   body: |
     First professional roles. Software Engineer at Motorola working on a Tetra-standard
-    packet data router. Later at Sabre Holdings, on next-generation data-mining
-    architecture and mentoring teams on TDD and OOAD.
+    packet data router. Later at Sabre Holdings on next-generation data-mining
+    architecture, mentoring teams on TDD and OOAD.
