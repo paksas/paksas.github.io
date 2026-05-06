@@ -17,19 +17,6 @@
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #131314;
-    --fg: #ececec;
-    --muted: #9a9a9a;
-    --rule: #2a2a2a;
-    --link: #6aa9ff;
-    --link-hover: #b6d2ff;
-    --tag-bg: #232325;
-    --tag-fg: #c2c2c2;
-  }
-}
-
 /* ---- Base ---- */
 * { box-sizing: border-box; }
 
@@ -202,9 +189,6 @@ body.layout-home .page { max-width: var(--max-width-home); }
   border-radius: 6px;
   background: var(--tag-bg);
   padding: 3px;
-}
-@media (prefers-color-scheme: dark) {
-  .era-logo { background: #f3f3f3; }   /* keep logos legible on dark bg */
 }
 .era-body {
   color: var(--muted);
