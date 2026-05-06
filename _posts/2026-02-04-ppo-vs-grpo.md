@@ -20,7 +20,7 @@ Both PPO and GRPO optimize a stochastic policy—a neural network that outputs a
   2. **Evaluate action probabilities** during training (for importance sampling)
 
 This shared requirement allows us to define a single `StochasticPolicy` interface that both algorithms consume:
-```
+```python
 class StochasticPolicy:
     def get_action(states) -> (action, log_prob)
     def evaluate_actions(states, actions) -> (log_probs, entropy)
@@ -113,7 +113,7 @@ This adds implementation complexity but is unavoidable when batching variable-le
 ### Pseudocode Comparison
 
 PPO Training Loop:
-```
+```python
 for epoch in epochs:
     trajectory = collect_episodes(policy, env)          # Shape: (T, ...)
 
@@ -125,7 +125,7 @@ for epoch in epochs:
 ```
 
 GRPO Training Loop:
-```
+```python
 for epoch in epochs:
     trajectories = [collect_episodes(policy, env)
                     for _ in range(group_dim)]          # List of G trajectories

@@ -48,15 +48,48 @@ code, pre {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   font-size: 0.92em;
 }
-pre {
-  background: var(--tag-bg);
+pre, .highlight pre, div.highlight {
+  background: #f6f8fa;
   padding: 14px 16px;
   border-radius: 6px;
   overflow-x: auto;
   line-height: 1.5;
 }
+.highlighter-rouge .highlight,
+figure.highlight {
+  background: #f6f8fa;
+  border-radius: 6px;
+}
 code { background: var(--tag-bg); padding: 1px 5px; border-radius: 4px; }
-pre code { background: transparent; padding: 0; border-radius: 0; }
+pre code, .highlight code { background: transparent; padding: 0; border-radius: 0; }
+
+/* ---- Rouge syntax highlighting (GitHub-light) ---- */
+.highlight { color: #24292f; }
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cm,
+.highlight .cpf, .highlight .c1, .highlight .cs { color: #6a737d; font-style: italic; }
+.highlight .err { color: #f6f8fa; background-color: #b31d28; }
+.highlight .k, .highlight .kc, .highlight .kd, .highlight .kn,
+.highlight .kp, .highlight .kr, .highlight .kt { color: #d73a49; }
+.highlight .o, .highlight .ow { color: #d73a49; }
+.highlight .n { color: #24292f; }
+.highlight .nb { color: #005cc5; }
+.highlight .bp { color: #005cc5; }
+.highlight .nf, .highlight .fm, .highlight .nc, .highlight .nx { color: #6f42c1; }
+.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi { color: #e36209; }
+.highlight .nd, .highlight .ni, .highlight .ne { color: #6f42c1; }
+.highlight .nt { color: #22863a; }
+.highlight .s, .highlight .sa, .highlight .sb, .highlight .sc, .highlight .dl,
+.highlight .sd, .highlight .s2, .highlight .se, .highlight .sh, .highlight .si,
+.highlight .sx, .highlight .sr, .highlight .s1, .highlight .ss { color: #032f62; }
+.highlight .m, .highlight .mb, .highlight .mf, .highlight .mh,
+.highlight .mi, .highlight .il, .highlight .mo, .highlight .mx { color: #005cc5; }
+.highlight .gh, .highlight .bp { color: #005cc5; }
+.highlight .gd { color: #b31d28; background-color: #ffeef0; }
+.highlight .gi { color: #22863a; background-color: #f0fff4; }
+.highlight .gu { color: #6a737d; }
+.highlight .gr { color: #b31d28; }
+.highlight .ge { font-style: italic; }
+.highlight .gs { font-weight: bold; }
 
 blockquote {
   border-left: 3px solid var(--rule);

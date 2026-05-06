@@ -62,7 +62,7 @@ Figure 1. Example PPO evaluation plots
 The X axis on the plots refers to the evaluation scores obtained after x training steps.
 
 Based on this information, we can develop the following framework:
-```
+```python
 import logging
 import gymnasium as gym
 
@@ -116,7 +116,7 @@ Figure 3. Reinforcement learning system, simplified view
 Reinforcement Learning describes a system of 2 entities - an environment and a policy, that trade 3 key pieces of data between themselves: observations (sometimes referred to as state), actions and rewards.
 
 Both can be thought of as functions:
-```
+```python
 def environment(action) -> tuple[observation, reward]:
    pass
 
@@ -155,7 +155,7 @@ You will find references to those concepts showing up in Sections 2-5, with the 
 Notice the use of V(s_{t+1}) and V(s_{t}) - these are values obtained from the **Value function,** an auxiliary neural function that PPO algorithm introduces.
 
 The code, implemented in pytorch, looks like this:
-```
+```python
 def compute_gae(
     rewards: torch.Tensor,
     values: torch.Tensor,
@@ -201,7 +201,7 @@ Full loss equation that combines the **clipped policy loss** with **value functi
 [![](https://substackcdn.com/image/fetch/$s_!773x!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc546ba53-767c-4ddb-acf7-b7372f4578fe_2330x420.png)](<https://substackcdn.com/image/fetch/$s_!773x!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc546ba53-767c-4ddb-acf7-b7372f4578fe_2330x420.png>)
 
 PyTorch implementation of the loss looks like this:
-```
+```python
 class Trajectory(typing.NamedTuple):
     states: torch.Tensor
     actions: torch.Tensor
@@ -265,7 +265,7 @@ At this point we can go ahead and implement the networks themselves.
 To make the long story short - depending on the types of actions an environment works with - continuous or discrete - we need to interpret the logits returned by a model differently, and slightly change the architecture of the network
 
 Policy base class
-```
+```python
 class PPOPolicy(nn.Module, abc.ABC):
 
     def __init__(self, state_dim: int, action_dim: int) -> None:
@@ -285,7 +285,7 @@ class PPOPolicy(nn.Module, abc.ABC):
 ```
 
 Implementation for the continuous action spaces trains the policy model to return parameters (1-st moments) of a gaussian distribution, and then samples those to return action values. An action is a vector of floating points - they may for example represent the speeds of motors rotating a robot’s arm:
-```
+```python
 class PPOPolicyContinuous(PPOPolicy):
 
     def __init__(self, state_dim: int, action_dim: int) -> None:
@@ -353,7 +353,7 @@ class PPOPolicyContinuous(PPOPolicy):
 ```
 
 Policy for discrete action spaces on the other hand assumes that the policy returns a single integer number that represents a discrete action to be taken by an environment. An example of such action is the index of an arrow key on a keyboard when we play one of atari games.
-```
+```python
 class PPOPolicyDiscrete(PPOPolicy):
 
     def __init__(self, state_dim: int, action_dim: int) -> None:
@@ -411,7 +411,7 @@ class PPOPolicyDiscrete(PPOPolicy):
 #### Step 6 Implementing the Value function
 
 The value function uses the same network architecture, with the difference of returning a single floating point value - the value the function would assign to the state (observation) of an environment.
-```
+```python
 class _PPOValue(nn.Module):
 
     def __init__(self, state_dim: int):
@@ -435,7 +435,7 @@ class _PPOValue(nn.Module):
 ### Complete code
 
 Here’s the complete solution:
-```
+```python
 import abc
 import logging
 import typing
@@ -896,7 +896,7 @@ if __name__ == "__main__":
 ```
 
 It was written and tested with Python 3.14 and uses the following dependencies:
-```
+```python
 gymnasium[box2d,other]>=1.2.3
 mlflow>=3.3.1
 pydantic>=2.11.7

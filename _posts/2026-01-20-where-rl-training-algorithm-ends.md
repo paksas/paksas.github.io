@@ -68,7 +68,7 @@ Tokenizer acts as an input encoder and an output decoder. It is either jointly t
 We will therefore need to train our own encoder and decoder. In this way, we’ll train those new layers to represent the inputs and decode the outputs in a way that best align with the LLM.
 
 The final construct looks like this:
-```
+```python
 import peft
 import transformers as tr
 import torch
@@ -115,7 +115,7 @@ At the end of this code we have 3 entities:
   * `action_head` which converts the LLM output to action logits 
 
 The following is the code that executes that conversion:
-```
+```python
 states_embeddings = state_encoder(states)
 states_embeddings = states_embeddings.unsqueeze(1)
 llm_outputs = llm(
@@ -129,12 +129,12 @@ action_logits = action_head(last_hidden)
 ### MLP based policy refresher
 
 We could express the code above with this pseudocode:
-```
+```python
 def get_action_logits(state: torch.Tensor) -> torch.Tensor
 ```
 
 Let’s see how this compares to our ML Policy implementation:
-```
+```python
 class PPODiscretePolicy(PPOPolicy):
 
     def __init__(self, state_dim: int, action_dim: int) -> None:
