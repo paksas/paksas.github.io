@@ -7,7 +7,6 @@ permalink: /resume/
 ## Contact
 
 - St. Albans, United Kingdom
-- ptrochim@proton.me
 - +44 7384 900 597
 - Polish nationality
 
@@ -129,12 +128,6 @@ Laid out the architecture for the next-generation data-mining application. Mento
 
 Designed and developed a packet data router for a Tetra-standard telecommunication system. *(C++, Linux, Bash, Tsh)*
 
-## Side projects
-
-**[Mineshaft](https://play.google.com/store/apps/details?id=com.MassiveMusatche.MineShaft&hl=en)** — An endless runner for Android in which you destroy obstacles as you fall down an endless mine shaft. Most of the code, graphics, animations, and art direction by me.
-
-**[Tamy](https://github.com/paksas/Tamy)** — A private game engine, developed to satisfy my thirst for knowledge. Open source on GitHub.
-
 ## Publications
 
 - Patent: [Simulating Industrial Facilities for Control](https://patentscope.wipo.int/search/en/detail.jsf?docId=WO2023247767) — Application no. PCT/EP2023/067148.
@@ -151,13 +144,10 @@ Designed and developed a packet data router for a Tetra-standard telecommunicati
 
 ## Education
 
-- **2016** — Machine Learning by Andrew Ng, Stanford University (Coursera)
-- **2008–2009** — DirectX Course Parts I & II at Game Institute
 - **1999–2005** — MSc, Electronics and Information Technology, Technical University of Lublin. Master thesis: *Adaptive regulation of randomly disrupted plants*.
 
-## Skills
+## Communication
 
-- **Programming languages:** C++, Python, C#
-- **Natural languages:** Polish (native), English (CAE, grade A), Spanish, German (basic)
-- **Game engines:** Unity, UE4
-- **Art:** Amateur 3D animation, modelling, and rigging in Blender; sketching
+- **Programming languages:** C++, Python
+- **Natural languages:** Polish (native), English, Spanish, German, French
+- **Universal languages:**: Linear algebra, Calculus, Probability Theory
