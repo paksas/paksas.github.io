@@ -52,9 +52,9 @@ This is the compression in action. The thought “what addition means to me” i
 What’s remarkable is how reliably people throw away the same things.
 
 I ran the same prompt through several LLMs:
-[code]
-    Prompt: Summarize addition defined on this website https://en.wikipedia.org/wiki/Addition in 2 sentences
-[/code]
+```
+Prompt: Summarize addition defined on this website https://en.wikipedia.org/wiki/Addition in 2 sentences
+```
 
 **Claude 4.5:** Addition is one of the four basic operations of arithmetic that combines two or more numbers (called addends or summands) to produce their total or sum, typically denoted with the plus sign (+).
 

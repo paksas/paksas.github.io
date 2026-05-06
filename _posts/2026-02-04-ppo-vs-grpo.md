@@ -20,11 +20,11 @@ Both PPO and GRPO optimize a stochastic policy—a neural network that outputs a
   2. **Evaluate action probabilities** during training (for importance sampling)
 
 This shared requirement allows us to define a single `StochasticPolicy` interface that both algorithms consume:
-[code]
-    class StochasticPolicy:
-        def get_action(states) -> (action, log_prob)
-        def evaluate_actions(states, actions) -> (log_probs, entropy)
-[/code]
+```
+class StochasticPolicy:
+    def get_action(states) -> (action, log_prob)
+    def evaluate_actions(states, actions) -> (log_probs, entropy)
+```
 
 The benefit is that policy architectures become algorithm-agnostic. Whether using a simple MLP, a continuous Gaussian policy, or a LoRA-finetuned LLM backbone, the same network can be trained with either PPO or GRPO without modification.
 
@@ -80,9 +80,9 @@ while for GRPO it’s:
 
 The advantage computation is where these algorithms fundamentally diverge:
 
-\- **PPO ’s GAE** performs _temporal_ credit assignment—it propagates information backward through time using the learned value function to determine which actions led to good outcomes.
+- **PPO ’s GAE** performs _temporal_ credit assignment—it propagates information backward through time using the learned value function to determine which actions led to good outcomes.
 
-\- **GRPO ’s group normalization** performs _batch_ comparison—it asks “how did this trajectory’s reward compare to other trajectories from the same policy?” This sidesteps temporal credit assignment entirely.
+- **GRPO ’s group normalization** performs _batch_ comparison—it asks “how did this trajectory’s reward compare to other trajectories from the same policy?” This sidesteps temporal credit assignment entirely.
 
 ## Training Loop Comparison
 
@@ -113,31 +113,31 @@ This adds implementation complexity but is unavoidable when batching variable-le
 ### Pseudocode Comparison
 
 PPO Training Loop:
-[code]
-    for epoch in epochs:
-        trajectory = collect_episodes(policy, env)          # Shape: (T, ...)
-    
-        advantages = compute_gae(trajectory, value_fn)      # Temporal credit assignment
-    
-        loss = ppo_loss(policy, value_fn, trajectory, advantages)
-    
-        optimizer.step(loss)                                # Updates policy AND value_fn
-[/code]
+```
+for epoch in epochs:
+    trajectory = collect_episodes(policy, env)          # Shape: (T, ...)
+
+    advantages = compute_gae(trajectory, value_fn)      # Temporal credit assignment
+
+    loss = ppo_loss(policy, value_fn, trajectory, advantages)
+
+    optimizer.step(loss)                                # Updates policy AND value_fn
+```
 
 GRPO Training Loop:
-[code]
-    for epoch in epochs:
-        trajectories = [collect_episodes(policy, env)
-                        for _ in range(group_dim)]          # List of G trajectories
-    
-        batched = stack_and_pad(trajectories)               # Shape: (T, G, ...)
-        mask = compute_mask(batched)                        # Valid position indicator
-        advantages = group_normalize(batched.rewards, mask) # Batch comparison
-    
-        loss = grpo_loss(policy, batched, advantages, mask)
-    
-        optimizer.step(loss)                                # Updates policy only
-[/code]
+```
+for epoch in epochs:
+    trajectories = [collect_episodes(policy, env)
+                    for _ in range(group_dim)]          # List of G trajectories
+
+    batched = stack_and_pad(trajectories)               # Shape: (T, G, ...)
+    mask = compute_mask(batched)                        # Valid position indicator
+    advantages = group_normalize(batched.rewards, mask) # Batch comparison
+
+    loss = grpo_loss(policy, batched, advantages, mask)
+
+    optimizer.step(loss)                                # Updates policy only
+```
 
 ## When to Use Each Algorithm
 
@@ -151,9 +151,9 @@ GRPO on the other hand has been designed specifically for LLM tuning. I took a l
 
 PPO and GRPO share the same clipped surrogate objective but differ fundamentally in how they estimate advantages:
 
-\- **PPO** learns a value function for temporal credit assignment, adding model complexity but reducing sample requirements
+- **PPO** learns a value function for temporal credit assignment, adding model complexity but reducing sample requirements
 
-\- **GRPO** uses group-relative normalization, trading sample efficiency for architectural simplicity
+- **GRPO** uses group-relative normalization, trading sample efficiency for architectural simplicity
 
 The shared policy interface in our implementation means you can benchmark both algorithms with identical network architectures—only the training loop and loss computation differ.
 

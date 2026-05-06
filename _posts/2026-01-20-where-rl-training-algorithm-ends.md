@@ -68,43 +68,43 @@ Tokenizer acts as an input encoder and an output decoder. It is either jointly t
 We will therefore need to train our own encoder and decoder. In this way, we’ll train those new layers to represent the inputs and decode the outputs in a way that best align with the LLM.
 
 The final construct looks like this:
-[code]
-    import peft
-    import transformers as tr
-    import torch
-    import torch.nn as nn
-    
-    
-    llm_id = "Qwen/Qwen2-0.5B"
-    llm = tr.AutoModelForCausalLM.from_pretrained(llm_id)
-    peft_config = peft.LoraConfig(
-        r=16,  # rank
-        lora_alpha=32,  # scaling factor
-        target_modules=[
-            "q_proj",
-            "k_proj",
-            "v_proj",
-            "o_proj",
-            "gate_proj",
-            "up_proj",
-            "down_proj",
-        ],
-        lora_dropout=0.05,
-    )
-    llm = peft.get_peft_model(llm, peft_config)
-    
-    llm_hidden_dim = 896
-    state_encoder = nn.Sequential(
-        nn.Linear(self.state_dim, 256), 
-        nn.ReLU(), 
-        nn.Linear(256, llm_hidden_dim)
-    )
-    action_head = nn.Sequential(
-        nn.Linear(llm_hidden_dim, 128),
-        nn.ReLU(),
-        nn.Linear(128, self.action_hidden_dim),
-    )
-[/code]
+```
+import peft
+import transformers as tr
+import torch
+import torch.nn as nn
+
+
+llm_id = "Qwen/Qwen2-0.5B"
+llm = tr.AutoModelForCausalLM.from_pretrained(llm_id)
+peft_config = peft.LoraConfig(
+    r=16,  # rank
+    lora_alpha=32,  # scaling factor
+    target_modules=[
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj",
+    ],
+    lora_dropout=0.05,
+)
+llm = peft.get_peft_model(llm, peft_config)
+
+llm_hidden_dim = 896
+state_encoder = nn.Sequential(
+    nn.Linear(self.state_dim, 256), 
+    nn.ReLU(), 
+    nn.Linear(256, llm_hidden_dim)
+)
+action_head = nn.Sequential(
+    nn.Linear(llm_hidden_dim, 128),
+    nn.ReLU(),
+    nn.Linear(128, self.action_hidden_dim),
+)
+```
 
 At the end of this code we have 3 entities:
 
@@ -115,51 +115,51 @@ At the end of this code we have 3 entities:
   * `action_head` which converts the LLM output to action logits 
 
 The following is the code that executes that conversion:
-[code]
-    states_embeddings = state_encoder(states)
-    states_embeddings = states_embeddings.unsqueeze(1)
-    llm_outputs = llm(
-        inputs_embeds=states_embeddings, 
-        output_hidden_states=True
-    )
-    last_hidden = llm_outputs.hidden_states[-1][:, -1, :]
-    action_logits = action_head(last_hidden)
-[/code]
+```
+states_embeddings = state_encoder(states)
+states_embeddings = states_embeddings.unsqueeze(1)
+llm_outputs = llm(
+    inputs_embeds=states_embeddings, 
+    output_hidden_states=True
+)
+last_hidden = llm_outputs.hidden_states[-1][:, -1, :]
+action_logits = action_head(last_hidden)
+```
 
 ### MLP based policy refresher
 
 We could express the code above with this pseudocode:
-[code]
-    def get_action_logits(state: torch.Tensor) -> torch.Tensor
-[/code]
+```
+def get_action_logits(state: torch.Tensor) -> torch.Tensor
+```
 
 Let’s see how this compares to our ML Policy implementation:
-[code]
-    class PPODiscretePolicy(PPOPolicy):
-    
-        def __init__(self, state_dim: int, action_dim: int) -> None:
-            super().__init__(
-                 # ...
-            )
-            self.policy = nn.Sequential(
-                 # ...
-            )
-    
-        def _get_action_distribution(self, state: torch.Tensor) -> dist.Distribution:
-            action_logits = self.policy(state)
-            action_logits_positive = nn.functional.softplus(action_logits)
-            return torch_utils.CategoricalUnsqueezed(action_logits_positive)
-    
-       def get_action(self, states: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
-         actions_dist = self._get_action_distribution(states)
-         # ...
-    
-       def evaluate_actions(
-            self, states: torch.Tensor, actions: torch.Tensor
-       ) -> tuple[torch.Tensor, torch.Tensor]:
-         actions_dist = self._get_action_distribution(states)
-         # ...
-[/code]
+```
+class PPODiscretePolicy(PPOPolicy):
+
+    def __init__(self, state_dim: int, action_dim: int) -> None:
+        super().__init__(
+             # ...
+        )
+        self.policy = nn.Sequential(
+             # ...
+        )
+
+    def _get_action_distribution(self, state: torch.Tensor) -> dist.Distribution:
+        action_logits = self.policy(state)
+        action_logits_positive = nn.functional.softplus(action_logits)
+        return torch_utils.CategoricalUnsqueezed(action_logits_positive)
+
+   def get_action(self, states: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+     actions_dist = self._get_action_distribution(states)
+     # ...
+
+   def evaluate_actions(
+        self, states: torch.Tensor, actions: torch.Tensor
+   ) -> tuple[torch.Tensor, torch.Tensor]:
+     actions_dist = self._get_action_distribution(states)
+     # ...
+```
 
 Notice the patterns in this code:
 
