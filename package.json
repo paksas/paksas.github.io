@@ -1,0 +1,12 @@
+{
+  "name": "paksas-resume-pdf",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Renders /resume/ to /resume.pdf for the static site",
+  "scripts": {
+    "render-pdf": "node scripts/render-pdf.js"
+  },
+  "dependencies": {
+    "puppeteer": "^23.0.0"
+  }
+}

@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: resume
 title: Resume
 permalink: /resume/
 ---
@@ -7,12 +7,6 @@ permalink: /resume/
 ## Profile
 
 AI/ML executive with two decades of experience leading research and engineering at the frontier — from foundational RL research at DeepMind to production AI infrastructure at Meta, the Ellison Institute of Technology (Oxford), and the Tony Blair Institute. Repeat founder and founding-team operator, currently building an autonomous coding agent for the enterprise at seed stage. Track record of recruiting and scaling world-class technical organisations, setting scientific direction, and shipping novel AI products into production.
-
-## Contact
-
-- St. Albans, United Kingdom
-- +44 7384 900 597
-- Polish nationality
 
 ## Experience
 

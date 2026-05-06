@@ -1,0 +1,26 @@
+---
+layout: default
+---
+<article class="resume-page">
+  <header class="post-header resume-header">
+    <p class="post-date resume-back"><a href="{{ '/' | relative_url }}">← back</a></p>
+    <div class="resume-titlebar">
+      <h1 class="post-title resume-title">{{ page.title }}</h1>
+      <a class="resume-download" href="{{ '/resume.pdf' | relative_url }}" download>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+        Download PDF
+      </a>
+    </div>
+  </header>
+  <div class="resume-grid">
+    <aside class="resume-contact">
+      <h2 class="resume-contact-heading">Contact</h2>
+      <p>St. Albans, United Kingdom</p>
+      <p><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+      <p class="resume-contact-meta">Polish nationality</p>
+    </aside>
+    <div class="post-content resume-body">
+      {{ content }}
+    </div>
+  </div>
+</article>
