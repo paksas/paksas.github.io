@@ -33,7 +33,6 @@
   title: "Discovering Software Engineering"
   logos:
     - { name: "Motorola", icon: "motorola" }
-    - { name: "Sabre", icon: "sabre" }
   body: |
     First professional roles. Software Engineer at Motorola working on a Tetra-standard
     packet data router. Later at Sabre Holdings on next-generation data-mining
