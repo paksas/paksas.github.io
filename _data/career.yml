@@ -8,8 +8,8 @@
 - dates: "2017 - 2023"
   title: "Deep Learning Apprentice"
   logos:
-    - { name: "DeepMind", icon: "deepmind" }
-    - { name: "Meta", icon: "meta" }
+    - { name: "DeepMind", file: "deepmind.svg" }
+    - { name: "Meta", file: "meta.svg" }
   body: |
     ML infrastructure and research at [DeepMind](https://deepmind.google/) and
     [Meta](https://meta.com/). At DeepMind, tech lead across model-based RL, robot
@@ -20,9 +20,9 @@
 - dates: "2008 - 2016"
   title: "Embodied Intelligence for Games"
   logos:
-    - { name: "CD Projekt RED", icon: "cdpr" }
-    - { name: "Havok", icon: "havok" }
-    - { name: "Crytek", icon: "crytek" }
+    - { name: "CD Projekt RED", file: "cdpr.png" }
+    - { name: "Havok", file: "havok.png" }
+    - { name: "Crytek", file: "crytek.png" }
   body: |
     Animation, AI, and physics for games. Senior Gameplay/AI Programmer at CD Projekt RED
     on _The Witcher 2_; Senior Software Engineer at Havok building character and vehicle
@@ -32,7 +32,7 @@
 - dates: "2005 - 2008"
   title: "Discovering Software Engineering"
   logos:
-    - { name: "Motorola", icon: "motorola" }
+    - { name: "Motorola", file: "motorola.svg" }
   body: |
     First professional roles. Software Engineer at Motorola working on a Tetra-standard
     packet data router. Later at Sabre Holdings on next-generation data-mining

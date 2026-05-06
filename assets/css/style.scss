@@ -256,14 +256,10 @@ body.layout-home .page { max-width: var(--max-width-home); }
   align-items: center;
 }
 .era-logo {
-  display: inline-flex;
   width: 28px;
   height: 28px;
-}
-.era-logo svg {
-  width: 100%;
-  height: 100%;
   display: block;
+  object-fit: contain;
   border-radius: 5px;
 }
 .era-body {

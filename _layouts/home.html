@@ -30,9 +30,7 @@ layout: default
                 {% if entry.logos %}
                 <div class="era-logos">
                   {% for logo in entry.logos %}
-                  <span class="era-logo" title="{{ logo.name }}" aria-label="{{ logo.name }}">
-                    {% include logos/{{ logo.icon }}.svg %}
-                  </span>
+                  <img class="era-logo" src="{{ '/assets/logos/' | append: logo.file | relative_url }}" alt="{{ logo.name }}" title="{{ logo.name }}" loading="lazy">
                   {% endfor %}
                 </div>
                 {% endif %}
