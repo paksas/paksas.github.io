@@ -67,6 +67,8 @@ And the competition only makes it sharper and scarier, because when I look onlin
 
 There's an obvious way out of all this. If I could point to one real customer who actually needs the thing I want to build, the co-founders and the money tend to follow - people don't bet on you, they bet on the pull you've already created. That's the whole reason "find a customer first" exists as advice. So the cure for "nothing sticks, no one wants to join me" is sitting right there in plain sight - go find the customer who's hurting, and let the rest follow (hopefully).
 
+I even wrote [a whole other piece]({% post_url 2026-06-06-push-ahead-or-pivot %}) convincing myself of exactly this - that what matters in the end isn't whether you stay or leave, but whether you walk away with something real to show for it. I believe every word of it.
+
 But I don't do it, and not for a lack of conviction, but because I'm afraid. I'm afraid I don't have an idea to discuss (or I have too many and can't choose). I'm afraid they won't want to talk to me, because why would they if I have nothing to offer. And I'm afraid they'll hand me some menial task their own team doesn't want.
 
 Read that third one again - sounds familiar?
