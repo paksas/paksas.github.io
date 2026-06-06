@@ -7,6 +7,8 @@ mathjax: false
 original_url: https://piotrtrochim.substack.com/p/what-came-first-a-customer-or-a-product
 ---
 
+![alt text](../_images/closed_entrance.jpg)
+
 I'm thinking about starting a startup, and if I'm honest, I've been circling it for years without taking the first step. So let me start with the question everyone argues about: an idea first, or a customer?
 
 Social media will give you a ton of advice about that, and most of them say that you need to find the customer first, learn about their problem and solve it - and that will be your product.
