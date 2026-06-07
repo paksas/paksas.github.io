@@ -7,6 +7,8 @@ mathjax: false
 original_url: https://piotrtrochim.substack.com/p/push-ahead-or-pivot
 ---
 
+![alt text](../_images/pivot.png)
+
 Every so often I get stuck on the same question, and I've never fully answered it: do I keep going with this, or do I let it go? If you've ever poured yourself into a project - a startup, a piece of work, anything that mattered - I suspect you know the feeling.
 
 I've read a lot of advice about it. Some people swear by perseverance: grit your teeth, push through, the breakthrough is just past the wall. Others swear by the pivot: be honest with yourself, cut your losses, point your energy somewhere better. I don't think either side is wrong, exactly. It's just that most of them are describing what worked for them, after the fact - and "what worked for me" turns out to be a hard thing to hand to someone else.
