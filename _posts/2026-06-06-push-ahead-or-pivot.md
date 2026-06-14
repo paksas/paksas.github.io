@@ -7,7 +7,7 @@ mathjax: false
 original_url: https://piotrtrochim.substack.com/p/push-ahead-or-pivot
 ---
 
-![alt text](../_images/pivot.png)
+![alt text](https://github.com/paksas/paksas.github.io/raw/master/_images/pivot.png)
 
 Every so often I get stuck on the same question, and I've never fully answered it: do I keep going with this, or do I let it go? If you've ever poured yourself into a project - a startup, a piece of work, anything that mattered - I suspect you know the feeling.
 

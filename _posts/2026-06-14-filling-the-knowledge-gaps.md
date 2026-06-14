@@ -7,7 +7,7 @@ mathjax: false
 original_url: https://piotrtrochim.substack.com/p/filling-the-knowledge-gaps
 ---
 
-![alt text](../_images/2026-06-14-filling-the-knowledge-gaps/title.png)
+![alt text](https://github.com/paksas/paksas.github.io/raw/master/_images/2026-06-14-filling-the-knowledge-gaps/title.png)
 
 For a while now I have been working on a way to treat curriculum design as a planning problem, and because the formal write-up still needs a good deal of work and a set of experiments before it is ready, I want to use this post to introduce the idea itself, the body of work it rests on, and the platform I have in mind for it.
 
@@ -15,13 +15,13 @@ The starting observation is the one from my earlier notes, that any topic worth 
 
 ## Building on Knowledge Space Theory
 
-![alt text](../_images/2026-06-14-filling-the-knowledge-gaps/learning-progress.png)
+![alt text](https://github.com/paksas/paksas.github.io/raw/master/_images/2026-06-14-filling-the-knowledge-gaps/learning-progress.png)
 
 The idea that knowledge has a structure one can reason about formally is not new, and the work I am doing builds directly on a tradition called [Knowledge Space Theory](https://doi.org/10.1016/S0020-7373%2885%2980031-6) (KST), developed by Jean-Paul Doignon and Jean-Claude Falmagne in the 1980s, which models a subject as the family of knowledge states a learner can actually occupy, where each state is a set of mastered topics consistent with the prerequisites, and where, for any state the learner is in, the theory identifies the topics they are now ready to study, which it calls the fringe. That fringe is a formal cousin of an older pedagogical idea, [Vygotsky's Zone of Proximal Development](https://en.wikipedia.org/wiki/Zone_of_proximal_development), the band of material just beyond what a learner can already do alone, where instruction does the most good, and the practice of teaching in small supported steps within that band is what educators call scaffolding. This tradition is not merely academic, since it underlies [ALEKS](https://www.aleks.com), a system used by a great many students, which locates a learner's knowledge state in a few dozen well-chosen questions and then recommends what to work on from there.
 
 Where my work departs from that tradition is in its purpose, because knowledge space theory was built largely to assess a learner, that is to locate efficiently which state they are in, whereas I am interested in what happens once that state is known and the material the learner has brought turns out to be incomplete. The structure recovered from a student's own material will often have gaps, places where a prerequisite the goal depends on is simply absent from what was provided, so that no study sequence the structure permits actually reaches the goal, and it is precisely there that the planning, the knowledge-state classification, and the rest of the machinery earn their place, since their purpose is not merely to choose among the routes that exist but to detect where the route runs out and to generate, dynamically, the curriculum that bridges the missing span. The ground truth the learner provides becomes the anchor the platform abseils from, the fixed point around which it builds a bridge across the gap, drawing the contents it needs from other sources to close it. That shift turns a map of which states are reachable into an active plan that says, from wherever the learner happens to be, which single step brings the goal closest, and that builds the step itself when the material does not already contain it.
 
-![alt text](../_images/2026-06-14-filling-the-knowledge-gaps/bridge.png)
+![alt text](https://github.com/paksas/paksas.github.io/raw/master/_images/2026-06-14-filling-the-knowledge-gaps/bridge.png)
 
 To make that bridging precise rather than a matter of intuition, I want to place a measure over the latent space in which the topics are embedded, one that quantifies how far apart two nodes lie, and my hypothesis is that the distance between the material on either side of a gap is what governs how much has to be built to span it. I expect a small gap to be closed by a single intermediate step, whereas a wide one, where the prerequisite the learner is missing sits far from anything they already hold, would have to be filled with a whole chain of generated nodes, each of them a little out of the distribution of the original material, before the goal comes within reach. The aim throughout is to keep the steps small, bridging even a wide gap not with one implausible leap but with a sequence of short and individually masterable moves, because the more distant the endpoints the more new material the system must generate to connect them, and material generated far out of distribution is precisely the material a learner is least equipped to absorb.
 
