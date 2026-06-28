@@ -164,8 +164,6 @@ As always, I invite you to comment and subscribe. Thank you for reading.
 ## References
 - 22M estimate - derived from ["How People Use ChatGPT" (NBER WP 34255)](https://www.nber.org/papers/w34255) and Anthropic's [Economic Index](https://www.anthropic.com/economic-index)
 - Wattpad - active-writer share (~10% of users) and monthly writer counts, via [Wattpad statistics](https://expandedramblings.com/index.php/wattpad-statistics-facts/)
-- NaNoWriMo - peak participation of ~400K (Nov 2022), via [Wikipedia](https://en.wikipedia.org/wiki/National_Novel_Writing_Month)
-- Royal Road - ~23K original-fiction authors, via [RoyalRoad Analysis 2025](https://medium.com/@hrule/royalroad-analysis-2025-86b92fae99d8)
 - Open-weights usage - the 100T-token report folds creative writing into a "roleplay" bucket alongside games and adult content, via [OpenRouter State of AI](https://openrouter.ai/state-of-ai)
 - Confederacy of Models - 2023 human-scored creative-writing eval where GPT-4 (80.2) and Claude 1.2 (74.4) beat the human baseline (70.1), via [arXiv 2310.08433](https://arxiv.org/abs/2310.08433)
 - Hemingway-bench - expert-human-scored writing leaderboard (Feb 2026), via [Surge AI](https://surgehq.ai/bloghemingway-bench-ai-writing-leaderboard)
