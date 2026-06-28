@@ -13,6 +13,8 @@ So I wanted to know what the research actually says about using large language m
 
 The academic evidence is strong and surprisingly consistent on one thing - LLMs flatten creative output across people. It is also strong on the ethics and copyright fight, because that part is happening in courtrooms and has a paper trail. It is much weaker on what majority of us would consider "low hanging efficiency gains" - helping authors do edits, brainstorm and draft their work. 
 
+![alt text](https://github.com/paksas/paksas.github.io/raw/master/_images/2026-06-26-for-creative-writing/llms_for_creative_writing.png)
+
 ## Getting the general sense of volume of LLM use for creative writing
 
 Let's start with the obvious question - which models are actually being used, and how good are they at fiction. We'll check out the proprietary models for one simple reason - they track the data we need.
