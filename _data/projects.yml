@@ -8,14 +8,13 @@
     integration, kinematic constraints for obstacle avoidance and docking, and engine
     systems including game-saves and world streaming.
 
-- name: "BCOOLER — Industrial Cooling RL"
+- name: "Semi-analytical Industrial Cooling System Model for Reinforcement Learning"
   org: "DeepMind"
-  url: "https://arxiv.org/abs/2207.13131"
+  url: "https://arxiv.org/abs/2207.13131
   body: |
     Hybrid simulator combining analytical solutions with multi-physics simulation, used
     as the training environment for DeepMind's commercial-cooling RL system. The deployed
-    policies cut energy use by ~9–13 % at the live experiment sites
-    ([deployment paper](https://arxiv.org/abs/2211.07357)).
+    policies cut energy use by ~9–13 % at the live experiment sites.
 
 - name: "DeepMind Control Suite"
   org: "DeepMind"
