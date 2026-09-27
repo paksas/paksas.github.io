@@ -10,7 +10,7 @@
 
 - name: "Semi-analytical Industrial Cooling System Model for Reinforcement Learning"
   org: "DeepMind"
-  url: "https://arxiv.org/abs/2207.13131
+  url: "https://arxiv.org/abs/2207.13131"
   body: |
     Hybrid simulator combining analytical solutions with multi-physics simulation, used
     as the training environment for DeepMind's commercial-cooling RL system. The deployed
