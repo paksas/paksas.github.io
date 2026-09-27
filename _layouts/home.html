@@ -5,6 +5,7 @@ layout: default
     <img class="profile-photo" src="{{ '/_images/avatar.jpeg' | relative_url }}" alt="{{ site.author }}">
     <div class="profile-text">
       <h1 class="profile-name">{{ site.author }}</h1>
+      {% if page.role %}<div class="profile-role">{{ page.role | markdownify }}</div>{% endif %}
       <p class="profile-tagline">{{ page.tagline | default: site.description }}</p>
       <nav class="profile-links">
         {% if site.github_username %}<a href="https://github.com/{{ site.github_username }}" aria-label="GitHub">{% include icons/github.svg %}</a>{% endif %}

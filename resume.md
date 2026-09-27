@@ -10,13 +10,22 @@ AI/ML executive with two decades of experience leading research and engineering 
 
 ## Experience
 
-### Pavo AI · Director of ML
-*Jan 2026 – Present*
+### Robo Data Lab · Founder & CEO
+*Jul 2026 – Present*
 
-Co-leading technical strategy at a seed-stage startup building an autonomous, life-long learning coding agent for the enterprise.
+Founded and leading [Robo Data Lab](https://robodatalab.com), an independent research lab working on the deep learning control problems in long-form language, holding state, meaning and character across a whole book rather than a paragraph.
 
-- Standing up the research and engineering organisations from zero.
-- Owning the technical and scientific roadmap for the core challenges in life-long learning.
+- Setting the research agenda across alignment, state-aware retrieval, plot identification, story pacing and character consistency.
+- Building [Authorship](https://marketplace.visualstudio.com/items?itemName=RoboDataLab.authorship), a VS Code extension that applies the lab's research on trajectory retrieval and causal world modelling to long-form fiction.
+- Built and open-sourced [Vramen](https://github.com/robodatalab/vramen), a Python library that keeps several models resident side by side under a fixed memory quota.
+
+### Pavo AI · Consulting Director of ML
+*Jan 2026 – Jul 2026*
+
+Co-led technical strategy at a seed-stage startup building an autonomous, life-long learning coding agent for the enterprise.
+
+- Stood up the research and engineering organisations from zero.
+- Owned the technical and scientific roadmap for the core challenges in life-long learning.
 
 ### Tony Blair Institute for Global Change · Head of ML, AI Incubator (Founding Team)
 *Mar 2025 – Nov 2025*

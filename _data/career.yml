@@ -1,7 +1,10 @@
 - dates: "2023 — present"
   title: "Deep Learning Entrepreneur"
+  logos:
+    - { name: "Robo Data Lab", file: "robodatalab.svg" }
   body: |
-    Independent. Searching for a research bet to commit to. Working on life-long
+    Leading and building [Robo Data Lab](https://robodatalab.com), a research lab
+    bridging human intent and machine understanding. Independent. Searching for a research bet to commit to. Working on life-long
     learning for LLM agents — how to make models that keep learning from their own
     experience after training, and how to keep their behaviour grounded as they do.
 
